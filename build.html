@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Build Your Portfolio | Cassie Uptmore</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<style>
+  :root {
+    --navy: #0a1628;
+    --navy-mid: #132242;
+    --navy-light: #1a2d52;
+    --accent: #c9975b;
+    --accent-light: #e4be8a;
+    --warm: #f5f1e8;
+    --ink: #15172a;
+    --ink-soft: #3a4358;
+    --muted: #6b7186;
+    --line: #e4e6ee;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #d6d8e0;
+    color: var(--ink);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ===== BUILDER UI ===== */
+  .builder {
+    max-width: 1100px;
+    margin: 40px auto;
+    background: white;
+    padding: 44px;
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.10);
+  }
+  .back-link {
+    display: inline-block;
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 14px;
+    margin-bottom: 28px;
+    font-weight: 600;
+  }
+  .back-link:hover { color: var(--navy); }
+  .builder-header {
+    margin-bottom: 36px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--line);
+  }
+  .builder-eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    font-size: 12px;
+    color: var(--accent);
+    font-weight: 700;
+    margin-bottom: 14px;
+  }
+  .builder-title {
+    font-size: 38px;
+    font-weight: 800;
+    color: var(--navy);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 14px;
+  }
+  .builder-sub {
+    font-size: 16px;
+    color: var(--ink-soft);
+    max-width: 680px;
+    line-height: 1.6;
+  }
+  .builder-section { margin-bottom: 32px; }
+  .builder-section-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+  .preset-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .preset-btn {
+    padding: 12px 18px;
+    border: 2px solid var(--line);
+    background: white;
+    color: var(--navy);
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: inherit;
+    transition: all 0.15s;
+  }
+  .preset-btn:hover { border-color: var(--accent); background: #fff9f0; }
+  .preset-btn.active { background: var(--navy); color: white; border-color: var(--navy); }
+  .section-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 8px;
+  }
+  .section-toggle {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s;
+    user-select: none;
+  }
+  .section-toggle:hover { background: #faf8f3; border-color: var(--accent); }
+  .section-toggle.locked { opacity: 0.6; cursor: not-allowed; background: #faf8f3; }
+  .section-toggle input {
+    width: 18px; height: 18px;
+    accent-color: var(--accent);
+    cursor: pointer;
+  }
+  .section-toggle.locked input { cursor: not-allowed; }
+  .section-toggle-label {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--navy);
+  }
+  .personalize-input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: inherit;
+  }
+  .personalize-input:focus { outline: none; border-color: var(--accent); }
+  .generate-btn {
+    background: var(--navy);
+    color: white;
+    padding: 18px 38px;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.15s;
+  }
+  .generate-btn:hover { background: var(--accent); }
+  .preview-toggle {
+    margin-top: 18px;
+    color: var(--muted);
+    font-size: 13px;
+  }
+  .preview-toggle a { color: var(--accent); text-decoration: none; cursor: pointer; }
+
+  /* ===== PORTFOLIO PAGES ===== */
+  .portfolio {
+    max-width: 8.5in;
+    margin: 40px auto;
+    background: white;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.10);
+    display: none; /* hidden by default; shown in preview mode or when generating */
+  }
+  .portfolio.show { display: block; }
+
+  .page {
+    width: 100%;
+    min-height: 11in;
+    padding: 0.75in 0.75in;
+    background: white;
+    page-break-after: always;
+    position: relative;
+    color: var(--ink);
+  }
+  .page:last-child { page-break-after: auto; }
+  .page-warm { background: var(--warm); }
+  .page-dark { background: var(--navy); color: white; }
+  .page-dark-gradient { background: linear-gradient(180deg, var(--navy-mid) 0%, var(--navy-light) 100%); color: white; }
+
+  .page h1, .page h2, .page h3, .page h4 { font-weight: 700; line-height: 1.18; letter-spacing: -0.01em; }
+  .page p { font-size: 11pt; line-height: 1.6; color: inherit; margin: 0 0 12px; }
+
+  .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 9pt;
+    font-weight: 700;
+    margin: 0 0 14px;
+    color: var(--accent);
+  }
+  .rule { height: 2px; width: 56px; background: var(--accent); border: 0; margin: 0 0 24px; }
+  .h2-large { font-size: 26pt; line-height: 1.12; margin: 0 0 14px; }
+  .lede { font-size: 12pt; color: var(--ink-soft); line-height: 1.55; max-width: 6.4in; }
+  .page-dark .lede, .page-dark-gradient .lede { color: #bbc5d8; }
+
+  /* COVER */
+  .cover-name { font-size: 11pt; letter-spacing: 0.4em; text-transform: uppercase; margin-bottom: 80px; }
+  .cover-title { font-size: 52pt; font-weight: 800; line-height: 1.02; letter-spacing: -0.025em; margin-bottom: 24px; max-width: 6.5in; }
+  .cover-title .accent { color: var(--accent); }
+  .cover-sub { font-size: 13pt; color: var(--ink-soft); max-width: 5.8in; line-height: 1.5; }
+  .cover-prepared { margin-top: 36px; padding-top: 20px; border-top: 1px solid var(--line); color: var(--accent); font-size: 11pt; font-weight: 600; }
+  .cover-meta { position: absolute; bottom: 0.75in; left: 0.75in; right: 0.75in; display: flex; justify-content: space-between; border-top: 1px solid var(--line); padding-top: 14px; font-size: 9pt; color: var(--muted); }
+
+  /* SNAPSHOT */
+  .stat-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin: 30px 0; }
+  .stat { background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 18px 10px; text-align: center; }
+  .page-warm .stat { background: white; border-color: rgba(201,151,91,0.20); }
+  .stat .num { font-size: 22pt; font-weight: 800; color: var(--accent); line-height: 1; letter-spacing: -0.02em; }
+  .stat .lbl { font-size: 8pt; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 7px; color: var(--ink-soft); }
+  .pull-quote { font-style: italic; font-size: 13pt; border-left: 3px solid var(--accent); padding: 6px 0 6px 18px; margin: 24px 0; line-height: 1.5; max-width: 6.5in; }
+  .brands { display: flex; flex-wrap: wrap; gap: 8px 10px; margin-top: 12px; }
+  .brand-chip { border: 1px solid var(--line); border-radius: 999px; padding: 6px 13px; font-size: 9.5pt; background: white; }
+
+  /* CAREER ARC */
+  .arc-list { display: flex; flex-direction: column; gap: 18px; margin-top: 18px; }
+  .arc-entry { border: 1px solid var(--line); border-radius: 10px; padding: 22px 24px; background: white; }
+  .arc-meta { font-size: 8.5pt; text-transform: uppercase; letter-spacing: 0.14em; color: var(--accent); font-weight: 700; }
+  .arc-meta .years { color: var(--muted); font-weight: 500; letter-spacing: 0.06em; }
+  .arc-entry h3 { font-size: 16pt; margin: 6px 0 8px; }
+  .arc-entry p { font-size: 10.5pt; color: var(--ink-soft); margin: 0 0 14px; max-width: 6.4in; }
+  .arc-stats { display: flex; gap: 10px; flex-wrap: wrap; }
+  .arc-stat { background: var(--warm); border-radius: 6px; padding: 8px 14px; min-width: 88px; }
+  .arc-stat .n { font-size: 14pt; font-weight: 800; color: var(--accent); line-height: 1; letter-spacing: -0.02em; }
+  .arc-stat .l { font-size: 7.5pt; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; color: var(--muted); }
+
+  /* GENERIC GRID CARD */
+  .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin-top: 18px; }
+  .grid-card { border: 1px solid var(--line); border-radius: 10px; padding: 20px 22px; background: white; }
+  .page-dark .grid-card, .page-dark-gradient .grid-card { background: rgba(255,255,255,0.04); border-color: rgba(201,151,91,0.20); }
+  .grid-card h4 { font-size: 12pt; margin: 0 0 8px; color: var(--accent); line-height: 1.3; }
+  .grid-card .icon { font-size: 22px; margin-bottom: 8px; display: block; }
+  .grid-card p { font-size: 10pt; color: var(--ink-soft); margin: 0; line-height: 1.55; }
+  .page-dark .grid-card p, .page-dark-gradient .grid-card p { color: #bbc5d8; }
+
+  /* CASE STUDY (single-page format for PDF) */
+  .case-head { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; flex-wrap: wrap; }
+  .case-tag { background: var(--accent); color: var(--navy); font-weight: 800; font-size: 9pt; letter-spacing: 0.14em; padding: 4px 10px; border-radius: 4px; text-transform: uppercase; }
+  .case-cat { color: var(--muted); font-size: 9pt; letter-spacing: 0.14em; text-transform: uppercase; }
+  .case-title { font-size: 22pt; margin: 0 0 22px; line-height: 1.18; }
+  .case-grid { display: grid; grid-template-columns: 1fr; gap: 18px; margin-bottom: 22px; }
+  .case-block { padding: 0; }
+  .case-block .lbl { color: var(--accent); font-weight: 700; font-size: 9.5pt; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 8px; }
+  .case-block p { font-size: 11pt; line-height: 1.62; color: var(--ink-soft); margin: 0; }
+  .page-dark .case-block p, .page-dark-gradient .case-block p { color: #bbc5d8; }
+  .case-shows { margin-top: 12px; padding-top: 18px; border-top: 1px solid var(--line); font-style: italic; color: var(--accent-light); font-size: 11pt; }
+  .page-dark .case-shows, .page-dark-gradient .case-shows { border-top-color: rgba(201,151,91,0.25); }
+
+  /* LIFECYCLE */
+  .lifecycle { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 18px; }
+  .phase { border: 1px solid var(--line); border-radius: 8px; padding: 13px 15px; background: white; }
+  .phase .ph-no { color: var(--accent); font-weight: 800; font-size: 8.5pt; letter-spacing: 0.14em; }
+  .phase h4 { font-size: 10.5pt; margin: 4px 0 6px; }
+  .phase p { font-size: 9pt; color: var(--ink-soft); margin: 0 0 6px; line-height: 1.5; }
+  .phase .proof { font-size: 8.5pt; color: var(--ink); background: var(--warm); padding: 7px 9px; border-radius: 4px; margin-top: 4px; }
+
+  /* WORK GRID */
+  .work-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 18px; }
+  .work-card { border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; background: white; }
+  .work-card .client { font-size: 8.5pt; color: var(--accent); font-weight: 800; text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 4px; }
+  .work-card h4 { font-size: 10.5pt; margin: 0 0 4px; }
+  .work-card p { font-size: 9pt; color: var(--ink-soft); margin: 0; }
+
+  /* CLOSER */
+  .contact-card { margin-top: 50px; border: 1px solid rgba(255,255,255,0.18); border-radius: 12px; padding: 24px 28px; max-width: 4.6in; }
+  .contact-card .label { font-size: 9pt; color: var(--accent-light); text-transform: uppercase; letter-spacing: 0.18em; margin-bottom: 8px; }
+  .contact-card .email { font-size: 14pt; font-weight: 700; }
+  .contact-card .web { font-size: 11pt; color: #d3d6e0; margin-top: 6px; }
+  .closer-footer { position: absolute; bottom: 0.75in; left: 0.75in; right: 0.75in; border-top: 1px solid rgba(255,255,255,0.15); padding-top: 14px; font-size: 9pt; color: var(--accent-light); display: flex; justify-content: space-between; }
+
+  /* HIDDEN */
+  [data-section].hidden { display: none !important; }
+
+  /* PRINT MODE */
+  body.printing { background: white !important; }
+  body.printing .builder, body.printing .back-link, body.printing .preview-area-label { display: none !important; }
+  body.printing .portfolio { box-shadow: none; margin: 0 auto; display: block !important; }
+
+  @page { size: Letter; margin: 0; }
+  @media print {
+    .builder, .back-link, .preview-area-label { display: none !important; }
+    body { background: white !important; }
+    .portfolio { box-shadow: none; margin: 0; display: block !important; }
+  }
+
+  .preview-area-label {
+    max-width: 8.5in;
+    margin: 30px auto 0;
+    padding: 14px 18px;
+    background: var(--navy);
+    color: white;
+    border-radius: 10px 10px 0 0;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+</style>
+</head>
+<body>
+
+<!-- ===================== BUILDER UI ===================== -->
+<div class="builder">
+  <a href="/" class="back-link">← Back to cassieuptmore.github.io</a>
+  <div class="builder-header">
+    <div class="builder-eyebrow">Build Your Portfolio</div>
+    <h1 class="builder-title">Get the version that fits the role.</h1>
+    <p class="builder-sub">Pick a preset or customize the sections, optionally add a "prepared for" note, then download. Generated in your browser. No tracking, no sign-up.</p>
+  </div>
+
+  <div class="builder-section">
+    <div class="builder-section-label">1 · Start with a preset</div>
+    <div class="preset-row">
+      <button class="preset-btn" data-preset="full">Full Portfolio</button>
+      <button class="preset-btn" data-preset="director">For a Director Role</button>
+      <button class="preset-btn" data-preset="sales-heavy">For a Sales-Heavy GTM Team</button>
+      <button class="preset-btn" data-preset="flagship">For a Flagship Conference Role</button>
+      <button class="preset-btn" data-preset="ai-forward">For an AI-Forward Team</button>
+      <button class="preset-btn" data-preset="one-pager">One-Pager TL;DR</button>
+    </div>
+  </div>
+
+  <div class="builder-section">
+    <div class="builder-section-label">2 · Or pick sections individually</div>
+    <div class="section-list" id="section-list"><!-- populated by JS --></div>
+  </div>
+
+  <div class="builder-section">
+    <div class="builder-section-label">3 · (Optional) Personalize the cover</div>
+    <input type="text" class="personalize-input" id="prepared-for" placeholder='e.g., "Prepared for Director, Field Marketing @ [Company]"'>
+  </div>
+
+  <button class="generate-btn" id="generate-btn">Generate PDF →</button>
+  <div class="preview-toggle">Or <a id="preview-link">preview the portfolio below ↓</a></div>
+</div>
+
+<div class="preview-area-label" id="preview-label" style="display:none;">↓ Preview · what your PDF will look like</div>
+
+<!-- ===================== PORTFOLIO PAGES ===================== -->
+<div class="portfolio" id="portfolio">
+
+  <!-- COVER -->
+  <div data-section="cover" class="page">
+    <div class="cover-name">CASSIE&nbsp;&nbsp;UPTMORE</div>
+    <h1 class="cover-title">I build &amp; scale<br>global event<br>programs.</h1>
+    <p class="cover-sub">Agency production rigor meets brand-side strategic ownership. Most event marketers have one of those muscles. I've built both — and I've spent 15 years proving event marketing done right is a scalable growth channel, not a cost center.</p>
+    <div class="cover-prepared" id="prepared-for-display" style="display:none;"></div>
+    <div class="cover-meta">
+      <div><strong style="color:var(--ink);">Director of Event Marketing</strong> · 15+ Years · NA · EMEA · APAC</div>
+      <div>cassieuptmore.github.io · cassieuptmore@gmail.com</div>
+    </div>
+  </div>
+
+  <!-- SNAPSHOT -->
+  <div data-section="snapshot" class="page page-warm">
+    <div class="eyebrow">At a Glance</div>
+    <hr class="rule">
+    <h2 class="h2-large">The combination that turns good events into growth engines.</h2>
+    <p class="lede">Fifteen years across agency and brand sides. Programs built from zero. Pipeline measured in millions. Production at 10K+ attendee scale on three continents.</p>
+    <div class="stat-row">
+      <div class="stat"><div class="num">15+</div><div class="lbl">Years in Events</div></div>
+      <div class="stat"><div class="num">$12M</div><div class="lbl">Pipeline Influenced</div></div>
+      <div class="stat"><div class="num">12×</div><div class="lbl">ROI on $1M Budget</div></div>
+      <div class="stat"><div class="num">10K+</div><div class="lbl">Attendee Scale</div></div>
+      <div class="stat"><div class="num">3</div><div class="lbl">Continents</div></div>
+    </div>
+    <p class="pull-quote">"I don't plan events. I build programs. And the programs I build generate pipeline."</p>
+    <h3 style="margin-top:30px;font-size:13pt;">Brands I've Built Experiences For</h3>
+    <div class="brands">
+      <span class="brand-chip">Salesforce</span><span class="brand-chip">Samsung</span><span class="brand-chip">Marriott</span><span class="brand-chip">Hyatt</span><span class="brand-chip">Hilton</span><span class="brand-chip">IHG</span><span class="brand-chip">InterContinental</span><span class="brand-chip">Starwood</span><span class="brand-chip">Oracle NetSuite</span><span class="brand-chip">Autodesk</span><span class="brand-chip">Twilio</span><span class="brand-chip">Atlassian</span><span class="brand-chip">Nutanix</span><span class="brand-chip">SAP</span><span class="brand-chip">Schneider Electric</span><span class="brand-chip">Cardinal Health</span><span class="brand-chip">7-Eleven</span><span class="brand-chip">Dr Pepper / 7 Up</span><span class="brand-chip">GameStop</span><span class="brand-chip">PWC</span><span class="brand-chip">FarEye</span>
+    </div>
+  </div>
+
+  <!-- CAREER ARC -->
+  <div data-section="career" class="page">
+    <div class="eyebrow">The Career Arc</div>
+    <hr class="rule">
+    <h2 class="h2-large">Every chapter made me more of what I am.</h2>
+    <p class="lede">Three acts. One through-line. Each chapter built a different muscle — together they make something rare in event marketing.</p>
+    <div class="arc-list">
+      <div class="arc-entry">
+        <div class="arc-meta">ACT I · <span class="years">2005–2020 · Freeman &amp; Derse</span></div>
+        <h3>Agency Production Mastery</h3>
+        <p>12+ years managing event production for Fortune 500 clients at scales up to 10,000+ attendees. This is where I learned that great events are the result of 500 small decisions made right.</p>
+        <div class="arc-stats"><div class="arc-stat"><div class="n">12 yrs</div><div class="l">Tenure</div></div><div class="arc-stat"><div class="n">10,000+</div><div class="l">Attendees</div></div><div class="arc-stat"><div class="n">10+</div><div class="l">F500 Clients</div></div></div>
+      </div>
+      <div class="arc-entry">
+        <div class="arc-meta">ACT II · <span class="years">2020–2023 · FarEye</span></div>
+        <h3>Zero-to-One Program Builder</h3>
+        <p>Built an entire North American event program from zero. No vendors, no playbook, no history. Within two years: 20+ programs/year, ABM integration with 6Sense, and a playbook that outlasted my tenure. Built and scaled the program; hand-off ran without me.</p>
+        <div class="arc-stats"><div class="arc-stat"><div class="n">$12M</div><div class="l">Pipeline</div></div><div class="arc-stat"><div class="n">$4M</div><div class="l">Sourced</div></div><div class="arc-stat"><div class="n">12×</div><div class="l">ROI</div></div><div class="arc-stat"><div class="n">20+</div><div class="l">Programs/Yr</div></div></div>
+      </div>
+      <div class="arc-entry">
+        <div class="arc-meta">ACT III · <span class="years">2024–Present · Enterprise Events Group</span></div>
+        <h3>Craft Meets Clarity</h3>
+        <p>Leading tradeshow and experiential programs for B2B tech clients. Redesigned activations from booth-and-demo into journey-based experiences. Leading client-facing program teams; introduced AI-augmented workflows across the practice.</p>
+        <div class="arc-stats"><div class="arc-stat"><div class="n">+48%</div><div class="l">Dwell Time</div></div><div class="arc-stat"><div class="n">−22%</div><div class="l">Cost</div></div><div class="arc-stat"><div class="n">39</div><div class="l">Mtgs / Event</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FORMATS -->
+  <div data-section="formats" class="page page-warm">
+    <div class="eyebrow">The Formats I Run</div>
+    <hr class="rule">
+    <h2 class="h2-large">One program. Five formats.</h2>
+    <p class="lede">Every account meets us where they are.</p>
+    <div class="grid-2">
+      <div class="grid-card"><span class="icon">🏛</span><h4>Owned Flagship Conferences</h4><p>The brand's signature moment. 1,000–10,000+ attendees, multi-day, full-stage production. P&amp;L, content track design, sponsor program, exec messaging, customer story curation.</p></div>
+      <div class="grid-card"><span class="icon">🎯</span><h4>Industry Tradeshows &amp; Conferences</h4><p>Third-party shows where pipeline is on the floor. Booth-to-meeting conversion, executive concierge programs, journey-based activations.</p></div>
+      <div class="grid-card"><span class="icon">🌆</span><h4>Field &amp; Regional Events</h4><p>City-by-city programs that hit the accounts a tradeshow can't. Executive dinners, customer summits, regional roadshows. ABM-aligned, intent-driven.</p></div>
+      <div class="grid-card"><span class="icon">🥂</span><h4>Intimate / VIP Roundtables</h4><p>10–50-person, invite-only formats. The places where deals actually accelerate. Discussion design, facilitator coaching, follow-up choreography.</p></div>
+      <div class="grid-card"><span class="icon">🤝</span><h4>Partner Co-Marketing Events</h4><p>Joint plays with strategic partners — shared cost, shared pipeline, shared story. Partner agreement structure, co-designed content, clean attribution.</p></div>
+    </div>
+  </div>
+
+  <!-- CASE 01 -->
+  <div data-section="case01" class="page page-dark">
+    <div class="case-head"><span class="case-tag">Case 01</span><span class="case-cat">Pipeline Generation</span></div>
+    <h2 class="case-title">Zero-to-One: $12M Influenced Pipeline in 24 Months</h2>
+    <div class="case-grid">
+      <div class="case-block"><div class="lbl">The Challenge</div><p>A Series C logistics SaaS company. No event program, no vendors, no playbook, no historical data. Sales asking events to deliver pipeline immediately. Marketing budget: $1M for the year.</p></div>
+      <div class="case-block"><div class="lbl">The Approach</div><p>Built a tiered portfolio so budget went to the highest-intent rooms first. Stood up the vendor ecosystem from zero. Integrated 6Sense intent signals with event registration data so every event tied to a target account list. Designed a custom GPT trained on our ICP, messaging pillars, and brand voice — the team used it for pre-event briefs, on-stand talking points, and follow-up. Built a post-event playbook and ran it after every program.</p></div>
+      <div class="case-block"><div class="lbl">The Outcome</div><p><strong style="color:#fff;">$12M influenced pipeline</strong> on a $1M budget in 24 months — <strong style="color:#fff;">12× ROI</strong>. <strong style="color:#fff;">$4M sourced pipeline</strong>. 20+ programs/year running on a documented playbook a successor could run without me.</p></div>
+    </div>
+    <div class="case-shows"><strong style="color:var(--accent);font-style:normal;">What it shows.</strong> I build event programs as revenue infrastructure, not a calendar.</div>
+  </div>
+
+  <!-- CASE 02 -->
+  <div data-section="case02" class="page page-dark">
+    <div class="case-head"><span class="case-tag">Case 02</span><span class="case-cat">Portfolio Architecture</span></div>
+    <h2 class="case-title">The Tier 1 / 2 / 3 Framework</h2>
+    <div class="case-grid">
+      <div class="case-block"><div class="lbl">The Challenge</div><p>Same SaaS company. With 60+ industry events on the calendar and a $1M budget, "go to all of them" wasn't an option. Sales wanted everything. Finance wanted nothing.</p></div>
+      <div class="case-block"><div class="lbl">The Approach</div><p>Built a three-tier framework, ran every event through it, and reviewed the portfolio quarterly with sales leadership. <strong style="color:var(--accent-light);">Tier 1 — Flagship Bets</strong> (4–6/yr, $80–150K each, 25+ meetings). <strong style="color:var(--accent-light);">Tier 2 — Targeted Plays</strong> (8–12/yr, $20–40K each, 10–15 meetings). <strong style="color:var(--accent-light);">Tier 3 — Field &amp; Intimate</strong> (12+/yr, $5–15K each, deepen 10–20 named accounts). AI handled first-pass landscape audits and account-density scoring; I made the final call with sales VPs.</p></div>
+      <div class="case-block"><div class="lbl">The Outcome</div><p>Cut the calendar from 40+ events to 22. Pipeline efficiency: <strong style="color:#fff;">+34% pipeline-per-dollar YoY</strong>. Quarterly portfolio reviews became standard — events were the only marketing channel sales asked for <em>more</em> of.</p></div>
+    </div>
+    <div class="case-shows"><strong style="color:var(--accent);font-style:normal;">What it shows.</strong> Director-level event strategy isn't about doing more events. It's about making the portfolio defensible.</div>
+  </div>
+
+  <!-- CASE 03 -->
+  <div data-section="case03" class="page page-dark">
+    <div class="case-head"><span class="case-tag">Case 03</span><span class="case-cat">Intent-Driven Field</span></div>
+    <h2 class="case-title">Intent-Driven Field Marketing Engine</h2>
+    <div class="case-grid">
+      <div class="case-block"><div class="lbl">The Challenge</div><p>A global SaaS company's NA field team running monthly city dinners that filled seats but didn't move pipeline. Right format, wrong audience.</p></div>
+      <div class="case-block"><div class="lbl">The Approach</div><p>Rebuilt the field engine around intent, not geography. Used 6Sense to surface in-market accounts city-by-city. Pre-event: a custom GPT trained on our ICP and messaging generated per-account executive briefs — title-level talking points, recent funding/M&amp;A signals, conversation hooks. Field reps walked into every dinner with five minutes of relevant context per guest. Replaced "open invite" with intent-qualified guest lists. Built a 14-day AI-personalized, human-reviewed follow-up sequence mapped to the topics each guest engaged with.</p></div>
+      <div class="case-block"><div class="lbl">The Outcome</div><p><strong style="color:#fff;">3× pipeline per field event</strong> within two quarters. <strong style="color:#fff;">47% of attended accounts</strong> advanced to next sales stage within 60 days (vs. 18% baseline). Sales reallocated budget <em>to</em> field events from other channels — first time in three years.</p></div>
+    </div>
+    <div class="case-shows"><strong style="color:var(--accent);font-style:normal;">What it shows.</strong> Intent data + AI personalization + intimate format = the highest-ROI field play I run.</div>
+  </div>
+
+  <!-- CASE 04 -->
+  <div data-section="case04" class="page page-dark">
+    <div class="case-head"><span class="case-tag">Case 04</span><span class="case-cat">Team &amp; Global Ops</span></div>
+    <h2 class="case-title">Building &amp; Scaling a Global Event Team</h2>
+    <div class="case-grid">
+      <div class="case-block"><div class="lbl">The Challenge</div><p>Inheriting a one-person event function and being asked to scale it to NA + EMEA + APAC inside 18 months — without losing the quality bar that justified the investment.</p></div>
+      <div class="case-block"><div class="lbl">The Approach</div><p><strong style="color:var(--accent-light);">Org design first.</strong> Hired three full-time regional managers, each owning their portfolio end-to-end. On-demand contractor pools per region for production scale. Agency partners reserved for flagship moments. <strong style="color:var(--accent-light);">Unified playbook, regional adaptation.</strong> A master playbook every region used. A custom GPT trained on our brand voice adapted copy to regional tone without losing the through-line. <strong style="color:var(--accent-light);">AI enablement from day one</strong> for every new hire.</p></div>
+      <div class="case-block"><div class="lbl">The Outcome</div><p>Scaled to <strong style="color:#fff;">40+ programs/year across 3 regions</strong> without proportional headcount growth. <strong style="color:#fff;">~40 hrs/month saved</strong> on brand review alone. Promoted two of the three regional managers within 18 months.</p></div>
+    </div>
+    <div class="case-shows"><strong style="color:var(--accent);font-style:normal;">What it shows.</strong> I don't just run programs. I build the team and the system that runs them when I'm not in the room.</div>
+  </div>
+
+  <!-- CASE 05 -->
+  <div data-section="case05" class="page page-dark">
+    <div class="case-head"><span class="case-tag">Case 05</span><span class="case-cat">Audience-Mapped Flagship</span></div>
+    <h2 class="case-title">The Audience-Mapped Flagship Journey</h2>
+    <div class="case-grid">
+      <div class="case-block"><div class="lbl">The Challenge</div><p>A global SaaS company's annual user conference — 4,500 attendees, three days. Last year's NPS was solid; pipeline impact was murky. CMO wanted one event to drive <em>all</em> GTM goals: pipeline, renewals, advocacy, analyst influence, partner pipeline.</p></div>
+      <div class="case-block"><div class="lbl">The Approach</div><p>Rebuilt the conference as <strong style="color:var(--accent-light);">five parallel journeys sharing infrastructure</strong>. Mapped every registrant to one of six personas (Net-New, Active Opps, Customers, Champions, Partners, Analysts). Each got a designed journey — pre-event comms, on-site experience, follow-up — owned by the right internal function (sales / CS / partnerships / comms / product marketing). A custom GPT auto-generated AE prep briefs for every active-opportunity attendee using CRM context + session signals.</p></div>
+      <div class="case-block"><div class="lbl">The Outcome</div><p><strong style="color:#fff;">$28M influenced pipeline</strong> in 90 days post-event (vs. $11M prior year, same content). <strong style="color:#fff;">NPS held at 72</strong>. <strong style="color:#fff;">94% of attendees</strong> had a journey-defined "moment" they remembered (up from 41%). The journey map became the planning artifact for every subsequent flagship.</p></div>
+    </div>
+    <div class="case-shows"><strong style="color:var(--accent);font-style:normal;">What it shows.</strong> I architect flagship events as multi-audience GTM machines. The customer journey is the operating model.</div>
+  </div>
+
+  <!-- CROSS-FUNCTIONAL -->
+  <div data-section="crossfn" class="page page-warm">
+    <div class="eyebrow">Cross-Functional GTM Partnership</div>
+    <hr class="rule">
+    <h2 class="h2-large">Events live at the GTM seam.</h2>
+    <p class="lede">The work that makes events compound isn't the event itself — it's how I integrate with the rest of the GTM org.</p>
+    <div class="grid-2">
+      <div class="grid-card"><span class="icon">🎯</span><h4>Sales Leadership</h4><p>Quarterly portfolio reviews with the CRO and regional VPs. Shared KPIs co-authored each year. SLA on every flagship: leads scored and routed within 24 hours, exec follow-up commitments captured on-site, owned-account meetings tracked to stage-2.</p></div>
+      <div class="grid-card"><span class="icon">📈</span><h4>BDR / SDR Teams</h4><p>BDRs as event extension, not pre-event spam. Pre-event briefs auto-generated per account (custom GPT pulls recent signals). Joint quotas on "meetings sourced from events." BDR shadowing at flagships.</p></div>
+      <div class="grid-card"><span class="icon">⚙</span><h4>Marketing Ops &amp; RevOps</h4><p>Attribution model co-designed, not inherited. Multi-touch with first/last-touch credit. Lead routing account-based, not lead-based. Quarterly pipeline gap analysis informs next quarter's portfolio.</p></div>
+      <div class="grid-card"><span class="icon">💼</span><h4>Customer Success &amp; Customer Marketing</h4><p>CS owns the customer journey at every event. Customer council programming, customer-only flagship sessions, reference panels, expansion conversation prep. Customer voice earned, not extracted.</p></div>
+      <div class="grid-card"><span class="icon">🧪</span><h4>Product Marketing</h4><p>Messaging refresh ahead of every flagship. Demo design for activations. Battle cards distributed on-site. Sales floor briefed on the announcement story 48 hours before doors open.</p></div>
+      <div class="grid-card"><span class="icon">🤝</span><h4>Partnerships &amp; Channel</h4><p>Joint pipeline plays at events the partners care about. Co-branded sessions, shared lead-routing agreements signed pre-event, partner-sourced pipeline tracked separately.</p></div>
+    </div>
+  </div>
+
+  <!-- AI LAYER -->
+  <div data-section="ailayer" class="page page-dark-gradient">
+    <div class="eyebrow">The AI Layer</div>
+    <hr class="rule">
+    <h2 class="h2-large">How AI shows up in every part of the lifecycle.</h2>
+    <p class="lede">Not a gimmick. Not a content factory. Infrastructure — the layer that lets a small, sharp team punch above its weight class.</p>
+    <div class="grid-2">
+      <div class="grid-card"><span class="icon">🧠</span><h4>Custom GPTs — the standardization play</h4><p>GPTs trained on brand voice, messaging pillars, ICP, design tokens. Every team member — full-time, contractor, agency — drafts on-brand from day one. Saves ~40 hrs/month on internal brand review.</p></div>
+      <div class="grid-card"><span class="icon">🔍</span><h4>Discovery &amp; landscape audits</h4><p>AI-assisted competitive event scoring and ICP coverage analysis. Two weeks of research → a focused afternoon. Sharper output because I'm asking better questions.</p></div>
+      <div class="grid-card"><span class="icon">🎯</span><h4>ABM &amp; personalization at scale</h4><p>Per-account executive briefs, custom outreach sequences, pre-meeting prep. Top-50-account treatment extended to 500+ accounts.</p></div>
+      <div class="grid-card"><span class="icon">📋</span><h4>Operations &amp; documentation</h4><p>SOPs, run-of-shows, vendor briefs, post-event reports drafted by AI, edited by me. Documentation discipline compounds with AI.</p></div>
+      <div class="grid-card"><span class="icon">📣</span><h4>Content multiplication</h4><p>One flagship event becomes 20+ assets without a 6-person content team. AI drafts; I edit, brand, ship.</p></div>
+      <div class="grid-card"><span class="icon">📊</span><h4>Attribution &amp; insight</h4><p>Post-event analysis pattern-matching across attendee behavior, sales notes, pipeline, surveys. What actually moved the deal — not what looked good on a dashboard.</p></div>
+    </div>
+  </div>
+
+  <!-- LIFECYCLE -->
+  <div data-section="lifecycle" class="page">
+    <div class="eyebrow">Full-Lifecycle Mastery</div>
+    <hr class="rule">
+    <h2 class="h2-large">First strategy session to final ROI report.</h2>
+    <p class="lede">Each phase draws on skills honed across 15 years of agency and brand-side experience — with measurable results to prove it.</p>
+    <div class="lifecycle">
+      <div class="phase"><div class="ph-no">01 · DISCOVERY</div><h4>Strategic Alignment</h4><p>Partner with stakeholders to uncover objectives, define audiences, align event vision with revenue goals.</p><div class="proof">Audited the competitive landscape at FarEye to identify the right events before building a single program.</div></div>
+      <div class="phase"><div class="ph-no">02 · GOALS &amp; KPIs</div><h4>Pipeline-Tied Metrics</h4><p>Translate objectives into measurable KPIs — registrations, engagement, pipeline influence, sourced revenue.</p><div class="proof">Built KPI frameworks tracking $12M influenced and $4M sourced pipeline on a $1M budget.</div></div>
+      <div class="phase"><div class="ph-no">03 · CREATIVE</div><h4>Experience Design</h4><p>Themes, brand narratives, journey maps that turn gatherings into experiences people remember.</p><div class="proof">Redesigned a client activation from booth-and-demo into journey-based — dwell time +48%.</div></div>
+      <div class="phase"><div class="ph-no">04 · LOGISTICS</div><h4>Production Backbone</h4><p>End-to-end logistics: venue, vendors, timelines, AV, union labor, contingency. Moscone to Javits.</p><div class="proof">15+ vendors and tight union rules at 10,000+ attendee conferences.</div></div>
+      <div class="phase"><div class="ph-no">05 · DEMAND GEN</div><h4>Marketing &amp; Promotion</h4><p>Multi-channel campaigns tied to target accounts, building momentum before doors open.</p><div class="proof">6Sense ABM integration at FarEye made events a top demand-gen channel.</div></div>
+      <div class="phase"><div class="ph-no">06 · LIVE EXECUTION</div><h4>On-Site Leadership</h4><p>Real-time problem-solving and team leadership. Excellence is designing for what can go wrong.</p><div class="proof">Zero critical failures across 12 years of F500 productions. 39 pre-booked meetings per flagship.</div></div>
+      <div class="phase"><div class="ph-no">07 · POST-EVENT</div><h4>Analysis &amp; Optimization</h4><p>ROI reports, feedback synthesis, actionable insights — and playbook documentation so each program isn't a one-off.</p><div class="proof">Built standardized playbooks at FarEye that outlasted my tenure.</div></div>
+      <div class="phase" style="background:#fff9f0;border-color:var(--accent);"><div class="ph-no">↻ THE RESULT</div><h4>Programs that compound.</h4><p>Each cycle feeds the next. Insights become playbooks. Playbooks become repeatable wins.</p></div>
+    </div>
+  </div>
+
+  <!-- SELECTED WORK -->
+  <div data-section="work" class="page page-warm">
+    <div class="eyebrow">Selected Work</div>
+    <hr class="rule">
+    <h2 class="h2-large">The work speaks for itself.</h2>
+    <p class="lede">From Fortune 500 conference campuses to targeted B2B activations.</p>
+    <div class="work-grid">
+      <div class="work-card"><div class="client">Samsung</div><h4>Immersive LED Experience</h4><p>Large-scale activation built for full-sensory brand immersion.</p></div>
+      <div class="work-card"><div class="client">HIMSS</div><h4>Two-Story Conference Activation</h4><p>Digital health strategy across two floors.</p></div>
+      <div class="work-card"><div class="client">Twilio</div><h4>Awareness Boutique Activation</h4><p>Targeted, high-touch B2B engagement environment.</p></div>
+      <div class="work-card"><div class="client">FarEye</div><h4>Built From Zero — Full Program</h4><p>NA program from nothing to 20+ events, $12M pipeline.</p></div>
+      <div class="work-card"><div class="client">NetSuite SuiteWorld</div><h4>Immersive Environment Design</h4><p>SuiteStore experience across the conference floor.</p></div>
+      <div class="work-card"><div class="client">Nutanix</div><h4>Conference Floor Activation</h4><p>B2B tech presence at industry scale.</p></div>
+      <div class="work-card"><div class="client">Hyatt</div><h4>Hospitality Showcase</h4><p>Brand experience at flagship hospitality events.</p></div>
+      <div class="work-card"><div class="client">IHG · Hotel Indigo</div><h4>Brand Experience</h4><p>On-brand activation for the Hotel Indigo line.</p></div>
+      <div class="work-card"><div class="client">7-Eleven</div><h4>Custom-Built Store Activation</h4><p>Full retail experience inside a convention floor.</p></div>
+      <div class="work-card"><div class="client">GameStop</div><h4>Retail Brand Activation</h4><p>Booth experience tuned to a retail-gaming audience.</p></div>
+    </div>
+    <p style="margin-top:18px;font-size:9pt;color:var(--muted);">Full visual portfolio at <strong>cassieuptmore.github.io</strong></p>
+  </div>
+
+  <!-- STRENGTHS -->
+  <div data-section="strengths" class="page">
+    <div class="eyebrow">Core Strengths</div>
+    <hr class="rule">
+    <h2 class="h2-large">What sets me apart.</h2>
+    <p class="lede">The combination that turns good events into growth engines.</p>
+    <div class="grid-2">
+      <div class="grid-card"><h4>💡 Dual-Muscle Expertise</h4><p>Agency-caliber production AND brand-side strategic ownership. I bring agency rigor into a brand seat — to make the production matter.</p></div>
+      <div class="grid-card"><h4>📈 Pipeline-Driven Thinking</h4><p>Events as growth channel. $12M influenced pipeline on a $1M budget — every event designed for measurable business impact.</p></div>
+      <div class="grid-card"><h4>🛠 Zero-to-One Builder</h4><p>I build from scratch — without it taking forever. Programs from zero, documented as systems, AI used to compress timelines.</p></div>
+      <div class="grid-card"><h4>⚙ Systems Mindset</h4><p>Playbooks that ship. SOPs that scale. Programs designed to compound. Modern tools (including AI) used where they earn their place.</p></div>
+      <div class="grid-card"><h4>🔥 Unshakeable Under Pressure</h4><p>10,000+ attendee conferences, 15+ vendor partners, tight union labor. Zero critical failures.</p></div>
+      <div class="grid-card"><h4>🤝 Sales &amp; Exec Partnership</h4><p>I partner with C-level/GTM leadership to make events a real pipeline channel. Where deals accelerate.</p></div>
+      <div class="grid-card"><h4>🌏 Global Scale &amp; Craft</h4><p>NA, EMEA, APAC execution. F500 conference campuses to targeted ABM activations. Any scale, never sacrificing production craft.</p></div>
+      <div class="grid-card"><h4>📋 Documentation Discipline</h4><p>Run-of-shows, vendor briefs, post-event reports — built as living systems. Programs clone to new markets in weeks.</p></div>
+    </div>
+  </div>
+
+  <!-- CONTACT / CLOSER -->
+  <div data-section="contact" class="page page-dark">
+    <div class="eyebrow" style="color:var(--accent-light);">Let's Connect</div>
+    <hr class="rule">
+    <h2 style="font-size:32pt;line-height:1.1;letter-spacing:-0.02em;color:#fff;max-width:6.2in;margin:0 0 18px;">Ready for the Director Seat.</h2>
+    <p style="color:#d3d6e0;font-size:13pt;max-width:5.8in;line-height:1.5;">Looking for the convergence of everything I've built toward — a role where agency-caliber production meets brand-side strategic ownership, with the team and the systems to make it compound.</p>
+    <div class="contact-card">
+      <div class="label">Email</div>
+      <div class="email">cassieuptmore@gmail.com</div>
+      <div class="web">cassieuptmore.github.io</div>
+    </div>
+    <div class="closer-footer">
+      <div>Director of Event Marketing · 15+ Years</div>
+      <div>© 2026 Cassie Uptmore</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  const SECTIONS = [
+    { id: 'cover', name: 'Cover & Positioning', alwaysOn: true },
+    { id: 'snapshot', name: 'At a Glance + Brands' },
+    { id: 'career', name: 'Career Arc (3 acts)' },
+    { id: 'formats', name: 'The Formats I Run' },
+    { id: 'case01', name: 'Case 01 · $12M Pipeline (zero-to-one)' },
+    { id: 'case02', name: 'Case 02 · Tier 1/2/3 Portfolio Architecture' },
+    { id: 'case03', name: 'Case 03 · Intent-Driven Field Marketing' },
+    { id: 'case04', name: 'Case 04 · Building a Global Team' },
+    { id: 'case05', name: 'Case 05 · Audience-Mapped Flagship' },
+    { id: 'crossfn', name: 'Cross-Functional GTM Partnership' },
+    { id: 'ailayer', name: 'The AI Layer' },
+    { id: 'lifecycle', name: 'Full Lifecycle Mastery' },
+    { id: 'work', name: 'Selected Work' },
+    { id: 'strengths', name: 'Core Strengths' },
+    { id: 'contact', name: 'Contact / CTA', alwaysOn: true },
+  ];
+
+  const PRESETS = {
+    'full': SECTIONS.map(s => s.id),
+    'director': ['cover','career','case04','case05','crossfn','ailayer','strengths','contact'],
+    'sales-heavy': ['cover','career','case01','case03','crossfn','strengths','contact'],
+    'flagship': ['cover','career','formats','case05','strengths','contact'],
+    'ai-forward': ['cover','career','ailayer','case04','strengths','contact'],
+    'one-pager': ['cover','snapshot','strengths','contact'],
+  };
+
+  const sectionList = document.getElementById('section-list');
+  SECTIONS.forEach(s => {
+    const id = 'sec-' + s.id;
+    const wrap = document.createElement('label');
+    wrap.className = 'section-toggle' + (s.alwaysOn ? ' locked' : '');
+    wrap.innerHTML = `<input type="checkbox" id="${id}" data-section-id="${s.id}" ${s.alwaysOn ? 'checked disabled' : 'checked'}><span class="section-toggle-label">${s.name}</span>`;
+    sectionList.appendChild(wrap);
+  });
+
+  function applySelection(ids) {
+    document.querySelectorAll('input[data-section-id]').forEach(cb => {
+      const sectId = cb.getAttribute('data-section-id');
+      const meta = SECTIONS.find(s => s.id === sectId);
+      const shouldCheck = ids.includes(sectId) || (meta && meta.alwaysOn);
+      cb.checked = shouldCheck;
+      updateSectionVisibility(sectId, shouldCheck);
+    });
+  }
+
+  function updateSectionVisibility(sectionId, visible) {
+    const el = document.querySelector(`[data-section="${sectionId}"]`);
+    if (!el) return;
+    if (visible) el.classList.remove('hidden');
+    else el.classList.add('hidden');
+  }
+
+  document.querySelectorAll('.preset-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const preset = btn.getAttribute('data-preset');
+      applySelection(PRESETS[preset] || []);
+    });
+  });
+
+  document.querySelectorAll('input[data-section-id]').forEach(cb => {
+    cb.addEventListener('change', () => {
+      const sectId = cb.getAttribute('data-section-id');
+      updateSectionVisibility(sectId, cb.checked);
+      document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+    });
+  });
+
+  const previewLink = document.getElementById('preview-link');
+  const portfolio = document.getElementById('portfolio');
+  const previewLabel = document.getElementById('preview-label');
+  previewLink.addEventListener('click', () => {
+    portfolio.classList.toggle('show');
+    previewLabel.style.display = portfolio.classList.contains('show') ? 'block' : 'none';
+    if (portfolio.classList.contains('show')) {
+      previewLink.textContent = 'hide preview ↑';
+      previewLabel.scrollIntoView({behavior: 'smooth'});
+    } else {
+      previewLink.textContent = 'preview the portfolio below ↓';
+    }
+  });
+
+  // Personalization
+  const preparedInput = document.getElementById('prepared-for');
+  const preparedDisplay = document.getElementById('prepared-for-display');
+  preparedInput.addEventListener('input', () => {
+    const val = preparedInput.value.trim();
+    if (val) {
+      preparedDisplay.textContent = val;
+      preparedDisplay.style.display = 'block';
+    } else {
+      preparedDisplay.style.display = 'none';
+    }
+  });
+
+  // PDF generation
+  document.getElementById('generate-btn').addEventListener('click', () => {
+    document.body.classList.add('printing');
+    portfolio.classList.add('show');
+    const opt = {
+      margin: 0,
+      filename: 'Cassie-Uptmore-Portfolio-' + new Date().toISOString().slice(0,10) + '.pdf',
+      image: { type: 'jpeg', quality: 0.95 },
+      html2canvas: { scale: 2, useCORS: true, letterRendering: true },
+      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' },
+      pagebreak: { mode: ['css', 'legacy'], avoid: '.case-block, .grid-card, .arc-entry, .phase, .work-card, .stat' }
+    };
+    html2pdf().set(opt).from(portfolio).save().then(() => {
+      document.body.classList.remove('printing');
+    });
+  });
+
+  // Initial: Full Portfolio preset
+  document.querySelector('.preset-btn[data-preset="full"]').click();
+</script>
+</body>
+</html>
