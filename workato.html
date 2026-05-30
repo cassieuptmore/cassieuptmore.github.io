@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Workato Event &amp; Field Marketing Operating System</title>
+<style>
+  :root{
+    --ink:#15252a; --ink2:#3a4a4d; --teal:#1b8089; --teal-d:#136069; --teal-l:#e3f4f4;
+    --sand:#f2f6f6; --paper:#ffffff; --line:#e1e8e8; --mut:#5a6566; --coral:#e0443a; --green:#0f9d6e;
+    --t1:#1b8089; --t2:#0f9d6e; --t3:#e0443a; --bad:#cf4035; --good:#0f9d6e;
+    --shadow:0 1px 2px rgba(15,23,25,.06),0 8px 24px rgba(15,23,25,.09);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    color:var(--ink);background:var(--sand);line-height:1.55;-webkit-font-smoothing:antialiased}
+  a{color:var(--teal-d);text-decoration:none}
+  header{background:linear-gradient(125deg,#0f1719 0%,#114a4f 52%,#27989f 130%);color:#fff;padding:34px 28px 26px}
+  .wrap{max-width:1120px;margin:0 auto}
+  .eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#8fe6e0;font-weight:700}
+  header h1{font-size:32px;line-height:1.15;margin:8px 0 6px;font-weight:800;letter-spacing:-.5px}
+  header p.sub{font-size:16px;color:#cdeceb;max-width:790px;margin:0}
+  .meta{margin-top:16px;display:flex;flex-wrap:wrap;gap:10px;font-size:12.5px}
+  .meta span{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);padding:5px 11px;border-radius:999px}
+  nav{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .nav-inner{max-width:1120px;margin:0 auto;display:flex;gap:2px;overflow-x:auto;padding:0 14px}
+  nav button{flex:0 0 auto;background:none;border:none;padding:14px 14px;font-size:13.5px;font-weight:600;color:var(--mut);
+    cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;font-family:inherit}
+  nav button:hover{color:var(--ink)}
+  nav button.active{color:var(--teal-d);border-bottom-color:var(--teal)}
+  main{max-width:1120px;margin:0 auto;padding:30px 22px 70px}
+  .panel{display:none;animation:fade .25s ease}
+  .panel.show{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  h2.sec{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal-d);font-weight:800;margin:0 0 4px}
+  h3.big{font-size:25px;font-weight:800;margin:0 0 14px;letter-spacing:-.3px;color:var(--ink)}
+  .lead{font-size:16.5px;color:var(--ink2);max-width:840px}
+  .card{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:22px;box-shadow:var(--shadow);margin-bottom:16px}
+  .grid{display:grid;gap:16px}
+  .g2{grid-template-columns:repeat(2,1fr)} .g3{grid-template-columns:repeat(3,1fr)} .g4{grid-template-columns:repeat(4,1fr)}
+  @media(max-width:860px){.g2,.g3,.g4{grid-template-columns:1fr}}
+  .kpi{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:var(--shadow)}
+  .kpi .num{font-size:30px;font-weight:800;color:var(--teal-d);letter-spacing:-.5px}
+  .kpi .lab{font-size:13px;color:var(--mut);margin-top:2px}
+  .pill{display:inline-block;font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px;letter-spacing:.03em}
+  .p-t1{background:#dbeef0;color:#136069} .p-t2{background:#d9f2e8;color:#0a7351} .p-t3{background:#fce0dc;color:#b2271c}
+  .p-good{background:#d9f2e8;color:#0a7351} .p-bad{background:#fbe0dd;color:#b2271c}
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  th,td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--mut);background:#fafbfb}
+  tbody tr:hover{background:#f7fbfb}
+  .tag{font-weight:700}
+  ul.clean{margin:8px 0 0;padding-left:18px} ul.clean li{margin:5px 0}
+  .callout{border-left:4px solid var(--teal);background:#e9f5f5;padding:14px 16px;border-radius:0 10px 10px 0;margin:14px 0;font-size:14.5px}
+  .callout.alt{border-left-color:var(--coral);background:#fdedeb}
+  .tier{border-radius:14px;padding:20px;color:#fff;position:relative;overflow:hidden;box-shadow:var(--shadow)}
+  .tier h4{margin:0 0 2px;font-size:19px;font-weight:800}
+  .tier .role{font-size:12.5px;opacity:.92;margin-bottom:12px}
+  .tier.t1{background:linear-gradient(135deg,#1b8089,#0f5258)}
+  .tier.t2{background:linear-gradient(135deg,#0f9d6e,#0a7351)}
+  .tier.t3{background:linear-gradient(135deg,#e0443a,#b2271c)}
+  .tier dl{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;font-size:13px;margin:0}
+  .tier dt{opacity:.85;font-weight:600} .tier dd{margin:0}
+  .vs th:nth-child(2){color:var(--teal-d)} .vs th:nth-child(3){color:#b2271c}
+  .phase{display:flex;gap:16px;margin-bottom:14px}
+  .phase .dot{flex:0 0 auto;width:42px;height:42px;border-radius:50%;background:var(--teal);color:#fff;display:flex;
+    align-items:center;justify-content:center;font-weight:800;font-size:15px;box-shadow:var(--shadow)}
+  .phase .body{flex:1;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:16px;box-shadow:var(--shadow)}
+  .phase h4{margin:0 0 4px;font-size:16px}
+  .trigger{display:inline-block;margin-top:8px;font-size:12.5px;background:#fdedeb;border:1px dashed var(--coral);color:#b2271c;padding:5px 10px;border-radius:8px;font-weight:600}
+  .flow{display:flex;flex-wrap:wrap;gap:8px;align-items:stretch}
+  .step{flex:1 1 150px;background:var(--paper);border:1px solid var(--line);border-radius:11px;padding:12px;box-shadow:var(--shadow);position:relative}
+  .step .n{font-size:11px;font-weight:800;color:var(--teal-d)}
+  .step h5{margin:3px 0 4px;font-size:14.5px}
+  .step p{margin:0;font-size:12.5px;color:var(--mut)}
+  .step .ai{margin-top:6px;font-size:11px;font-weight:700;color:#b2271c;background:#fdedeb;border-radius:6px;padding:3px 7px;display:inline-block}
+  .loop{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+  .loop .lp{flex:1 1 200px;background:#e9f5f5;border:1px solid var(--teal-l);border-radius:10px;padding:12px;font-size:13px}
+  .loop .lp b{color:var(--teal-d)}
+  .bar{height:13px;border-radius:7px;background:var(--teal);margin-top:5px}
+  .bartrk{background:#eaeeee;border-radius:7px;overflow:hidden}
+  .agent{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:16px;box-shadow:var(--shadow)}
+  .agent .nm{font-weight:800;color:var(--teal-d);font-size:16px}
+  footer{max-width:1120px;margin:0 auto;padding:26px 22px 50px;color:var(--mut);font-size:12.5px;border-top:1px solid var(--line)}
+  .toggle{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;margin:6px 0 14px}
+  .toggle button{background:#fff;border:none;padding:9px 18px;font-weight:700;font-size:13.5px;cursor:pointer;color:var(--mut);font-family:inherit}
+  .toggle button.on{background:var(--teal);color:#fff}
+  .hide{display:none}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="eyebrow">Event &amp; Field Marketing · Systems-First Program Design</div>
+    <h1>The Workato Event Operating System</h1>
+    <p class="sub">How the #1 iPaaS becomes the #1 brand in enterprise agentic AI — turning analyst leadership into field dominance, run at startup speed by a team supercharged with an AI operating model.</p>
+    <div class="meta">
+      <span>Prepared for Workato GTM leadership · the Office of the CMO</span>
+      <span>12-month horizon</span>
+      <span>Category: Enterprise iPaaS → Agentic AI / Enterprise MCP</span>
+    </div>
+  </div>
+</header>
+
+<nav><div class="nav-inner" id="nav"></div></nav>
+
+<main>
+
+<!-- THESIS -->
+<section class="panel show" id="p-thesis">
+  <h2 class="sec">The Thesis</h2>
+  <h3 class="big">The leader's real risk isn't budget — it's moving too slowly while the category shifts</h3>
+  <p class="lead">Workato is the 8x Gartner Leader in iPaaS. But the ground is moving to <b>agentic AI</b>, and nimbler players are out-shouting on AI despite shallower platforms. The job of events is to convert that analyst leadership into <b>field and narrative dominance</b> — fast. AI used as a revenue accelerator gives the team <b>10x–100x leverage</b>, so Workato can move at startup speed without scaling spend linearly. The system, not the headcount, produces quality at volume.</p>
+  <div class="grid g3" style="margin-top:18px">
+    <div class="card"><div class="pill p-t1">Layer 1</div><h4 style="margin:8px 0 4px">Repeatable playbooks</h4><p style="margin:0;color:var(--mut);font-size:14px">Tiered runbooks so nothing is invented twice. Quality stops being person-dependent.</p></div>
+    <div class="card"><div class="pill p-t3">Layer 2</div><h4 style="margin:8px 0 4px">AI does the production load</h4><p style="margin:0;color:var(--mut);font-size:14px">Research, copy, briefs, recaps, reporting — run on Workato's own Genies &amp; Agent Studio. Marketing as customer-zero.</p></div>
+    <div class="card"><div class="pill p-t2">Layer 3</div><h4 style="margin:8px 0 4px">Partner &amp; ecosystem leverage</h4><p style="margin:0;color:var(--mut);font-size:14px">SIs, AWS Marketplace, and the analyst community extend reach far beyond the team's size.</p></div>
+  </div>
+  <div class="grid g4" style="margin-top:6px">
+    <div class="kpi"><div class="num">10–100×</div><div class="lab">Human leverage from AI</div></div>
+    <div class="kpi"><div class="num">#1 → #1</div><div class="lab">iPaaS leader → agentic-AI leader</div></div>
+    <div class="kpi"><div class="num">WOW</div><div class="lab">The flagship to own the category moment</div></div>
+    <div class="kpi"><div class="num">Customer-zero</div><div class="lab">Run marketing on Workato's own agents</div></div>
+  </div>
+  <div class="callout alt"><b>From "random acts of AI" to an operating model.</b> Templatize prompts into <b>workflows anyone can run</b>. Apply <b>80/20 filtering</b> (ignore the AI noise; point it at the few tasks that compound) and a <b>"commercial major, marketing minor"</b> lens — optimize for pipeline velocity and category narrative, not vanity metrics. The marketer becomes a <b>system architect</b> — and, for Workato, a living proof point of its own product.</div>
+  <div class="callout"><b>The one-line pitch to the CMO:</b> Give me the system and the AI pod — built on Workato's own agents — and I'll make Workato the brand the market thinks of first for enterprise agentic AI in 90 days, then show you exactly what to fund to extend the lead.</div>
+</section>
+
+<!-- CURRENT STATE -->
+<section class="panel" id="p-now">
+  <h2 class="sec">Current State</h2>
+  <h3 class="big">Workato has every asset to win the agentic era — the field motion has to catch up to the story</h3>
+  <p class="lead">A $5.7B-valued, ~1,370-person enterprise leader ($415M raised; Altimeter, Battery, Redpoint), 8x a Gartner Leader, with a real flagship and a genuine agentic platform (Enterprise MCP, Agent Studio, Genies, Otto). The opportunity is to make the field and events tell the <i>agentic-AI</i> story as loudly as the product already delivers it.</p>
+  <div class="grid g2" style="margin-top:16px">
+    <div class="card">
+      <h4 style="margin:0 0 8px;color:var(--good)">✓ What's working</h4>
+      <ul class="clean" style="font-size:14px">
+        <li><b>A real flagship</b> — World of Workato (WOW), Sept 22–24, 2026, The Cosmopolitan, Las Vegas.</li>
+        <li><b>Analyst dominance</b> — 8x Gartner MQ Leader, 3x Furthest in Vision (2026). A credibility engine most challengers lack.</li>
+        <li><b>A genuine agentic platform</b> — Enterprise MCP, Agent Studio, Genies, Otto, 1,400+ connectors.</li>
+        <li><b>Multi-function reach</b> — sells across IT, Finance, HR, RevOps, Support, Sales — many rooms, one platform.</li>
+        <li><b>Ecosystem + content</b> — SI/AWS Marketplace partners, "The Connector" blog + podcast, deep case studies.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4 style="margin:0 0 8px;color:var(--bad)">▲ Gaps to close</h4>
+      <ul class="clean" style="font-size:14px">
+        <li><b>The field may still tell the "iPaaS" story</b> while the market is buying "agentic AI" — the narrative needs to lead.</li>
+        <li><b>WOW as a user conference, not a category moment</b> — it should define enterprise agentic automation, not just train users.</li>
+        <li><b>The CIO / Chief AI Officer demand motion is under-built</b> — the agentic buyer needs intimate, governance-led rooms.</li>
+        <li><b>Speed gap</b> — nimbler rivals (Zapier, SnapLogic, Celigo) out-publish on AI; the leader must out-ship them.</li>
+        <li><b>AI under-leveraged in the workflow itself</b> — Workato should run its own marketing on its own agents, visibly.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- COMPETITIVE -->
+<section class="panel" id="p-comp">
+  <h2 class="sec">Competitive Landscape</h2>
+  <h3 class="big">Steal the best move from each — then own the position only the leader can hold</h3>
+  <p class="lead">Workato's edge isn't a single feature; it's <b>enterprise depth + governance + analyst leadership</b> for agentic AI. The field job is to make that the obvious choice while rivals make noise on AI from shallower platforms.</p>
+  <div class="card" style="overflow-x:auto;margin-top:14px">
+    <table>
+      <thead><tr><th>Competitor</th><th>Signature move</th><th>What they do well</th><th>What Workato should steal / where it wins</th></tr></thead>
+      <tbody>
+        <tr><td class="tag">MuleSoft (Salesforce)</td><td>Dreamforce gravity + MuleSoft CONNECT</td><td>Ecosystem scale; API-led enterprise credibility</td><td>Steal: ride the Dreamforce ecosystem. Win: agility, agentic depth &amp; price predictability vs. Salesforce lock-in</td></tr>
+        <tr><td class="tag">Boomi</td><td>Boomi World + broad suite</td><td>Hybrid/on-prem; established enterprise base</td><td>Steal: a strong owned-conference cadence. Win: modern agentic platform + Gartner Vision lead</td></tr>
+        <tr><td class="tag">SnapLogic</td><td>"SnapGPT" AI-copilot messaging</td><td>Loud, AI-forward narrative; data-engineering feel</td><td>Steal: the provocative AI POV. Win: true enterprise agentic orchestration, not just a copilot</td></tr>
+        <tr><td class="tag">Celigo / Tray.ai</td><td>Mid-market + "Agent Builder / Merlin"</td><td>Approachable, fast-moving, AI-agent messaging</td><td>Steal: speed &amp; hands-on builder energy. Win: enterprise scale, governance, 1,400+ connectors</td></tr>
+        <tr style="background:#f7fbfb"><td class="tag">Zapier (moving up)</td><td>"Command center for your AI ecosystem"</td><td>Massive brand reach; AI-orchestration narrative</td><td>Steal: brand ubiquity &amp; self-serve motion. Win: the enterprise trust &amp; security agents actually require</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout alt"><b>The white space:</b> No one yet owns "the trusted enterprise standard for agentic AI — where agents act safely across the whole business." MuleSoft has scale but Salesforce gravity; the nimble players have noise but not enterprise trust. That position — depth + governance + analyst leadership — is Workato's to claim, and events are how the market comes to believe it.</div>
+</section>
+
+<!-- STRATEGY -->
+<section class="panel" id="p-strat">
+  <h2 class="sec">Strategy &amp; Positioning</h2>
+  <h3 class="big">Make Workato the default brand for enterprise agentic AI</h3>
+  <p class="lead"><b>North Star:</b> <i>When a CIO decides where AI agents will safely act across the business, Workato is the first and most trusted name in the room.</i></p>
+  <div class="grid g3" style="margin-top:16px">
+    <div class="card" style="border-top:3px solid var(--t1)"><div class="pill p-t1">Pillar 1</div><h4 style="margin:8px 0 4px">Own the category moment</h4><p style="margin:0;color:var(--mut);font-size:14px">Elevate WOW from user conference to the event where enterprise agentic automation is defined. Amplify the Gartner MQ. Make the launches unmissable.</p></div>
+    <div class="card" style="border-top:3px solid var(--t2)"><div class="pill p-t2">Pillar 2</div><h4 style="margin:8px 0 4px">Multi-function field presence</h4><p style="margin:0;color:var(--mut);font-size:14px">Workato sells across IT, Finance, HR, RevOps. Show up where each function's leaders gather — one platform, many rooms.</p></div>
+    <div class="card" style="border-top:3px solid var(--t3)"><div class="pill p-t3">Pillar 3</div><h4 style="margin:8px 0 4px">Executive agentic-AI demand</h4><p style="margin:0;color:var(--mut);font-size:14px">CIO / Chief AI Officer dinners, governance roundtables, and hands-on agent-build workshops — the rooms where the enterprise agentic decision is actually made.</p></div>
+  </div>
+  <div class="grid g2" style="margin-top:6px">
+    <div class="card"><h4 style="margin:0 0 6px">Audiences (ICP)</h4><p style="margin:0;color:var(--ink2);font-size:14px"><b>Economic:</b> CIO, CTO, Chief AI Officer, VP Platform/Integration/Automation. <b>Functional champions:</b> Finance, HR, RevOps, IT Ops, Support leaders. Enterprise + upper-mid-market, named-account ABM.</p></div>
+    <div class="card"><h4 style="margin:0 0 6px">Brand promise: enterprise trust for agentic AI</h4><p style="margin:0;color:var(--ink2);font-size:14px">In agentic AI, the enterprise question isn't "can it?" but "can it act safely, at scale, governed?" Workato's depth + governance is the answer — events make that the felt, obvious truth.</p></div>
+  </div>
+</section>
+
+<!-- TIERS -->
+<section class="panel" id="p-tiers">
+  <h2 class="sec">The Three-Tier Model</h2>
+  <h3 class="big">Tiering tells even a well-funded team where to go deep, templatize, and skip</h3>
+  <p class="lead"><b>Tier 1 owns the narrative. Tier 3 wins the enterprise decision. Tier 2 puts Workato in front of every function it sells to.</b></p>
+  <div class="grid g3" style="margin-top:16px">
+    <div class="tier t1">
+      <h4>Tier 1</h4><div class="role">Owned &amp; category-defining</div>
+      <dl>
+        <dt>What</dt><dd>World of Workato (WOW) + regional WOW editions · Gartner MQ amplification · major agentic launches</dd>
+        <dt>Goal</dt><dd>Category leadership, brand, the agentic-AI moment</dd>
+        <dt>Cadence</dt><dd>1 flagship + 4–6 regional + launch moments</dd>
+        <dt>Cost</dt><dd>$900K–$2M flagship; $60K–$150K regional</dd>
+        <dt>KPI</dt><dd>Reach, narrative share, pipeline, exec mtgs</dd>
+      </dl>
+    </div>
+    <div class="tier t2">
+      <h4>Tier 2</h4><div class="role">Industry, analyst &amp; ecosystem</div>
+      <dl>
+        <dt>What</dt><dd>Gartner Symposium/App Innovation, Dreamforce, AWS re:Invent, SaaStr, HR Tech, RevOps events</dd>
+        <dt>Goal</dt><dd>Be in front of every buying function + the analysts</dd>
+        <dt>Cadence</dt><dd>14–20/yr</dd>
+        <dt>Cost</dt><dd>$30K–$250K per event</dd>
+        <dt>KPI</dt><dd>Meetings, accounts engaged, cost/opp</dd>
+      </dl>
+    </div>
+    <div class="tier t3">
+      <h4>Tier 3</h4><div class="role">Executive &amp; hands-on — the decision engine</div>
+      <dl>
+        <dt>What</dt><dd>CIO/CAIO dinners, agentic-governance roundtables, agent-build workshops, CAB, accredited webinars, SI co-events</dd>
+        <dt>Goal</dt><dd>Win the enterprise agentic decision; deepen accounts</dd>
+        <dt>Cadence</dt><dd>40–60/yr</dd>
+        <dt>Cost</dt><dd>$5K–$25K each</dd>
+        <dt>KPI</dt><dd>Exec mtgs, pipeline/$ (best in mix), expansion</dd>
+      </dl>
+    </div>
+  </div>
+  <div class="callout"><b>The logic:</b> make WOW + the Gartner moment define the category (Tier 1), show up sharply for every function and analyst (Tier 2), and run a relentless cadence of CIO dinners and hands-on agent workshops (Tier 3) — where enterprise agentic decisions are actually made.</div>
+</section>
+
+<!-- OPERATING MODEL -->
+<section class="panel" id="p-ops">
+  <h2 class="sec">Operating Model</h2>
+  <h3 class="big">Two versions of the same machine — even the leader scales the system, not the headcount</h3>
+  <p class="lead">Workato has a real marketing team. The question isn't "1 person vs many" — it's whether the field function moves at startup speed. Model A applies the operating system + AI to the core team so it punches like one twice its size; Model B fully resources the category-leader build.</p>
+  <div class="toggle" id="modeToggle">
+    <button class="on" data-mode="A">Model A · AI-leveraged core</button>
+    <button data-mode="B">Model B · Category-leader build</button>
+  </div>
+  <div id="modeA">
+    <div class="card">
+      <h4 style="margin:0 0 6px">"A lean field pod, a team of AI agents, retainer vendors, and the partner ecosystem"</h4>
+      <p style="margin:0 0 6px;color:var(--mut);font-size:14px">The humans own strategy, executive relationships, on-site presence, and judgment. Everything reproducible is delegated to AI agents — built, fittingly, on Workato's own Agent Studio. Marketing becomes customer-zero for the product it sells.</p>
+    </div>
+    <div class="grid" style="grid-template-columns:repeat(5,1fr)">
+      <div class="agent"><div class="nm">Scout</div><p style="margin:4px 0 0;font-size:13px;color:var(--mut)">Account/persona research, show-ROI scoring, exec briefing docs</p></div>
+      <div class="agent"><div class="nm">Scribe</div><p style="margin:4px 0 0;font-size:13px;color:var(--mut)">Invites, pages, abstracts, recaps, launch &amp; analyst content</p></div>
+      <div class="agent"><div class="nm">Concierge</div><p style="margin:4px 0 0;font-size:13px;color:var(--mut)">RSVP, reminders, personalized agendas, logistics checklists</p></div>
+      <div class="agent"><div class="nm">Analyst</div><p style="margin:4px 0 0;font-size:13px;color:var(--mut)">Lead scoring/routing, budget, dashboards, retros</p></div>
+      <div class="agent"><div class="nm">Sprint</div><p style="margin:4px 0 0;font-size:13px;color:var(--mut)">PM agent CC'd on email + in meetings: tracks, updates, pings deadlines</p></div>
+    </div>
+    <div class="callout alt"><b>The leverage story:</b> built on Workato's own Genies &amp; Agent Studio, the pod lets the existing team run a flagship + a full Tier 2 calendar + a relentless executive cadence — and doubles as a <b>customer-zero proof point</b> the sales team can show prospects.</div>
+  </div>
+  <div id="modeB" class="hide">
+    <div class="card">
+      <h4 style="margin:0 0 6px">Fully-resourced to own the category, globally</h4>
+      <table style="margin-top:8px">
+        <thead><tr><th>Role</th><th>Owns</th><th>Hire</th></tr></thead>
+        <tbody>
+          <tr><td class="tag">Director, Global Events &amp; Field</td><td>Strategy, WOW, executive program <span class="pill p-good">the role</span></td><td>Month 0</td></tr>
+          <tr><td class="tag">Field Marketing Mgrs (regional ×2–3)</td><td>AMER / EMEA / APAC field + regional WOW</td><td>~Month 2–4</td></tr>
+          <tr><td class="tag">Flagship Event Producer</td><td>WOW production at scale + launches</td><td>~Month 3</td></tr>
+          <tr><td class="tag">Exec / ABM Programs Manager</td><td>CIO/CAIO program, CAB, named-account events</td><td>~Month 5</td></tr>
+          <tr><td class="tag">Agency + design + AV</td><td>Production, brand, video, agent demos</td><td>Ongoing</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout"><b>Result:</b> WOW at full polish + 4–6 regional editions + a complete analyst/industry calendar + 40–60 executive &amp; hands-on rooms + an ABM-integrated CIO program — the footprint of the agentic-AI category leader.</div>
+  </div>
+  <h4 style="margin:22px 0 6px">The trade-off at a glance</h4>
+  <div class="card" style="overflow-x:auto">
+    <table class="vs">
+      <thead><tr><th>Dimension</th><th>Model A · AI-leveraged core</th><th>Model B · Category-leader build</th></tr></thead>
+      <tbody>
+        <tr><td>Headcount</td><td>Core pod + AI agents + vendors</td><td>5–7 FTE + agency, global</td></tr>
+        <tr><td>Annual budget</td><td>~$1.5M</td><td>~$5M</td></tr>
+        <tr><td>Flagship (Tier 1)</td><td>WOW, focused</td><td>WOW at full scale + 4–6 regional</td></tr>
+        <tr><td>Tier 2 events/yr</td><td>8–12 selective</td><td>14–20 (global, all functions)</td></tr>
+        <tr><td>Tier 3 events/yr</td><td>~25</td><td>40–60</td></tr>
+        <tr><td>Quality bar</td><td>High — guaranteed by the system</td><td>High — same system</td></tr>
+        <tr><td>What more resources buy</td><td>—</td><td>Global reach &amp; parallelism, not quality</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout"><b>Recommendation:</b> stand up the system in Model A immediately (and make it a customer-zero showcase); use the roadmap's spend/hire triggers to graduate to Model B as the agentic narrative and pipeline prove out.</div>
+</section>
+
+<!-- AI OPERATING MODEL -->
+<section class="panel" id="p-ai">
+  <h2 class="sec">The AI Operating Model</h2>
+  <h3 class="big">Run the field on Workato's own agents — and turn the marketing org into a live demo</h3>
+  <p class="lead">Not by chatting with a chatbot — by turning repeatable tasks into shared, governed workflows. For Workato uniquely, the AI operating model is also <b>product marketing</b>: every agent the team uses is a story sales can tell.</p>
+  <div class="grid g3" style="margin-top:16px">
+    <div class="card"><div class="pill p-t1">The Marketing Brain</div><p style="margin:8px 0 0;font-size:13.5px;color:var(--mut)">A versioned repo of prompts &amp; "skills" encoding Workato brand, messaging &amp; the agentic narrative. Invoke a <b>"WOW session"</b> or <b>"CIO dinner"</b> skill → on-brand output in seconds.</p></div>
+    <div class="card"><div class="pill p-t3">Zero-to-One workflows</div><p style="margin:8px 0 0;font-size:13.5px;color:var(--mut)">Automate the first 80%. From one launch theme: research accounts, draft the abstract, the invite sequence, and the follow-up — built as Workato recipes &amp; agents.</p></div>
+    <div class="card"><div class="pill p-t2">Mass personalization</div><p style="margin:8px 0 0;font-size:13.5px;color:var(--mut)">HeyGen-style video where a Workato leader invites each target CIO by name. "Unfair" high-touch at scale that nimble rivals can't match.</p></div>
+    <div class="card"><div class="pill p-t1">Sales-enablement "brains"</div><p style="margin:8px 0 0;font-size:13.5px;color:var(--mut)">An approved library so AEs generate bespoke, on-brand follow-ups &amp; agent demos off every event in real time — closing the marketing-to-sales gap.</p></div>
+    <div class="card"><div class="pill p-t3">Content &amp; SEO engines</div><p style="margin:8px 0 0;font-size:13.5px;color:var(--mut)">Programmatic SEO for "enterprise agentic AI / MCP" by function &amp; industry; quarterly refresh keeps pages <b>~3× more likely cited by AI search</b>.</p></div>
+    <div class="card"><div class="pill p-t2">Thought partner — CRIT</div><p style="margin:8px 0 0;font-size:13.5px;color:var(--mut)">Not an oracle. CRIT (Context, Role, Interview, Task) makes AI interview you one question at a time to find plan gaps before a dollar is spent.</p></div>
+  </div>
+  <div class="callout alt"><b>The Workato-only unlock — "drink your own champagne."</b> Build the entire pod on Agent Studio + Enterprise MCP. The field team becomes <b>customer-zero</b>: a credible, on-stage case study ("here's how our own marketing runs on Workato agents") that no competitor can copy — and a governance showcase (human-in-the-loop on everything customer-facing) that proves the enterprise-trust promise.</div>
+</section>
+
+<!-- WORKFLOWS -->
+<section class="panel" id="p-flow">
+  <h2 class="sec">Workflows &amp; Sprint Cadence</h2>
+  <h3 class="big">One lifecycle, nine stages — shipped in sprints</h3>
+  <p class="lead">A single source of truth: tiered runbooks defining every stage, owner, AI step, and SLA. <b>Lead times:</b> Tier 1 = 14–20 wks · Tier 2 = 6–8 wks · Tier 3 = 3–4 wks (dinners/workshops), &lt;2 wks (webinars).</p>
+  <div class="flow" style="margin-top:14px">
+    <div class="step"><div class="n">01</div><h5>Select</h5><p>Score vs ICP, tier, named-account overlap</p><span class="ai">AI · Scout</span></div>
+    <div class="step"><div class="n">02</div><h5>Brief</h5><p>One-page: objective, audience, offer, budget, KPI</p><span class="ai">AI · Scribe</span></div>
+    <div class="step"><div class="n">03</div><h5>Build</h5><p>Page, registration, agent demo, run-of-show</p><span class="ai">AI · Scribe/Concierge</span></div>
+    <div class="step"><div class="n">04</div><h5>Promote</h5><p>Multi-touch invites, sales-assisted outreach, social</p><span class="ai">AI · Scribe</span></div>
+    <div class="step"><div class="n">05</div><h5>Produce</h5><p>Vendor/partner coordination, rehearsal</p><span class="ai">Human + agency</span></div>
+    <div class="step"><div class="n">06</div><h5>Execute</h5><p>Deliver, capture conversations &amp; intent</p><span class="ai">Human</span></div>
+    <div class="step"><div class="n">07</div><h5>Follow-up</h5><p>48-hr routing SLA, personalized follow-up</p><span class="ai">AI · Analyst/Scribe</span></div>
+    <div class="step"><div class="n">08</div><h5>Measure</h5><p>Pipeline, velocity, cost/opp to dashboard</p><span class="ai">AI · Analyst</span></div>
+    <div class="step"><div class="n">09</div><h5>Retro</h5><p>Within 5 days → into the backlog</p><span class="ai">Human + AI</span></div>
+  </div>
+  <h4 style="margin:22px 0 4px">Sprint cycles — out-ship the challengers</h4>
+  <p style="margin:0 0 10px;font-size:14.5px;color:var(--ink2)"><b>Run field marketing like product engineering.</b> Replace the annual plan with <b>3-week / 2-month sprints</b>, always shipping a field play, a CIO roundtable, an agent-build workshop, a launch moment. For the leader, constant shipping is how you <b>out-pace nimble challengers on their own turf</b> — visible, relentless momentum that keeps Workato the loudest <i>and</i> deepest voice in agentic AI.</p>
+  <div class="loop">
+    <div class="lp"><b>48-hour rule:</b> every lead routed &amp; followed up in two business days.</div>
+    <div class="lp"><b>5-day retro:</b> fast, blameless, into the backlog.</div>
+    <div class="lp"><b>Sprint demo:</b> ship + show every 2–3 weeks — visible momentum.</div>
+    <div class="lp"><b>Quarterly rebalance:</b> double down on winners, cut the rest.</div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section class="panel" id="p-road">
+  <h2 class="sec">12-Month Roadmap</h2>
+  <h3 class="big">Build the machine, win the narrative, then let proof unlock the next dollar</h3>
+  <p class="lead">Each phase has an exit metric and an explicit spend/hire trigger — growth is earned by pipeline and narrative-share data, not argued in a meeting.</p>
+  <div style="margin-top:16px">
+    <div class="phase"><div class="dot">0</div><div class="body"><h4>Build the machine · Month 0–1</h4><p style="margin:0;font-size:14px;color:var(--mut)">Audit, instrument attribution, stand up runbooks + the AI pod on Agent Studio + dashboards. Quick wins: first CIO dinner + an agentic-AI roundtable in 30 days.</p><span class="trigger">Exit: system live · customer-zero pod running · first 2 Tier 3 booked</span></div></div>
+    <div class="phase"><div class="dot">1</div><div class="body"><h4>Own the Gartner moment + exec engine · Q1</h4><p style="margin:0;font-size:14px;color:var(--mut)">Amplify the 2026 Gartner MQ (March); launch the CIO/CAIO dinner cadence; show up at Gartner App Innovation; pilot HeyGen personalization.</p><span class="trigger">Exit: MQ amplification + 6 Tier 3 run + first sourced pipeline → Hire regional Field Mgr</span></div></div>
+    <div class="phase"><div class="dot">2</div><div class="body"><h4>Multi-function field + ecosystem · Q2–Q3</h4><p style="margin:0;font-size:14px;color:var(--mut)">Scale Tier 2 across functions (Dreamforce, SaaStr, HR Tech, RevOps); run agent-build workshops with SIs &amp; AWS.</p><span class="trigger">Exit: multi-function pipeline + workshop pipeline → Hire Event Producer / ABM mgr</span></div></div>
+    <div class="phase"><div class="dot">3</div><div class="body"><h4>World of Workato — the category moment · Sept</h4><p style="margin:0;font-size:14px;color:var(--mut)">Make WOW (Sept 22–24, Las Vegas) define enterprise agentic automation; tie a major launch + CAB + exec summit to it.</p><span class="trigger">Exit: WOW reach + pipeline + narrative-share targets hit</span></div></div>
+    <div class="phase"><div class="dot">4</div><div class="body"><h4>Measure &amp; scale the case · Q4</h4><p style="margin:0;font-size:14px;color:var(--mut)">re:Invent + Gartner Symposium; full-year measurement; rebalance; build the case to fully fund Model B + global WOW editions.</p><span class="trigger">Exit: board-ready ROI + narrative-leadership story · budget approved</span></div></div>
+  </div>
+</section>
+
+<!-- CALENDAR -->
+<section class="panel" id="p-cal">
+  <h2 class="sec">12-Month Tiered Calendar</h2>
+  <h3 class="big">All three tiers — anchored to the real 2026 enterprise calendar</h3>
+  <p class="lead">Confirmed/known anchors: 2026 Gartner MQ for iPaaS (March) · Dreamforce (Sept, SF) · World of Workato / WOW (Sept 22–24, Las Vegas) · AWS re:Invent (early Dec, Las Vegas) · Gartner IT Symposium/Xpo (Oct, Orlando) · SaaStr Annual (Sept) · HR Tech (fall). Beyond anchors the grid is illustrative.</p>
+  <div class="card" style="overflow-x:auto;margin-top:14px">
+    <table>
+      <thead><tr><th>Month</th><th><span class="pill p-t1">Tier 1</span> Owned</th><th><span class="pill p-t2">Tier 2</span> Industry / Analyst / Ecosystem</th><th><span class="pill p-t3">Tier 3</span> Executive / Hands-on</th></tr></thead>
+      <tbody>
+        <tr><td><b>Jan</b></td><td>Agentic-AI POV content + WOW theme</td><td>Function webinar series kickoff</td><td>2 CIO dinners (NYC, SF); agentic roundtable</td></tr>
+        <tr><td><b>Feb</b></td><td>Gartner MQ pre-amplification build</td><td>Regional CIO meetups</td><td>3 dinners; CAB recruiting; agent-build workshop</td></tr>
+        <tr><td><b>Mar</b></td><td>2026 Gartner MQ amplification moment</td><td>Gartner App Innovation Summit</td><td>3 dinners; CAIO governance roundtable</td></tr>
+        <tr><td><b>Apr</b></td><td>Major agentic launch moment</td><td>Industry / vertical shows ×2</td><td>4 dinners; SI co-hosted workshops ×2</td></tr>
+        <tr><td><b>May</b></td><td>Regional WOW edition (EMEA)</td><td>Finance &amp; RevOps events</td><td>3 dinners; CAB session 1</td></tr>
+        <tr><td><b>Jun</b></td><td>Mid-year customer + launch content</td><td>HR Tech / function events</td><td>4 dinners; agent-build workshops ×2</td></tr>
+        <tr><td><b>Jul</b></td><td>WOW promotion engine on</td><td>Regional roadshows ×2</td><td>3 dinners; partner (AWS/SI) briefings</td></tr>
+        <tr><td><b>Aug</b></td><td>WOW curation + speaker prep</td><td>Sponsored speaking ×2</td><td>4 dinners; pre-WOW VIP receptions</td></tr>
+        <tr style="background:#f7fbfb"><td><b>Sep</b></td><td><b>World of Workato (Sept 22–24, LV)</b></td><td>Dreamforce; SaaStr Annual</td><td>WOW exec summit + CAB; CIO dinners on-site</td></tr>
+        <tr><td><b>Oct</b></td><td>Post-WOW content factory + nurture</td><td>Gartner IT Symposium/Xpo (Orlando)</td><td>4 dinners; agentic governance roundtables</td></tr>
+        <tr><td><b>Nov</b></td><td>Regional WOW edition (APAC)</td><td>Vertical / industry shows ×2</td><td>3 dinners; CAB session 2</td></tr>
+        <tr><td><b>Dec</b></td><td>Year-in-review + 2027 WOW planning</td><td>AWS re:Invent (Las Vegas)</td><td>re:Invent CIO dinners; 2 customer dinners</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout"><b>Totals (Model B):</b> WOW + 4–6 regional + Gartner/launch moments (Tier 1) · 14–20 (Tier 2) · ~50 (Tier 3). Model A runs the same skeleton selectively with heavier AI + ecosystem leverage.</div>
+</section>
+
+<!-- BUDGET -->
+<section class="panel" id="p-budget">
+  <h2 class="sec">Budget Model</h2>
+  <h3 class="big">Enterprise-scale — recommend ~$5M to own the agentic-AI category</h3>
+  <p class="lead">Sized for a $5.7B-valued category leader defending and extending its lead. The AI operating model is the multiplier that keeps spend from scaling linearly with ambition. The AI-leveraged core model runs at ~$1.5M.</p>
+  <div class="grid g2" style="margin-top:16px">
+    <div class="card">
+      <h4 style="margin:0 0 10px">Model B · Category-leader build <span class="pill p-t1">~$5.0M / yr</span></h4>
+      <div id="budgetB"></div>
+      <p style="font-size:12px;color:var(--mut);margin:10px 0 0">Headcount (~$900K–$1.2M loaded for 5–7 FTE) is a separate people-budget line.</p>
+    </div>
+    <div class="card">
+      <h4 style="margin:0 0 10px">Model A · AI-leveraged core <span class="pill p-t3">~$1.5M / yr</span></h4>
+      <div id="budgetA"></div>
+      <p style="font-size:12px;color:var(--mut);margin:10px 0 0">Plus the core team. Heavier AI + ecosystem leverage substitutes for spend.</p>
+    </div>
+  </div>
+  <div class="grid g3" style="margin-top:4px">
+    <div class="kpi"><div class="num">5:1</div><div class="lab">Blended pipeline-to-cost target (12 mo)</div></div>
+    <div class="kpi"><div class="num">8–12:1</div><div class="lab">CIO dinner / workshop ROI</div></div>
+    <div class="kpi"><div class="num">↓ QoQ</div><div class="lab">Cost-per-opp as the system matures</div></div>
+  </div>
+</section>
+
+<!-- KPIS -->
+<section class="panel" id="p-kpi">
+  <h2 class="sec">KPIs &amp; Measurement</h2>
+  <h3 class="big">Commercial major, marketing minor — plus narrative leadership</h3>
+  <p class="lead">Measure on the numbers a board respects — <b>pipeline and pipeline velocity</b> — and, because this is a category-leadership fight, on <b>narrative-share</b> in agentic AI. Not vanity counts.</p>
+  <div class="grid g2" style="margin-top:16px">
+    <div class="card"><h4 style="margin:0 0 8px">Commercial (the headline)</h4>
+      <ul class="clean" style="font-size:14px"><li>Sourced + influenced pipeline · pipeline velocity</li><li>Meetings booked with named enterprise accounts</li><li>Win-rate lift on event-touched deals · cost per opp</li><li>Expansion / multi-function land within accounts</li></ul></div>
+    <div class="card"><h4 style="margin:0 0 8px">Narrative leadership (the moat)</h4>
+      <ul class="clean" style="font-size:14px"><li>Share of voice in "enterprise agentic AI / MCP"</li><li>Analyst standing (Gartner/Forrester) momentum</li><li>WOW reach, attendance &amp; earned media</li><li>CIO/CAIO relationships &amp; CAB depth</li></ul></div>
+  </div>
+  <div class="callout alt"><b>De-emphasize vanity metrics</b> — booth scans, impressions, raw registrations. For the leader, <b>owning the agentic-AI conversation and the enterprise pipeline beats counting badges.</b></div>
+  <div class="callout"><b>The dashboard:</b> one live view refreshed by the <i>Analyst</i> agent — pipeline by tier &amp; function, velocity, account coverage, narrative-share trend, and a portfolio scorecard so the quarterly rebalance is data-driven, not political.</div>
+</section>
+
+<!-- 90 DAYS -->
+<section class="panel" id="p-90">
+  <h2 class="sec">First 90 Days</h2>
+  <h3 class="big">How I'd start</h3>
+  <div class="grid g3" style="margin-top:16px">
+    <div class="card"><div class="pill p-t1">Days 1–30</div><p style="margin:8px 0 0;font-size:14px">Audit current events &amp; return. Stand up runbooks, the AI pod on Agent Studio, the attribution dashboard. Tier the calendar. Launch the first CIO dinner + an agentic-AI roundtable.</p></div>
+    <div class="card"><div class="pill p-t2">Days 31–60</div><p style="margin:8px 0 0;font-size:14px">Activate the executive engine + the Gartner-MQ amplification plan. Ship the first Zero-to-One workflow + a HeyGen pilot. Stand up the customer-zero showcase. Run the first sprint.</p></div>
+    <div class="card"><div class="pill p-t3">Days 61–90</div><p style="margin:8px 0 0;font-size:14px">Report first sourced pipeline + narrative-share baseline. Lock the WOW category-moment plan. Bring the quarterly rebalance + spend/hire triggers to the CMO.</p></div>
+  </div>
+  <div class="callout" style="margin-top:18px;font-size:16px"><b>Give me the system and the AI pod — built on Workato's own agents — and I'll make Workato the brand the market thinks of first for enterprise agentic AI in 90 days, then show you exactly what to fund to extend the lead.</b></div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <b>Workato Event &amp; Field Marketing Operating System</b> · A strategic teardown prepared for Workato GTM leadership.<br>
+    Built from public research on Workato and its event/competitive landscape. Budgets, calendar details beyond confirmed event anchors, headcount, and tool/agent names are illustrative planning models, not Workato-internal figures.
+  </div>
+</footer>
+
+<script>
+  const sections = [
+    ['p-thesis','Thesis'],['p-now','Current State'],['p-comp','Competitive'],['p-strat','Strategy'],['p-tiers','Tier Model'],
+    ['p-ops','Operating Model'],['p-ai','AI Operating Model'],['p-flow','Workflows'],['p-road','Roadmap'],
+    ['p-cal','Calendar'],['p-budget','Budget'],['p-kpi','KPIs'],['p-90','First 90 Days']
+  ];
+  const nav = document.getElementById('nav');
+  sections.forEach(([id,label],i)=>{
+    const b=document.createElement('button');
+    b.textContent=label; b.dataset.t=id; if(i===0)b.classList.add('active');
+    b.onclick=()=>{
+      document.querySelectorAll('.panel').forEach(pn=>pn.classList.remove('show'));
+      document.getElementById(id).classList.add('show');
+      document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));
+      b.classList.add('active');
+      window.scrollTo({top:0,behavior:'smooth'});
+    };
+    nav.appendChild(b);
+  });
+  document.querySelectorAll('#modeToggle button').forEach(btn=>{
+    btn.onclick=()=>{
+      document.querySelectorAll('#modeToggle button').forEach(x=>x.classList.remove('on'));
+      btn.classList.add('on');
+      const m=btn.dataset.mode;
+      document.getElementById('modeA').classList.toggle('hide',m!=='A');
+      document.getElementById('modeB').classList.toggle('hide',m!=='B');
+    };
+  });
+  const budgetB=[['World of Workato (flagship)',1500],['Regional WOW editions (4–6)',650],['Industry/analyst/ecosystem (14–20)',1100],
+    ['Exec dinners / workshops / CAB (50)',650],['Launch &amp; narrative moments',250],['Tooling + AI',300],['Agency / production',350],['Contingency',200]];
+  const budgetA=[['WOW (focused)',600],['Industry (8–12 selective)',430],['Exec dinners + workshops (~25)',250],
+    ['Tooling (lean + AI)',140],['Vendors',80]];
+  function renderBudget(el,data,max,color){
+    const c=document.getElementById(el);
+    data.forEach(([lab,val])=>{
+      const row=document.createElement('div'); row.style.marginBottom='9px';
+      row.innerHTML='<div style="display:flex;justify-content:space-between;font-size:13px"><span>'+lab+'</span><b>$'+val+'K</b></div>'+
+        '<div class="bartrk"><div class="bar" style="width:'+(val/max*100).toFixed(1)+'%;background:'+color+'"></div></div>';
+      c.appendChild(row);
+    });
+  }
+  renderBudget('budgetB',budgetB,1500,'#1b8089');
+  renderBudget('budgetA',budgetA,600,'#e0443a');
+</script>
+</body>
+</html>
