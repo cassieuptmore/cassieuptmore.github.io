@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kodex Event &amp; Field Marketing Operating System</title>
+<style>
+  :root{
+    --ink:#0c0a2e; --ink2:#3a3f63; --blue:#2d62ff; --blue-d:#1b3fb0; --blue-l:#e6ecff;
+    --sand:#f2f4fb; --paper:#ffffff; --line:#e2e4ee; --mut:#5a5f78; --magenta:#dd23bb; --cyan:#2dccd3;
+    --t1:#2d62ff; --t2:#0f9aa0; --t3:#c21ca3; --bad:#c0414e; --good:#1c8e63;
+    --shadow:0 1px 2px rgba(8,3,49,.06),0 8px 24px rgba(8,3,49,.09);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    color:var(--ink);background:var(--sand);line-height:1.55;-webkit-font-smoothing:antialiased}
+  a{color:var(--blue-d);text-decoration:none}
+  header{background:linear-gradient(125deg,#080331 0%,#0a1f7a 55%,#2d62ff 130%);color:#fff;padding:34px 28px 26px}
+  .wrap{max-width:1120px;margin:0 auto}
+  .eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#7fd6db;font-weight:700}
+  header h1{font-size:32px;line-height:1.15;margin:8px 0 6px;font-weight:800;letter-spacing:-.5px}
+  header p.sub{font-size:16px;color:#cdd8ff;max-width:780px;margin:0}
+  .meta{margin-top:16px;display:flex;flex-wrap:wrap;gap:10px;font-size:12.5px}
+  .meta span{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);padding:5px 11px;border-radius:999px}
+  nav{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .nav-inner{max-width:1120px;margin:0 auto;display:flex;gap:2px;overflow-x:auto;padding:0 14px}
+  nav button{flex:0 0 auto;background:none;border:none;padding:14px 14px;font-size:13.5px;font-weight:600;color:var(--mut);
+    cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;font-family:inherit}
+  nav button:hover{color:var(--ink)}
+  nav button.active{color:var(--blue-d);border-bottom-color:var(--blue)}
+  main{max-width:1120px;margin:0 auto;padding:30px 22px 70px}
+  .panel{display:none;animation:fade .25s ease}
+  .panel.show{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  h2.sec{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--blue-d);font-weight:800;margin:0 0 4px}
+  h3.big{font-size:25px;font-weight:800;margin:0 0 14px;letter-spacing:-.3px;color:var(--ink)}
+  .lead{font-size:16.5px;color:var(--ink2);max-width:840px}
+  .card{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:22px;box-shadow:var(--shadow);margin-bottom:16px}
+  .grid{display:grid;gap:16px}
+  .g2{grid-template-columns:repeat(2,1fr)} .g3{grid-template-columns:repeat(3,1fr)} .g4{grid-template-columns:repeat(4,1fr)}
+  @media(max-width:860px){.g2,.g3,.g4{grid-template-columns:1fr}}
+  .kpi{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:var(--shadow)}
+  .kpi .num{font-size:30px;font-weight:800;color:var(--blue-d);letter-spacing:-.5px}
+  .kpi .lab{font-size:13px;color:var(--mut);margin-top:2px}
+  .pill{display:inline-block;font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px;letter-spacing:.03em}
+  .p-t1{background:#e0e8ff;color:#1b3fb0} .p-t2{background:#d6f2f3;color:#0c7177} .p-t3{background:#fbdcf4;color:#a3128a}
+  .p-good{background:#daf3ea;color:#1c8e63} .p-bad{background:#fadce0;color:#b03342}
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  th,td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--mut);background:#fbfbfd}
+  tbody tr:hover{background:#fafbff}
+  .tag{font-weight:700}
+  ul.clean{margin:8px 0 0;padding-left:18px} ul.clean li{margin:5px 0}
+  .callout{border-left:4px solid var(--blue);background:#eef2ff;padding:14px 16px;border-radius:0 10px 10px 0;margin:14px 0;font-size:14.5px}
+  .callout.alt{border-left-color:var(--magenta);background:#fdeefb}
+  .tier{border-radius:14px;padding:20px;color:#fff;position:relative;overflow:hidden;box-shadow:var(--shadow)}
+  .tier h4{margin:0 0 2px;font-size:19px;font-weight:800}
+  .tier .role{font-size:12.5px;opacity:.92;margin-bottom:12px}
+  .tier.t1{background:linear-gradient(135deg,#2d62ff,#1b3fb0)}
+  .tier.t2{background:linear-gradient(135deg,#19b3b9,#0f7d82)}
+  .tier.t3{background:linear-gradient(135deg,#dd23bb,#a3128a)}
+  .tier dl{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;font-size:13px;margin:0}
+  .tier dt{opacity:.85;font-weight:600} .tier dd{margin:0}
+  .vs th:nth-child(2){color:var(--blue-d)} .vs th:nth-child(3){color:#a3128a}
+  .phase{display:flex;gap:16px;margin-bottom:14px}
+  .phase .dot{flex:0 0 auto;width:42px;height:42px;border-radius:50%;background:var(--blue);color:#fff;display:flex;
+    align-items:center;justify-content:center;font-weight:800;font-size:15px;box-shadow:var(--shadow)}
+  .phase .body{flex:1;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:16px;box-shadow:var(--shadow)}
+  .phase h4{margin:0 0 4px;font-size:16px}
+  .trigger{display:inline-block;margin-top:8px;font-size:12.5px;background:#fdeefb;border:1px dashed var(--magenta);color:#a3128a;padding:5px 10px;border-radius:8px;font-weight:600}
+  .flow{display:flex;flex-wrap:wrap;gap:8px;align-items:stretch}
+  .step{flex:1 1 150px;background:var(--paper);border:1px solid var(--line);border-radius:11px;padding:12px;box-shadow:var(--shadow);position:relative}
+  .step .n{font-size:11px;font-weight:800;color:var(--blue-d)}
+  .step h5{margin:3px 0 4px;font-size:14.5px}
+  .step p{margin:0;font-size:12.5px;color:var(--mut)}
+  .step .ai{margin-top:6px;font-size:11px;font-weight:700;color:#a3128a;background:#fdeefb;border-radius:6px;padding:3px 7px;display:inline-block}
+  .loop{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+  .loop .lp{flex:1 1 200px;background:#eef2ff;border:1px solid var(--blue-l);border-radius:10px;padding:12px;font-size:13px}
+  .loop .lp b{color:var(--blue-d)}
+  .bar{height:13px;border-radius:7px;background:var(--blue);margin-top:5px}
+  .bartrk{background:#eceef6;border-radius:7px;overflow:hidden}
+  .agent{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:16px;box-shadow:var(--shadow)}
+  .agent .nm{font-weight:800;color:var(--blue-d);font-size:16px}
+  footer{max-width:1120px;margin:0 auto;padding:26px 22px 50px;color:var(--mut);font-size:12.5px;border-top:1px solid var(--line)}
+  .toggle{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;margin:6px 0 14px}
+  .toggle button{background:#fff;border:none;padding:9px 18px;font-weight:700;font-size:13.5px;cursor:pointer;color:var(--mut);font-family:inherit}
+  .toggle button.on{background:var(--blue);color:#fff}
+  .hide{display:none}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="eyebrow">Event &amp; Field Marketing · Systems-First Program Design</div>
+    <h1>The Kodex Event Operating System</h1>
+    <p class="sub">How a lean, Series-A team manufactures the field presence of the category's clear leader — built around trust, the Threat Intelligence data, and an AI operating model — run by one person + AI today, with a clear path to scale.</p>
+    <div class="meta">
+      <span>Prepared for Kodex GTM leadership</span>
+      <span>Office of the Head of Marketing &amp; Gov Relations</span>
+      <span>12-month horizon</span>
+      <span>Category: Law-enforcement data-request management</span>
+    </div>
+  </div>
+</header>
+
+<nav><div class="nav-inner" id="nav"></div></nav>
+
+<main>
+
+<!-- THESIS -->
+<section class="panel show" id="p-thesis">
+  <h2 class="sec">The Thesis</h2>
+  <h3 class="big">In a category you're creating, the system — not headcount — makes you the obvious standard</h3>
+  <p class="lead">Kodex isn't fighting for share in a crowded market; it's defining a new one. That changes the job of events: not share-stealing, but <b>category authority and trust</b>. AI is the force multiplier — used as a revenue accelerator it gives an ~81-person company <b>10x–100x leverage</b>, so a one-person field function can convene the room that decides the standard. The system, not the headcount, produces quality at volume.</p>
+  <div class="grid g3" style="margin-top:18px">
+    <div class="card"><div class="pill p-t1">Layer 1</div><h4 style="margin:8px 0 4px">Repeatable playbooks</h4><p style="margin:0;color:var(--mut);font-size:14px">Tiered runbooks so nothing is invented twice. Quality stops being person-dependent.</p></div>
+    <div class="card"><div class="pill p-t3">Layer 2</div><h4 style="margin:8px 0 4px">AI does the production load</h4><p style="margin:0;color:var(--mut);font-size:14px">Research, copy, briefs, threat-intel repurposing, recaps — humans do judgment, relationships, the room.</p></div>
+    <div class="card"><div class="pill p-t2">Layer 3</div><h4 style="margin:8px 0 4px">Partner &amp; community leverage</h4><p style="margin:0;color:var(--mut);font-size:14px">Investors (a16z, Founders Fund), customers, and the T&amp;S/compliance community extend reach without a standing army.</p></div>
+  </div>
+  <div class="grid g4" style="margin-top:6px">
+    <div class="kpi"><div class="num">10–100×</div><div class="lab">Human leverage from AI</div></div>
+    <div class="kpi"><div class="num">3 tiers</div><div class="lab">Owned · Industry · Intimate</div></div>
+    <div class="kpi"><div class="num">2-sided</div><div class="lab">Enterprise buyers + 15K gov agencies</div></div>
+    <div class="kpi"><div class="num">Trust</div><div class="lab">The product and the marketing wedge</div></div>
+  </div>
+  <div class="callout alt"><b>From "random acts of AI" to an operating model.</b> Templatize prompts into <b>workflows anyone can run</b>. Apply <b>80/20 filtering</b> (ignore the AI noise; point it at the few tasks that compound) and a <b>"commercial major, marketing minor"</b> lens — optimize for pipeline velocity and category authority, not vanity metrics. The marketer becomes a <b>system architect</b>.</div>
+  <div class="callout"><b>The one-line pitch:</b> Give me the system and the AI pod, and Kodex's field presence will look like the category's clear leader in 90 days — then I'll show you exactly what to fund to make the scale match the perception.</div>
+</section>
+
+<!-- CURRENT STATE -->
+<section class="panel" id="p-now">
+  <h2 class="sec">Current State</h2>
+  <h3 class="big">Kodex has the raw materials of a category leader — they need an event system to compound them</h3>
+  <p class="lead">A Boston-founded (2020), a16z/Founders Fund/YC/Sound-backed company (~$31M raised, Series A, ~81 people) created by an ex-FBI counterterrorism agent. It already out-punches its size on content and credibility — the gap is a systematic in-person and field motion.</p>
+  <div class="grid g2" style="margin-top:16px">
+    <div class="card">
+      <h4 style="margin:0 0 8px;color:var(--good)">✓ What's working</h4>
+      <ul class="clean" style="font-size:14px">
+        <li><b>A real content engine</b> — Quarterly Threat Intelligence Reports, the Modern Request Response Playbook, the CPO Guide, webinars. Proprietary data others don't have.</li>
+        <li><b>A nascent owned moment</b> — the first-ever Kodex Global Keynote. The seed of a flagship.</li>
+        <li><b>A credibility halo</b> — a16z, Founders Fund, Y Combinator, Sound Ventures; ex-FBI founder; SOC/PCI/GDPR.</li>
+        <li><b>Proof at scale</b> — 15K+ government agencies and leading crypto, fintech &amp; telecom firms (OKX, Yahoo).</li>
+        <li><b>A clear category POV</b> — "the first secure standard for law-enforcement data requests."</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4 style="margin:0 0 8px;color:var(--bad)">▲ Gaps to close</h4>
+      <ul class="clean" style="font-size:14px">
+        <li><b>No systematic in-person motion</b> — the Keynote is a one-off; no owned flagship cadence or field calendar.</li>
+        <li><b>Two-sided audience under-served at events</b> — enterprise buyers AND government/LE agencies need different rooms; nobody is convening both.</li>
+        <li><b>No executive roundtable / dinner program</b> — for a sensitive, trust-first category, intimate rooms are the highest-ROI motion and they're missing.</li>
+        <li><b>The Threat Intel data is under-leveraged as an event magnet</b> — it should anchor briefings, not just PDFs.</li>
+        <li><b>One leader wears two hats</b> — Marketing + Gov Relations on a lean team. The system + AI is how that scales.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- COMPETITIVE -->
+<section class="panel" id="p-comp">
+  <h2 class="sec">Competitive Landscape</h2>
+  <h3 class="big">The real competitor is the broken status quo — so events are for category creation, not share-stealing</h3>
+  <p class="lead">There is no clean head-to-head SaaS rival. Kodex competes against manual processes and low category awareness. That means the field strategy is to <b>define the category, build trust, and become the default</b> — and to own a convening role nobody else can.</p>
+  <div class="card" style="overflow-x:auto;margin-top:14px">
+    <table>
+      <thead><tr><th>"Competitor"</th><th>What it is</th><th>Why it persists</th><th>How Kodex wins with events</th></tr></thead>
+      <tbody>
+        <tr><td class="tag">The status quo</td><td>Faxes, email, in-house Search Response Teams handling requests manually</td><td>Inertia; "it's how we've always done it"; no forcing function</td><td>Threat-intel briefings that quantify the fraud/risk of manual handling → urgency to adopt a standard</td></tr>
+        <tr><td class="tag">In-house / point tools</td><td>Ticketing or homegrown workflows bolted onto legal/compliance</td><td>Already paid for; "good enough" until a breach</td><td>Executive roundtables where peers who switched tell the story — social proof beats a demo</td></tr>
+        <tr><td class="tag">Adjacent vendors</td><td>Data-protection (e.g. Virtru), eDiscovery (Casepoint, Lighthouse), T&amp;S tooling</td><td>Solve neighboring problems; partial overlap</td><td>Co-host the ecosystem; own the "request" wedge specifically; partner rather than collide</td></tr>
+        <tr><td class="tag">Agency-side systems</td><td>CrimeTracer/COPLINK, RMS (Motorola, Hexagon), N-DEx/LInX</td><td>Serve law enforcement, not the company side</td><td>Convene <b>both sides</b> — the unique position only Kodex can credibly hold</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout alt"><b>The white space:</b> No one owns "the trusted room where law-enforcement, privacy, compliance, and trust &amp; safety leaders define the standard for data requests." That convening role — two-sided, data-backed, discreet — is Kodex's to take, and events are how you claim it.</div>
+</section>
+
+<!-- STRATEGY -->
+<section class="panel" id="p-strat">
+  <h2 class="sec">Strategy &amp; Positioning</h2>
+  <h3 class="big">Be the trusted convener of everyone who sits between law enforcement and user data</h3>
+  <p class="lead"><b>North Star:</b> <i>Make Kodex the trusted convener of the people who manage law-enforcement data requests — and the obvious standard they adopt.</i></p>
+  <div class="grid g3" style="margin-top:16px">
+    <div class="card" style="border-top:3px solid var(--t1)"><div class="pill p-t1">Pillar 1</div><h4 style="margin:8px 0 4px">Category authority</h4><p style="margin:0;color:var(--mut);font-size:14px">Own the narrative and the data. The Threat Intelligence Report + the Keynote become the must-watch moments that set the agenda for the category.</p></div>
+    <div class="card" style="border-top:3px solid var(--t2)"><div class="pill p-t2">Pillar 2</div><h4 style="margin:8px 0 4px">Two-sided trust-building</h4><p style="margin:0;color:var(--mut);font-size:14px">Serve enterprise buyers AND government/LE agencies at events — a convening position no competitor can hold. Trust compounds on both sides.</p></div>
+    <div class="card" style="border-top:3px solid var(--t3)"><div class="pill p-t3">Pillar 3</div><h4 style="margin:8px 0 4px">Intimate, high-trust demand</h4><p style="margin:0;color:var(--mut);font-size:14px">Closed-door roundtables and dinners for Heads of T&amp;S, Compliance, Privacy &amp; CISOs. In a sensitive category, discretion and peer trust are the format.</p></div>
+  </div>
+  <div class="grid g2" style="margin-top:6px">
+    <div class="card"><h4 style="margin:0 0 6px">Audiences (two-sided ICP)</h4><p style="margin:0;color:var(--ink2);font-size:14px"><b>Enterprise:</b> Legal, Compliance, CISO/Security, Trust &amp; Safety leaders at crypto, fintech/banking &amp; telecom. <b>Government:</b> law-enforcement agencies &amp; the gov-relations community. Prioritized by named-account ABM.</p></div>
+    <div class="card"><h4 style="margin:0 0 6px">Brand promise: trust before promotion</h4><p style="margin:0;color:var(--ink2);font-size:14px">In a fraud/privacy/security category, credibility and discretion <i>are</i> the product. The Threat Intelligence data is the magnet that earns the room; the platform is the natural conclusion.</p></div>
+  </div>
+</section>
+
+<!-- TIERS -->
+<section class="panel" id="p-tiers">
+  <h2 class="sec">The Three-Tier Model</h2>
+  <h3 class="big">Tiering tells a lean team where to go deep, what to templatize, and what to skip</h3>
+  <p class="lead"><b>Tier 1 builds authority. Tier 3 builds trust and the best pipeline. Tier 2 puts Kodex where its two audiences already gather.</b></p>
+  <div class="grid g3" style="margin-top:16px">
+    <div class="tier t1">
+      <h4>Tier 1</h4><div class="role">Owned &amp; category-defining</div>
+      <dl>
+        <dt>What</dt><dd>Kodex Keynote (annual, live+virtual) · Quarterly Threat Intel launch moments · an invite-only Request Response Summit</dd>
+        <dt>Goal</dt><dd>Category authority, brand, the data-driven moment</dd>
+        <dt>Cadence</dt><dd>1 keynote + 4 report moments + 1 summit/yr</dd>
+        <dt>Cost</dt><dd>$40K–$180K (summit); report moments low-cost</dd>
+        <dt>KPI</dt><dd>Reach, share of voice, pipeline, exec relationships</dd>
+      </dl>
+    </div>
+    <div class="tier t2">
+      <h4>Tier 2</h4><div class="role">Industry presence — both audiences</div>
+      <dl>
+        <dt>What</dt><dd>TrustCon, ACAMS, RSAC, IAPP, Money20/20, Consensus, IACP — speaking + booth + meetings</dd>
+        <dt>Goal</dt><dd>Be where buyers AND agencies gather; vertical credibility</dd>
+        <dt>Cadence</dt><dd>8–12/yr</dd>
+        <dt>Cost</dt><dd>$10K–$70K per event</dd>
+        <dt>KPI</dt><dd>Meetings booked, accounts engaged, cost/lead</dd>
+      </dl>
+    </div>
+    <div class="tier t3">
+      <h4>Tier 3</h4><div class="role">Intimate &amp; high-trust — the engine</div>
+      <dl>
+        <dt>What</dt><dd>Closed-door roundtables, CISO/compliance dinners, gov-relations briefings, accredited (CLE/CPE) webinars, advisory council</dd>
+        <dt>Goal</dt><dd>Highest-intent demand + deep trust in a sensitive category</dd>
+        <dt>Cadence</dt><dd>25–40/yr</dd>
+        <dt>Cost</dt><dd>$2K–$15K each</dd>
+        <dt>KPI</dt><dd>Exec meetings, pipeline/$, advocacy, references</dd>
+      </dl>
+    </div>
+  </div>
+  <div class="callout"><b>The logic:</b> make the Keynote + Threat Intel the category's moment (Tier 1), show up sharply where the two audiences already are (Tier 2), and run a relentless cadence of discreet, trust-first rooms (Tier 3) — the format a sensitive category rewards most.</div>
+</section>
+
+<!-- OPERATING MODEL -->
+<section class="panel" id="p-ops">
+  <h2 class="sec">Operating Model</h2>
+  <h3 class="big">Two versions of the same machine — sized for a Series-A team</h3>
+  <p class="lead">Start lean on Day 1 to build the system and bank quick wins; graduate as pipeline and category authority prove out. The system is identical — resources add reach and parallelism, not baseline quality.</p>
+  <div class="toggle" id="modeToggle">
+    <button class="on" data-mode="A">Model A · Solo + AI</button>
+    <button data-mode="B">Model B · Scaled</button>
+  </div>
+  <div id="modeA">
+    <div class="card">
+      <h4 style="margin:0 0 6px">"1 human, a pod of AI agents, 2 retainer vendors, the community channel"</h4>
+      <p style="margin:0 0 6px;color:var(--mut);font-size:14px">The human owns strategy, executive &amp; agency relationships, on-site presence, dinners, and judgment. Everything reproducible is delegated. A realistic first add to a team where one leader runs Marketing + Gov Relations.</p>
+    </div>
+    <div class="grid" style="grid-template-columns:repeat(5,1fr)">
+      <div class="agent"><div class="nm">Scout</div><p style="margin:4px 0 0;font-size:13px;color:var(--mut)">Account/agency research, show-ROI scoring, attendee briefing docs</p></div>
+      <div class="agent"><div class="nm">Scribe</div><p style="margin:4px 0 0;font-size:13px;color:var(--mut)">Invites, pages, threat-intel repurposing, abstracts, recaps</p></div>
+      <div class="agent"><div class="nm">Concierge</div><p style="margin:4px 0 0;font-size:13px;color:var(--mut)">RSVP, reminders, personalized agendas, logistics checklists</p></div>
+      <div class="agent"><div class="nm">Analyst</div><p style="margin:4px 0 0;font-size:13px;color:var(--mut)">Lead scoring/routing, budget, dashboards, retros</p></div>
+      <div class="agent"><div class="nm">Sprint</div><p style="margin:4px 0 0;font-size:13px;color:var(--mut)">PM agent CC'd on email + in meetings: tracks, updates tracker, pings deadlines</p></div>
+    </div>
+    <div class="callout alt"><b>Honest ceiling:</b> ~1 keynote + 4 Threat-Intel moments + selective Tier 2 + ~20 intimate rooms — the output of a 4-person team. The limits are <i>simultaneity</i> and deep reach, not quality. That's all Model B buys.</div>
+  </div>
+  <div id="modeB" class="hide">
+    <div class="card">
+      <h4 style="margin:0 0 6px">Same system, more hands — for reach across both audiences</h4>
+      <table style="margin-top:8px">
+        <thead><tr><th>Role</th><th>Owns</th><th>Hire</th></tr></thead>
+        <tbody>
+          <tr><td class="tag">Field &amp; Events Lead</td><td>Strategy, Keynote/Summit, exec program <span class="pill p-t1">the role</span></td><td>Month 0</td></tr>
+          <tr><td class="tag">Field Marketing Manager</td><td>Tier 2 calendar + ABM-integrated field + roundtables</td><td>~Month 4</td></tr>
+          <tr><td class="tag">Events Producer (fractional)</td><td>Logistics, vendor mgmt, Tier 3 at volume</td><td>~Month 7</td></tr>
+          <tr><td class="tag">Agency / design</td><td>Production, brand, video, Threat-Intel design</td><td>Ongoing</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout"><b>Result:</b> a polished Keynote + a flagship Summit + full presence across the two-sided event calendar + 25–40 intimate rooms + an ABM-integrated exec program — a footprint that reads as the category's clear leader.</div>
+  </div>
+  <h4 style="margin:22px 0 6px">The trade-off at a glance</h4>
+  <div class="card" style="overflow-x:auto">
+    <table class="vs">
+      <thead><tr><th>Dimension</th><th>Model A · Solo + AI</th><th>Model B · Scaled</th></tr></thead>
+      <tbody>
+        <tr><td>Headcount</td><td>1 FTE + AI pod + 2 vendors</td><td>2–3 FTE + agency</td></tr>
+        <tr><td>Annual budget</td><td>~$300K</td><td>~$850K</td></tr>
+        <tr><td>Owned moments (Tier 1)</td><td>Keynote + 4 report moments</td><td>+ flagship Summit, full polish</td></tr>
+        <tr><td>Tier 2 events/yr</td><td>5–7 selective</td><td>8–12 (both audiences)</td></tr>
+        <tr><td>Tier 3 events/yr</td><td>~20</td><td>25–40</td></tr>
+        <tr><td>Quality bar</td><td>High — guaranteed by the system</td><td>High — same system</td></tr>
+        <tr><td>What more resources buy</td><td>—</td><td>Reach &amp; parallelism, not quality</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout"><b>Recommendation:</b> start in Model A now; use the roadmap's spend/hire triggers to graduate to Model B as pipeline and category authority prove out.</div>
+</section>
+
+<!-- AI OPERATING MODEL -->
+<section class="panel" id="p-ai">
+  <h2 class="sec">The AI Operating Model</h2>
+  <h3 class="big">How a lean team produces category-leader event &amp; field assets</h3>
+  <p class="lead">Not by chatting with a chatbot — by turning repeatable tasks into shared, governed workflows. For a security/trust company, the governance layer isn't optional; it's on-brand.</p>
+  <div class="grid g3" style="margin-top:16px">
+    <div class="card"><div class="pill p-t1">The Marketing Brain</div><p style="margin:8px 0 0;font-size:13.5px;color:var(--mut)">A versioned repo of prompts &amp; "skills" encoding Kodex SOPs, brand, messaging &amp; the threat-intel framing. Invoke a <b>"roundtable"</b> or <b>"threat-intel briefing"</b> skill → on-brand output in seconds.</p></div>
+    <div class="card"><div class="pill p-t3">Zero-to-One workflows</div><p style="margin:8px 0 0;font-size:13.5px;color:var(--mut)">Automate the first 80%. From one Threat-Intel theme: research target accounts/agencies, draft the briefing deck, the invite sequence, and the follow-up — in minutes.</p></div>
+    <div class="card"><div class="pill p-t2">Mass personalization</div><p style="margin:8px 0 0;font-size:13.5px;color:var(--mut)">HeyGen-style AI video where Matt (ex-FBI founder) or a threat analyst invites each registrant by name. An "unfair" high-touch move competitors can't match.</p></div>
+    <div class="card"><div class="pill p-t1">Sales-enablement "brains"</div><p style="margin:8px 0 0;font-size:13.5px;color:var(--mut)">An approved library so revenue can generate bespoke, on-brand follow-ups and briefs off every event in real time — closing the marketing-to-sales gap.</p></div>
+    <div class="card"><div class="pill p-t3">Content &amp; SEO engines</div><p style="margin:8px 0 0;font-size:13.5px;color:var(--mut)">Programmatic SEO for "law-enforcement data request" by jurisdiction/vertical; quarterly refresh keeps pages <b>~3× more likely cited by AI search</b>.</p></div>
+    <div class="card"><div class="pill p-t2">Thought partner — CRIT</div><p style="margin:8px 0 0;font-size:13.5px;color:var(--mut)">Not an oracle. CRIT (Context, Role, Interview, Task) makes AI interview you one question at a time to surface plan gaps before a dollar is spent.</p></div>
+  </div>
+  <div class="callout"><b>Governance — a risk-level operating model (and Kodex's home turf).</b> Low-risk internal agents (monitor, summarize, report — "Sprint") run autonomously. High-risk, customer- or agency-facing outputs (personalized outreach, anything touching sensitive data) always require <b>human-in-the-loop</b> review. For a trust company, this discipline doubles as a proof point.</div>
+</section>
+
+<!-- WORKFLOWS -->
+<section class="panel" id="p-flow">
+  <h2 class="sec">Workflows &amp; Sprint Cadence</h2>
+  <h3 class="big">One lifecycle, nine stages — shipped in sprints</h3>
+  <p class="lead">A single source of truth: tiered runbooks defining every stage, owner, AI step, and SLA. <b>Lead times:</b> Tier 1 = 12–16 wks · Tier 2 = 6–8 wks · Tier 3 = 3–4 wks (dinners/roundtables), &lt;2 wks (webinars).</p>
+  <div class="flow" style="margin-top:14px">
+    <div class="step"><div class="n">01</div><h5>Select</h5><p>Score vs ICP, tier, target-account/agency overlap</p><span class="ai">AI · Scout</span></div>
+    <div class="step"><div class="n">02</div><h5>Brief</h5><p>One-page: objective, audience, offer, budget, KPI</p><span class="ai">AI · Scribe</span></div>
+    <div class="step"><div class="n">03</div><h5>Build</h5><p>Page, registration, threat-intel content, run-of-show</p><span class="ai">AI · Scribe/Concierge</span></div>
+    <div class="step"><div class="n">04</div><h5>Promote</h5><p>Multi-touch invites, sales-assisted outreach, social</p><span class="ai">AI · Scribe</span></div>
+    <div class="step"><div class="n">05</div><h5>Produce</h5><p>Vendor/partner coordination, rehearsal</p><span class="ai">Human + agency</span></div>
+    <div class="step"><div class="n">06</div><h5>Execute</h5><p>Deliver, capture conversations (discreetly)</p><span class="ai">Human</span></div>
+    <div class="step"><div class="n">07</div><h5>Follow-up</h5><p>48-hr routing SLA, personalized follow-up</p><span class="ai">AI · Analyst/Scribe</span></div>
+    <div class="step"><div class="n">08</div><h5>Measure</h5><p>Pipeline, velocity, cost/opp into the dashboard</p><span class="ai">AI · Analyst</span></div>
+    <div class="step"><div class="n">09</div><h5>Retro</h5><p>Within 5 days → into the backlog</p><span class="ai">Human + AI</span></div>
+  </div>
+  <h4 style="margin:22px 0 4px">Sprint cycles — manufacture "noise in the market"</h4>
+  <p style="margin:0 0 10px;font-size:14.5px;color:var(--ink2)"><b>Run field marketing like product engineering.</b> Replace the annual plan with <b>3-week / 2-month sprints</b>, always shipping a new field play, a roundtable, a threat-intel briefing, a personalized promo. Constant shipping creates persistent <b>"noise in the market"</b> that makes a Series-A team look like the established category leader.</p>
+  <div class="loop">
+    <div class="lp"><b>48-hour rule:</b> every lead routed &amp; followed up in two business days.</div>
+    <div class="lp"><b>5-day retro:</b> fast, blameless, into the backlog.</div>
+    <div class="lp"><b>Sprint demo:</b> ship + show every 2–3 weeks — visible momentum.</div>
+    <div class="lp"><b>Quarterly rebalance:</b> double down on winners, cut the rest.</div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section class="panel" id="p-road">
+  <h2 class="sec">12-Month Roadmap</h2>
+  <h3 class="big">Build the machine first, then let proof unlock resources</h3>
+  <p class="lead">Each phase has an exit metric and an explicit spend/hire trigger — growth from Model A to Model B is earned by data, not argued in a meeting.</p>
+  <div style="margin-top:16px">
+    <div class="phase"><div class="dot">0</div><div class="body"><h4>Build the machine · Month 0–1</h4><p style="margin:0;font-size:14px;color:var(--mut)">Audit, instrument attribution, stand up runbooks + AI pod + Marketing Brain + dashboards. Quick wins: first executive roundtable + a Threat-Intel briefing in 30 days.</p><span class="trigger">Exit: system live · first 2 Tier 3 booked · attribution reporting</span></div></div>
+    <div class="phase"><div class="dot">1</div><div class="body"><h4>Roundtable engine + RSAC · Q1 (M2–4)</h4><p style="margin:0;font-size:14px;color:var(--mut)">Launch the roundtable/dinner cadence; show up sharply at RSAC + IAPP; pilot the Zero-to-One workflows and a HeyGen promo.</p><span class="trigger">Exit: 6+ Tier 3 run · cost-per-opp baseline · first sourced pipeline → Hire Field Marketing Manager</span></div></div>
+    <div class="phase"><div class="dot">2</div><div class="body"><h4>Keynote + TrustCon · Q2–Q3 (M5–8)</h4><p style="margin:0;font-size:14px;color:var(--mut)">Make the Kodex Keynote a real annual flagship; own a presence at TrustCon &amp; ACAMS; tie each to a Threat-Intel data moment.</p><span class="trigger">Exit: Keynote reach + pipeline targets hit → Hire/contract Events Producer</span></div></div>
+    <div class="phase"><div class="dot">3</div><div class="body"><h4>Two-sided convening · Q3–Q4 (M8–10)</h4><p style="margin:0;font-size:14px;color:var(--mut)">Launch the invite-only Request Response Summit; add IACP for the government/LE audience; stand up the advisory council.</p><span class="trigger">Exit: summit live · both audiences engaged · portfolio rebalanced</span></div></div>
+    <div class="phase"><div class="dot">4</div><div class="body"><h4>Measure &amp; scale the case · Q4 (M11–12)</h4><p style="margin:0;font-size:14px;color:var(--mut)">Full-year measurement; rebalance next-year portfolio; build the investment case to fully fund Model B.</p><span class="trigger">Exit: board-ready ROI + category-authority story · budget approved</span></div></div>
+  </div>
+</section>
+
+<!-- CALENDAR -->
+<section class="panel" id="p-cal">
+  <h2 class="sec">12-Month Tiered Calendar</h2>
+  <h3 class="big">All three tiers — anchored to the real 2026 event landscape</h3>
+  <p class="lead">Confirmed 2026 anchors: RSAC Mar 23–26 (SF) · ACAMS Assembly Hollywood Apr 20–22 · IAPP Global Privacy Summit (spring, DC) · TrustCon Jul 20–22 (SF) · ACAMS Assembly Vegas Sep 29–Oct 1 · IACP Oct 24–27 (Orlando) · Money20/20 (fall, Vegas). Beyond anchors the grid is illustrative.</p>
+  <div class="card" style="overflow-x:auto;margin-top:14px">
+    <table>
+      <thead><tr><th>Month</th><th><span class="pill p-t1">Tier 1</span> Owned</th><th><span class="pill p-t2">Tier 2</span> Industry (both audiences)</th><th><span class="pill p-t3">Tier 3</span> Intimate / Field</th></tr></thead>
+      <tbody>
+        <tr><td><b>Jan</b></td><td>Q4 Threat Intel report launch + briefing</td><td>Planning; vertical webinar</td><td>2 exec roundtables (NYC, SF); CISO dinner</td></tr>
+        <tr><td><b>Feb</b></td><td>Keynote theme + content build</td><td>Regional compliance meetups</td><td>3 roundtables; gov-relations briefing</td></tr>
+        <tr><td><b>Mar</b></td><td>Threat-Intel data drop at RSAC</td><td><b>RSAC</b> (Mar 23–26) — booth + meetings</td><td>RSAC CISO dinner; 2 roundtables</td></tr>
+        <tr><td><b>Apr</b></td><td>Q1 Threat Intel report launch</td><td><b>ACAMS Assembly Hollywood</b> · IAPP Global Privacy Summit</td><td>3 dinners; CPO roundtable; webinar (CLE)</td></tr>
+        <tr><td><b>May</b></td><td>Keynote promotion engine on</td><td>Consensus (crypto) · telecom security event</td><td>3 roundtables; advisory council kickoff</td></tr>
+        <tr><td><b>Jun</b></td><td>Pre-Keynote VIP receptions</td><td>Regional fintech/AML events ×2</td><td>4 roundtables; partner co-host</td></tr>
+        <tr><td><b>Jul</b></td><td><b>Kodex Keynote</b> (flagship, live+virtual)</td><td><b>TrustCon</b> (Jul 20–22) — speaking + booth</td><td>TrustCon T&amp;S leaders dinner; 2 roundtables</td></tr>
+        <tr><td><b>Aug</b></td><td>Q2 Threat Intel report launch</td><td>Sponsored speaking ×2</td><td>3 roundtables; gov-relations briefing</td></tr>
+        <tr><td><b>Sep</b></td><td>Summit promotion + curation</td><td><b>ACAMS Assembly Vegas</b> (Sep 29–Oct 1)</td><td>ACAMS compliance dinner; 3 roundtables</td></tr>
+        <tr><td><b>Oct</b></td><td><b>Request Response Summit</b> (invite-only)</td><td><b>IACP</b> (Oct 24–27) · Money20/20</td><td>Summit VIP dinners; gov + enterprise briefings</td></tr>
+        <tr><td><b>Nov</b></td><td>Year-in-review + customer awards</td><td>Regional CISO events ×2</td><td>3 roundtables; advisory council session 2</td></tr>
+        <tr><td><b>Dec</b></td><td>Q3 Threat Intel + 2027 Keynote planning</td><td>Holiday outreach</td><td>2 intimate customer dinners</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout"><b>Totals (Model B):</b> Keynote + Summit + 4 Threat-Intel moments (Tier 1) · 8–12 (Tier 2) · ~30 (Tier 3). Model A runs the same skeleton selectively with heavier AI + community leverage.</div>
+</section>
+
+<!-- BUDGET -->
+<section class="panel" id="p-budget">
+  <h2 class="sec">Budget Model</h2>
+  <h3 class="big">Series-A sized — recommend ~$850K to credibly own the category</h3>
+  <p class="lead">Sized for an ~81-person, Series-A company — a fraction of an enterprise vendor's budget, made to look far bigger through owned moments, the Threat-Intel magnet, AI leverage, and intimate rooms. The solo model floors at ~$300K.</p>
+  <div class="grid g2" style="margin-top:16px">
+    <div class="card">
+      <h4 style="margin:0 0 10px">Model B · Scaled <span class="pill p-t1">~$850K / yr</span></h4>
+      <div id="budgetB"></div>
+      <p style="font-size:12px;color:var(--mut);margin:10px 0 0">Headcount (~$350–450K loaded for 2–3 FTE) is a separate people-budget line.</p>
+    </div>
+    <div class="card">
+      <h4 style="margin:0 0 10px">Model A · Solo operator <span class="pill p-t3">~$300K / yr</span></h4>
+      <div id="budgetA"></div>
+      <p style="font-size:12px;color:var(--mut);margin:10px 0 0">Plus 1 FTE. Heavier AI + community leverage substitutes for spend.</p>
+    </div>
+  </div>
+  <div class="grid g3" style="margin-top:4px">
+    <div class="kpi"><div class="num">5:1</div><div class="lab">Blended pipeline-to-cost target (12 mo)</div></div>
+    <div class="kpi"><div class="num">8–12:1</div><div class="lab">Roundtable / dinner ROI</div></div>
+    <div class="kpi"><div class="num">↓ QoQ</div><div class="lab">Cost-per-opp as the system matures</div></div>
+  </div>
+</section>
+
+<!-- KPIS -->
+<section class="panel" id="p-kpi">
+  <h2 class="sec">KPIs &amp; Measurement</h2>
+  <h3 class="big">Commercial major, marketing minor — plus category authority</h3>
+  <p class="lead">Measure on the numbers a board respects — <b>pipeline and pipeline velocity</b> — and, because Kodex is creating a category, <b>authority metrics</b> too. Not vanity counts.</p>
+  <div class="grid g2" style="margin-top:16px">
+    <div class="card"><h4 style="margin:0 0 8px">Commercial (the headline)</h4>
+      <ul class="clean" style="font-size:14px"><li>Sourced + influenced pipeline · pipeline velocity</li><li>Meetings booked with target accounts &amp; agencies</li><li>Win-rate lift on event-touched deals · cost per opp</li><li>48-hour follow-up SLA compliance</li></ul></div>
+    <div class="card"><h4 style="margin:0 0 8px">Category authority (the moat)</h4>
+      <ul class="clean" style="font-size:14px"><li>Share of voice in T&amp;S / compliance / privacy</li><li>Threat-Intel report reach &amp; citations</li><li>Government/agency relationships built</li><li>Exec advisory council &amp; reference depth</li></ul></div>
+  </div>
+  <div class="callout alt"><b>De-emphasize vanity metrics</b> — booth scans, impressions, raw registrations. In a trust category, <b>the quality of the room beats the size of the list.</b></div>
+  <div class="callout"><b>The dashboard:</b> one live view refreshed by the <i>Analyst</i> agent — pipeline by tier, velocity, account/agency coverage, and a portfolio scorecard so the quarterly rebalance is data-driven, not political.</div>
+</section>
+
+<!-- 90 DAYS -->
+<section class="panel" id="p-90">
+  <h2 class="sec">First 90 Days</h2>
+  <h3 class="big">How I'd start</h3>
+  <div class="grid g3" style="margin-top:16px">
+    <div class="card"><div class="pill p-t1">Days 1–30</div><p style="margin:8px 0 0;font-size:14px">Audit current activity &amp; return. Stand up runbooks, the AI pod &amp; Marketing Brain, the attribution dashboard. Tier the calendar. Launch the first executive roundtable + a Threat-Intel briefing.</p></div>
+    <div class="card"><div class="pill p-t2">Days 31–60</div><p style="margin:8px 0 0;font-size:14px">Activate the roundtable engine + RSAC plan. Ship the first Zero-to-One workflow + a HeyGen invite pilot. Instrument the 48-hour SLA. Run the first 3-week sprint.</p></div>
+    <div class="card"><div class="pill p-t3">Days 61–90</div><p style="margin:8px 0 0;font-size:14px">Report first sourced pipeline + velocity. Lock the Kodex Keynote as an annual flagship. Bring the quarterly rebalance + the spend/hire triggers to leadership.</p></div>
+  </div>
+  <div class="callout" style="margin-top:18px;font-size:16px"><b>Give me the system and the AI pod, and Kodex's field presence will look like the category's clear leader in 90 days — then I'll show you exactly what to fund to make the scale match the perception.</b></div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <b>Kodex Event &amp; Field Marketing Operating System</b> · A strategic teardown prepared for Kodex GTM leadership.<br>
+    Built from public research on Kodex and its event/buyer landscape. Budgets, calendar details beyond confirmed event anchors, headcount, and tool/agent names are illustrative planning models, not Kodex-internal figures.
+  </div>
+</footer>
+
+<script>
+  const sections = [
+    ['p-thesis','Thesis'],['p-now','Current State'],['p-comp','Competitive'],['p-strat','Strategy'],['p-tiers','Tier Model'],
+    ['p-ops','Operating Model'],['p-ai','AI Operating Model'],['p-flow','Workflows'],['p-road','Roadmap'],
+    ['p-cal','Calendar'],['p-budget','Budget'],['p-kpi','KPIs'],['p-90','First 90 Days']
+  ];
+  const nav = document.getElementById('nav');
+  sections.forEach(([id,label],i)=>{
+    const b=document.createElement('button');
+    b.textContent=label; b.dataset.t=id; if(i===0)b.classList.add('active');
+    b.onclick=()=>{
+      document.querySelectorAll('.panel').forEach(pn=>pn.classList.remove('show'));
+      document.getElementById(id).classList.add('show');
+      document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));
+      b.classList.add('active');
+      window.scrollTo({top:0,behavior:'smooth'});
+    };
+    nav.appendChild(b);
+  });
+  document.querySelectorAll('#modeToggle button').forEach(btn=>{
+    btn.onclick=()=>{
+      document.querySelectorAll('#modeToggle button').forEach(x=>x.classList.remove('on'));
+      btn.classList.add('on');
+      const m=btn.dataset.mode;
+      document.getElementById('modeA').classList.toggle('hide',m!=='A');
+      document.getElementById('modeB').classList.toggle('hide',m!=='B');
+    };
+  });
+  const budgetB=[['Kodex Keynote (flagship)',180],['Request Response Summit',150],['Industry events (8–12)',220],
+    ['Roundtables / dinners (30)',150],['Threat-Intel event moments',30],['Tooling + AI',55],['Agency / design',45],['Contingency',20]];
+  const budgetA=[['Keynote (lean + virtual)',90],['Industry (5–7 selective)',90],['Roundtables + webinars (~20)',75],
+    ['Tooling (lean + AI)',30],['2 retainer vendors',15]];
+  function renderBudget(el,data,max,color){
+    const c=document.getElementById(el);
+    data.forEach(([lab,val])=>{
+      const row=document.createElement('div'); row.style.marginBottom='9px';
+      row.innerHTML='<div style="display:flex;justify-content:space-between;font-size:13px"><span>'+lab+'</span><b>$'+val+'K</b></div>'+
+        '<div class="bartrk"><div class="bar" style="width:'+(val/max*100).toFixed(1)+'%;background:'+color+'"></div></div>';
+      c.appendChild(row);
+    });
+  }
+  renderBudget('budgetB',budgetB,220,'#2d62ff');
+  renderBudget('budgetA',budgetA,90,'#dd23bb');
+</script>
+</body>
+</html>
