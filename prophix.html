@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prophix Event &amp; Field Marketing Operating System</title>
+<style>
+  :root{
+    --ink:#1e1b1a; --ink2:#34316b; --teal:#4e4eac; --teal-d:#3e3e92; --teal-l:#e7e7f7;
+    --sand:#f3f3f8; --paper:#ffffff; --line:#e5e4eb; --mut:#5b5a63; --gold:#f88032;
+    --t1:#4e4eac; --t2:#2a61ac; --t3:#f88032; --bad:#ef373e; --good:#2bb282;
+    --shadow:0 1px 2px rgba(30,27,26,.06),0 8px 24px rgba(30,27,26,.08);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    color:var(--ink);background:var(--sand);line-height:1.55;-webkit-font-smoothing:antialiased}
+  a{color:var(--teal-d);text-decoration:none}
+  /* Header */
+  header{background:linear-gradient(125deg,#1e1b1a 0%,#2c2a5e 50%,#4e4eac 100%);color:#fff;padding:34px 28px 26px}
+  .wrap{max-width:1120px;margin:0 auto}
+  .eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#c4c3ee;font-weight:700}
+  header h1{font-size:32px;line-height:1.15;margin:8px 0 6px;font-weight:800;letter-spacing:-.5px}
+  header p.sub{font-size:16px;color:#dad9f4;max-width:760px;margin:0}
+  .meta{margin-top:16px;display:flex;flex-wrap:wrap;gap:10px;font-size:12.5px}
+  .meta span{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);padding:5px 11px;border-radius:999px}
+  /* Nav */
+  nav{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .nav-inner{max-width:1120px;margin:0 auto;display:flex;gap:2px;overflow-x:auto;padding:0 14px}
+  nav button{flex:0 0 auto;background:none;border:none;padding:14px 14px;font-size:13.5px;font-weight:600;color:var(--mut);
+    cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;font-family:inherit}
+  nav button:hover{color:var(--ink)}
+  nav button.active{color:var(--teal-d);border-bottom-color:var(--teal)}
+  /* Sections */
+  main{max-width:1120px;margin:0 auto;padding:30px 22px 70px}
+  .panel{display:none;animation:fade .25s ease}
+  .panel.show{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  h2.sec{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal-d);font-weight:800;margin:0 0 4px}
+  h3.big{font-size:25px;font-weight:800;margin:0 0 14px;letter-spacing:-.3px;color:var(--ink)}
+  .lead{font-size:16.5px;color:var(--ink2);max-width:820px}
+  .card{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:22px;box-shadow:var(--shadow);margin-bottom:16px}
+  .grid{display:grid;gap:16px}
+  .g2{grid-template-columns:repeat(2,1fr)} .g3{grid-template-columns:repeat(3,1fr)} .g4{grid-template-columns:repeat(4,1fr)}
+  @media(max-width:860px){.g2,.g3,.g4{grid-template-columns:1fr}}
+  .kpi{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:var(--shadow)}
+  .kpi .num{font-size:30px;font-weight:800;color:var(--teal-d);letter-spacing:-.5px}
+  .kpi .lab{font-size:13px;color:var(--mut);margin-top:2px}
+  .pill{display:inline-block;font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px;letter-spacing:.03em}
+  .p-t1{background:#e7e7f7;color:#3e3e92} .p-t2{background:#dde7f5;color:#234f8c}
+  .p-t3{background:#fde7d6;color:#c25d14} .p-good{background:#daf3ea;color:#1c8e63} .p-bad{background:#fcdcdd;color:#c42a30}
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  th,td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--mut);background:#fbfbf9}
+  tbody tr:hover{background:#fafdfc}
+  .tag{font-weight:700}
+  ul.clean{margin:8px 0 0;padding-left:18px} ul.clean li{margin:5px 0}
+  .callout{border-left:4px solid var(--teal);background:#f0f0fb;padding:14px 16px;border-radius:0 10px 10px 0;margin:14px 0;font-size:14.5px}
+  .callout.gold{border-left-color:var(--gold);background:#fdf2e9}
+  /* tier cards */
+  .tier{border-radius:14px;padding:20px;color:#fff;position:relative;overflow:hidden;box-shadow:var(--shadow)}
+  .tier h4{margin:0 0 2px;font-size:19px;font-weight:800}
+  .tier .role{font-size:12.5px;opacity:.9;margin-bottom:12px}
+  .tier.t1{background:linear-gradient(135deg,#5a5ac0,#3e3e92)}
+  .tier.t2{background:linear-gradient(135deg,#2a61ac,#1f4a84)}
+  .tier.t3{background:linear-gradient(135deg,#f88032,#dd6312)}
+  .tier dl{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;font-size:13px;margin:0}
+  .tier dt{opacity:.82;font-weight:600} .tier dd{margin:0}
+  /* compare */
+  .vs th:nth-child(2){color:var(--teal-d)} .vs th:nth-child(3){color:#c25d14}
+  /* roadmap */
+  .phase{display:flex;gap:16px;margin-bottom:14px}
+  .phase .dot{flex:0 0 auto;width:42px;height:42px;border-radius:50%;background:var(--teal);color:#fff;display:flex;
+    align-items:center;justify-content:center;font-weight:800;font-size:15px;box-shadow:var(--shadow)}
+  .phase .body{flex:1;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:16px;box-shadow:var(--shadow)}
+  .phase h4{margin:0 0 4px;font-size:16px}
+  .trigger{display:inline-block;margin-top:8px;font-size:12.5px;background:#fbf6ec;border:1px dashed var(--gold);color:#8a6420;padding:5px 10px;border-radius:8px;font-weight:600}
+  /* workflow */
+  .flow{display:flex;flex-wrap:wrap;gap:8px;align-items:stretch}
+  .step{flex:1 1 150px;background:var(--paper);border:1px solid var(--line);border-radius:11px;padding:12px;box-shadow:var(--shadow);position:relative}
+  .step .n{font-size:11px;font-weight:800;color:var(--teal-d)}
+  .step h5{margin:3px 0 4px;font-size:14.5px}
+  .step p{margin:0;font-size:12.5px;color:var(--mut)}
+  .step .ai{margin-top:6px;font-size:11px;font-weight:700;color:#c25d14;background:#fdf2e9;border-radius:6px;padding:3px 7px;display:inline-block}
+  .loop{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+  .loop .lp{flex:1 1 200px;background:#f0f0fb;border:1px solid var(--teal-l);border-radius:10px;padding:12px;font-size:13px}
+  .loop .lp b{color:var(--teal-d)}
+  /* budget bars */
+  .bar{height:13px;border-radius:7px;background:var(--teal);margin-top:5px}
+  .bartrk{background:#eef1f0;border-radius:7px;overflow:hidden}
+  .agent{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:16px;box-shadow:var(--shadow)}
+  .agent .nm{font-weight:800;color:var(--teal-d);font-size:16px}
+  footer{max-width:1120px;margin:0 auto;padding:26px 22px 50px;color:var(--mut);font-size:12.5px;border-top:1px solid var(--line)}
+  .toggle{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;margin:6px 0 14px}
+  .toggle button{background:#fff;border:none;padding:9px 18px;font-weight:700;font-size:13.5px;cursor:pointer;color:var(--mut);font-family:inherit}
+  .toggle button.on{background:var(--teal);color:#fff}
+  .hide{display:none}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="eyebrow">Event &amp; Field Marketing · Systems-First Program Design</div>
+    <h1>The Prophix Event Operating System</h1>
+    <p class="sub">A system that makes great events happen reliably — so events look like a billion-dollar category leader, run by one person + AI today, with a clear path to rival-scale resourcing within a year.</p>
+    <div class="meta">
+      <span>Prepared for the Office of the CMO</span>
+      <span>By Cassie Uptmore</span>
+      <span>12-month horizon</span>
+      <span>Benchmark: Workday · Vena · Datarails · IBM</span>
+    </div>
+  </div>
+</header>
+
+<nav>
+  <div class="nav-inner" id="nav"></div>
+</nav>
+
+<main>
+
+<!-- THESIS -->
+<section class="panel show" id="p-thesis">
+  <h2 class="sec">The Thesis</h2>
+  <h3 class="big">Do more events — and do them well — by building the system, not by adding headcount</h3>
+  <p class="lead">AI isn't a cost-cutter here — it's a <b>revenue accelerator that gives a five-person team 10x–100x human leverage</b>: the output of an organization many times its size. Doing more events and doing them well are <b>not</b> in tension. A <b>system</b> — not the headcount — is what produces quality at scale. Stack three layers of leverage and one person credibly runs a big-company program; what more budget and people buy later is not quality, it's <i>parallelism and reach</i>.</p>
+  <div class="grid g3" style="margin-top:18px">
+    <div class="card"><div class="pill p-t1">Layer 1</div><h4 style="margin:8px 0 4px">Repeatable playbooks</h4><p style="margin:0;color:var(--mut);font-size:14px">Tiered runbooks so nothing is invented twice. Quality stops being person-dependent.</p></div>
+    <div class="card"><div class="pill p-t3">Layer 2</div><h4 style="margin:8px 0 4px">AI does the production load</h4><p style="margin:0;color:var(--mut);font-size:14px">Research, copy, briefs, scoring, recaps, reporting — human hours go to judgment, relationships, the room.</p></div>
+    <div class="card"><div class="pill p-t2">Layer 3</div><h4 style="margin:8px 0 4px">Partner &amp; agency leverage</h4><p style="margin:0;color:var(--mut);font-size:14px">The program looks omnipresent without a standing army. Partners bring venues and half the guest list.</p></div>
+  </div>
+  <div class="grid g4" style="margin-top:6px">
+    <div class="kpi"><div class="num">10–100×</div><div class="lab">Human leverage from AI</div></div>
+    <div class="kpi"><div class="num">3 tiers</div><div class="lab">Flagship · Industry · Intimate</div></div>
+    <div class="kpi"><div class="num">~40+</div><div class="lab">Tier-3 touches/yr = omnipresence</div></div>
+    <div class="kpi"><div class="num">5:1</div><div class="lab">Target blended pipeline-to-cost</div></div>
+  </div>
+  <div class="callout gold"><b>From "random acts of AI" to an operating model.</b> Individuals chatting back-and-forth with a chatbot can't be scaled or shared. The win is templatizing prompts into <b>workflows anyone can run</b>. Two disciplines: <b>strategic filtering (80/20)</b> — ignore the 80% of AI noise, point it at the 20% of tasks that turn strengths into superpowers; and a <b>"commercial major, marketing minor"</b> mindset — optimize for revenue in the room and pipeline velocity, not vanity metrics. The marketer becomes a <b>system architect</b>, not an order-taker.</div>
+  <div class="callout"><b>The one-line pitch to the CMO:</b> Give me the system and the AI pod, and I'll make Prophix's events look like the category leader in 90 days — then show you exactly what to fund to make the scale as big as the perception.</div>
+</section>
+
+<!-- CURRENT STATE -->
+<section class="panel" id="p-now">
+  <h2 class="sec">Current State</h2>
+  <h3 class="big">Prophix already runs a strong program — it needs to be systematized, instrumented &amp; tiered</h3>
+  <p class="lead">The job isn't to start over. It's to give a sophisticated program the operating system it deserves, so it scales and gets credit. Prophix is a Toronto-based, Hg Capital-backed FP&amp;A leader (~500–700 employees) — it has the budget and the narrative to punch at category-leader weight.</p>
+  <div class="grid g2" style="margin-top:16px">
+    <div class="card">
+      <h4 style="margin:0 0 8px;color:var(--good)">✓ What's working</h4>
+      <ul class="clean" style="font-size:14px">
+        <li><b>A real flagship</b> — Prophix Live! (2026: Denver, May 26–28), with '24/'25 momentum.</li>
+        <li><b>Global reach</b> — Prophix Live! On Tour: Brussels, Paris, London, Luxembourg, Perth.</li>
+        <li><b>Vertical credibility</b> — active at CFMA, HFMA, AFP.</li>
+        <li><b>A working partner motion</b> — co-marketing with SIs like RKL eSolutions (finance happy hours, AFP co-exhibits).</li>
+        <li><b>A sharp narrative</b> — "autonomous finance / Office of the CFO" + the Prophix One agent suite.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4 style="margin:0 0 8px;color:var(--bad)">▲ Gaps to close</h4>
+      <ul class="clean" style="font-size:14px">
+        <li><b>No explicit tiering</b> — effort spread evenly burns a small team and dilutes the flagship.</li>
+        <li><b>Intimate executive demand under-built</b> — no always-on dinner / CFO council program (the highest-ROI motion for selling to the CFO).</li>
+        <li><b>Workflows live in people's heads</b> — no runbooks/SLAs means it can't scale or be handed to AI.</li>
+        <li><b>Thin attribution</b> — hard to prove pipeline per event, the exact number that defends budget.</li>
+        <li><b>AI under-leveraged</b> in the workflow itself, not just on stage.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- COMPETITIVE -->
+<section class="panel" id="p-comp">
+  <h2 class="sec">Competitive Landscape</h2>
+  <h3 class="big">Steal the best move from each — then own the white space none of them have claimed</h3>
+  <p class="lead">Each benchmark competitor has one signature event move. The play: borrow the best of each, then take a position nobody owns — <b>the most intimate, useful, and AI-forward room for finance leaders.</b></p>
+  <div class="card" style="overflow-x:auto;margin-top:14px">
+    <table>
+      <thead><tr><th>Competitor</th><th>Signature move</th><th>What they do well</th><th>What Prophix should steal</th><th>Where Prophix wins</th></tr></thead>
+      <tbody>
+        <tr><td class="tag">Workday<br><span style="font-weight:400;color:var(--mut)">(Adaptive Planning)</span></td><td><b>Workday Rising</b> — tens-of-thousands marquee flagship</td><td>Sheer scale = category-leader perception; ecosystem gravity</td><td>Main-stage production polish &amp; storytelling, at Prophix scale</td><td>Intimacy &amp; finance depth — finance gets lost in a broad HCM/ERP show</td></tr>
+        <tr><td class="tag">Vena</td><td><b>Excelerate Finance Fest</b> — all-inclusive resort takeover, CPE/CPD-accredited</td><td>Experience design + accreditation as a real reason to attend</td><td>The <b>CPE/CPD accreditation hook</b> &amp; "earn-while-you-network" model</td><td>A multi-format program (flagship + always-on field), not one annual bet</td></tr>
+        <tr><td class="tag">Datarails</td><td>Brand blitz — "FP&amp;A is dead / FinanceOS," $70M Series C, awards + podcast</td><td>Loud, opinionated PR; awards program; content engine drives field</td><td>A <b>provocative POV</b> &amp; an <b>awards program</b> that makes customers the heroes</td><td>Substance + enterprise trust for multi-entity mid-market</td></tr>
+        <tr><td class="tag">IBM<br><span style="font-weight:400;color:var(--mut)">(Planning Analytics)</span></td><td>Analyst-grade enterprise events</td><td>Gravitas, analyst relations, executive credibility</td><td>The <b>executive-briefing-center</b> 1:few format + analyst integration</td><td>Speed, modernity &amp; a human-scale experience IBM can't match</td></tr>
+        <tr style="background:#f0f0fb"><td class="tag">Context: Anaplan (CPX), Pigment (Sessions), Planful (Perform)</td><td>Modern flagship + heavy field</td><td>Brand design &amp; field omnipresence</td><td>Design language &amp; field cadence</td><td>Vertical depth (CFMA/HFMA) + partner co-sell</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout gold"><b>The white space:</b> No competitor owns "the most intimate, useful, and AI-forward room for finance leaders." A tiered system claims it — a marquee flagship for scale, a relentless field/dinner cadence for omnipresence, and accredited, agenda-light executive experiences for trust.</div>
+</section>
+
+<!-- TIERS -->
+<section class="panel" id="p-tiers">
+  <h2 class="sec">The Three-Tier Model</h2>
+  <h3 class="big">Tiering is the highest-leverage decision a small team can make</h3>
+  <p class="lead">It tells you where to spend disproportionate effort, what to templatize and hand to AI, and what to cut without guilt. <b>Tier 1 buys perception of scale. Tier 3 buys omnipresence and the best ROI. Tier 2 connects them.</b></p>
+  <div class="grid g3" style="margin-top:16px">
+    <div class="tier t1">
+      <h4>Tier 1</h4><div class="role">Owned flagship &amp; marquee</div>
+      <dl>
+        <dt>What</dt><dd>Prophix Live! + On Tour regional editions</dd>
+        <dt>Goal</dt><dd>Category leadership, brand gravity, customer love</dd>
+        <dt>Cadence</dt><dd>1 flagship + 4–8 regional/yr</dd>
+        <dt>Cost</dt><dd>$250K–$900K flagship; $25K–$75K regional</dd>
+        <dt>AI</dt><dd>Agendas, abstracts, personalized agendas, recap factory</dd>
+        <dt>KPI</dt><dd>Pipeline, NPS, expansion, share of voice</dd>
+      </dl>
+    </div>
+    <div class="tier t2">
+      <h4>Tier 2</h4><div class="role">Industry / sponsored + roadshow</div>
+      <dl>
+        <dt>What</dt><dd>CFMA, HFMA, AFP, chapters, vertical shows, speaking</dd>
+        <dt>Goal</dt><dd>"Be everywhere" footprint, vertical credibility, TOFU</dd>
+        <dt>Cadence</dt><dd>12–24/yr</dd>
+        <dt>Cost</dt><dd>$8K–$60K per event</dd>
+        <dt>AI</dt><dd>Show ROI scoring, pre-show outreach, lead routing</dd>
+        <dt>KPI</dt><dd>Cost/lead, meetings booked, accounts engaged</dd>
+      </dl>
+    </div>
+    <div class="tier t3">
+      <h4>Tier 3</h4><div class="role">Field &amp; intimate — the omnipresence engine</div>
+      <dl>
+        <dt>What</dt><dd>Exec dinners, CFO councils, partner happy hours, accredited webinars, CAB, meetups</dd>
+        <dt>Goal</dt><dd>Highest-intent demand + appearance of omnipresence</dd>
+        <dt>Cadence</dt><dd>30–60/yr</dd>
+        <dt>Cost</dt><dd>$1.5K–$15K (dinners ~$5K–$12K)</dd>
+        <dt>AI</dt><dd>Target lists, invites, briefing docs, follow-ups</dd>
+        <dt>KPI</dt><dd>Exec meetings, pipeline/$ (best in mix), advocacy</dd>
+      </dl>
+    </div>
+  </div>
+  <div class="callout">A small team wins by going <b>deep</b> on a few Tier 1 moments, <b>systematizing</b> Tier 2 so it runs on rails, and using AI + partners to run a <b>relentless</b> Tier 3 cadence that makes Prophix feel everywhere.</div>
+</section>
+
+<!-- OPERATING MODEL -->
+<section class="panel" id="p-ops">
+  <h2 class="sec">Operating Model</h2>
+  <h3 class="big">Two versions of the same machine — side by side</h3>
+  <p class="lead">Start in Model A on day one to build the system and bank quick wins; graduate to Model B as pipeline proof unlocks budget. The system is identical — only the throughput changes.</p>
+  <div class="toggle" id="modeToggle">
+    <button class="on" data-mode="A">Model A · Solo + AI</button>
+    <button data-mode="B">Model B · Rival-Scale</button>
+  </div>
+
+  <div id="modeA">
+    <div class="card">
+      <h4 style="margin:0 0 6px">"1 human, a pod of AI agents, 2 retainer vendors, the partner channel"</h4>
+      <p style="margin:0 0 6px;color:var(--mut);font-size:14px">The human does only what a human must: strategy, relationships, on-site presence, exec dinners, judgment, saying no. Everything reproducible is delegated.</p>
+    </div>
+    <div class="grid" style="grid-template-columns:repeat(5,1fr)">
+      <div class="agent"><div class="nm">Scout</div><p style="margin:4px 0 0;font-size:13px;color:var(--mut)">Account/contact research, show-ROI scoring, attendee briefing docs</p></div>
+      <div class="agent"><div class="nm">Scribe</div><p style="margin:4px 0 0;font-size:13px;color:var(--mut)">Invites, landing pages, emails, social, abstracts, recaps, awards</p></div>
+      <div class="agent"><div class="nm">Concierge</div><p style="margin:4px 0 0;font-size:13px;color:var(--mut)">RSVP tracking, reminders, personalized agendas, logistics checklists</p></div>
+      <div class="agent"><div class="nm">Analyst</div><p style="margin:4px 0 0;font-size:13px;color:var(--mut)">Lead scoring/routing, budget tracking, dashboards, retros</p></div>
+      <div class="agent"><div class="nm">Sprint</div><p style="margin:4px 0 0;font-size:13px;color:var(--mut)">PM agent CC'd on email + in meetings: tracks transcripts, updates the tracker, pings deadlines</p></div>
+    </div>
+    <div class="callout gold"><b>What the solo model really delivers:</b> a genuinely large, high-quality program — the flagship plus a full-calendar Tier 2 presence and a relentless field + dinner cadence (~25–30 Tier 3), all to a high standard, because the system (not headcount) guarantees the quality. The limits are <b>not</b> volume or quality — they're <i>simultaneity</i> (one person can't host three dinners in three cities the same night), deep geographic reach, single-point-of-failure risk, and the most bespoke white-glove production. Those four things — not "doing events well" — are the only things Model B's resources actually buy.</div>
+  </div>
+
+  <div id="modeB" class="hide">
+    <div class="card">
+      <h4 style="margin:0 0 6px">Same system, more hands &amp; budget — built to genuinely rival the benchmark set</h4>
+      <table style="margin-top:8px">
+        <thead><tr><th>Role</th><th>Owns</th><th>Hire</th></tr></thead>
+        <tbody>
+          <tr><td class="tag">Director / Sr. Mgr, Field &amp; Events</td><td>Strategy, flagship, executive program <span class="pill p-good">the role you're applying for</span></td><td>Month 0</td></tr>
+          <tr><td class="tag">Field Marketing Manager</td><td>Tier 2 + regional roadshow + ABM-integrated field</td><td>~Month 3</td></tr>
+          <tr><td class="tag">Events Producer / Coordinator</td><td>Logistics, vendor mgmt, Tier 3 at volume</td><td>~Month 5</td></tr>
+          <tr><td class="tag">Fractional / agency</td><td>Design, marketing ops, production retainer</td><td>Ongoing</td></tr>
+          <tr><td class="tag">2nd Field Mgr (EMEA) — optional</td><td>Roadshow scale in Europe</td><td>~Month 9</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout"><b>Result:</b> flagship at full polish + 6–10 regional editions + a complete industry calendar + 30–50 Tier 3 events + an ABM-integrated executive program — a footprint that reads as a category leader several times Prophix's size.</div>
+  </div>
+
+  <h4 style="margin:22px 0 6px">The trade-off at a glance</h4>
+  <div class="card" style="overflow-x:auto">
+    <table class="vs">
+      <thead><tr><th>Dimension</th><th>Model A · Solo + AI</th><th>Model B · Rival-Scale</th></tr></thead>
+      <tbody>
+        <tr><td>Headcount</td><td>1 FTE + AI pod + 2 vendors</td><td>3–4 FTE + agency + fractional</td></tr>
+        <tr><td>Annual budget</td><td>~$650K</td><td>~$2.5M</td></tr>
+        <tr><td>Tier 1 flagship</td><td>1, agency-produced</td><td>1 at full polish + 6–10 regional</td></tr>
+        <tr><td>Tier 2 events/yr</td><td>10–14 (full calendar, sequenced)</td><td>18–24 (parallel coverage)</td></tr>
+        <tr><td>Tier 3 events/yr</td><td>25–30</td><td>30–50 (simultaneous across regions)</td></tr>
+        <tr><td>Executive program</td><td>Founder-led, ~quarterly</td><td>Always-on, ABM-integrated</td></tr>
+        <tr><td>"Looks like a $1B company?"</td><td><span class="pill p-good">Yes — perception + omnipresence</span></td><td><span class="pill p-good">Yes — perception + true scale</span></td></tr>
+        <tr><td>Primary risk</td><td>Single point of failure; capped Tier 1</td><td>Standard hiring / ramp risk</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- STACK -->
+<section class="panel" id="p-stack">
+  <h2 class="sec">The AI Operating Model</h2>
+  <h3 class="big">How a small team produces big-company event &amp; field assets</h3>
+  <p class="lead">Not by chatting with a chatbot — by turning repeatable tasks into shared, governed workflows. Build the system once and it compounds.</p>
+  <div class="grid g3" style="margin-top:16px">
+    <div class="card"><div class="pill p-t1">The Marketing Brain</div><p style="margin:8px 0 0;font-size:13.5px;color:var(--mut)">A versioned repository of prompts &amp; "skills" encoding Prophix SOPs, brand, and frameworks. Anyone invokes an <b>"executive-dinner"</b> or <b>"programmatic-SEO"</b> skill and gets on-brand output in seconds. The difference between a clever individual and a scalable team.</p></div>
+    <div class="card"><div class="pill p-t3">Zero-to-One workflows</div><p style="margin:8px 0 0;font-size:13.5px;color:var(--mut)">Automate the first 80%, humans finish the last 20%. From one event topic: auto-research guests &amp; accounts, generate speaker summaries &amp; titles, draft host talking points and the full invite + reminder sequence — in <b>minutes</b>.</p></div>
+    <div class="card"><div class="pill p-t2">Mass personalization</div><p style="margin:8px 0 0;font-size:13.5px;color:var(--mut)">AI video (e.g. <b>HeyGen</b>) creates promos where a speaker thanks each registrant <b>by name</b>, at scale — an "unfair" level of high-touch engagement larger competitors can't match.</p></div>
+    <div class="card"><div class="pill p-t1">Agentic PM — "Sprint"</div><p style="margin:8px 0 0;font-size:13.5px;color:var(--mut)">A bespoke project-manager agent CC'd on email and in meetings: tracks transcripts, updates the tracker, pings owners on deadlines. The program runs itself between standups.</p></div>
+    <div class="card"><div class="pill p-t3">Sales-enablement "brains"</div><p style="margin:8px 0 0;font-size:13.5px;color:var(--mut)">An approved content library so sales generates bespoke, on-brand decks &amp; outreach off every event in real time — closing the marketing-to-sales gap, no off-brand drift.</p></div>
+    <div class="card"><div class="pill p-t2">Content &amp; SEO engines</div><p style="margin:8px 0 0;font-size:13.5px;color:var(--mut)">Programmatic SEO spins up dozens of on-brand landing pages from real keyword data; a quarterly refresh keeps them <b>~3× more likely to be cited by AI search</b> (Perplexity et al.).</p></div>
+  </div>
+  <div class="grid g2" style="margin-top:6px">
+    <div class="card"><div class="pill p-t1">AI as thought partner — CRIT</div><p style="margin:8px 0 0;font-size:13.5px;color:var(--mut)">Not an oracle. The <b>CRIT</b> framework (Context, Role, Interview, Task) makes AI interview you one question at a time to surface gaps in the plan <b>before</b> a dollar is spent.</p></div>
+    <div class="card"><div class="pill p-t3">Built to last + the wizard ratio</div><p style="margin:8px 0 0;font-size:13.5px;color:var(--mut)"><b>Modular infrastructure</b> swaps LLMs/agents as pricing shifts — no lock-in. And ~<b>one technical builder per 10 marketers</b> (a "vibe coder") turns ideas into working tools and custom event apps in hours.</p></div>
+  </div>
+  <div class="callout"><b>Governance — a risk-level operating model.</b> Categorize every AI task by brand risk. <b>Low-risk, internal</b> (monitor / summarize / report — the "Sprint" agent) runs autonomously. <b>High-risk, customer-facing</b> (personalized outreach, deal strategy, anything a prospect sees) always requires <b>human-in-the-loop</b> review — one obvious error there invalidates brand trust.</div>
+  <h3 class="big" style="margin-top:24px;font-size:20px">The tooling stack — lean vs. scaled</h3>
+  <div class="card" style="overflow-x:auto;margin-top:10px">
+    <table>
+      <thead><tr><th>Job to be done</th><th>Lean (Model A)</th><th>Scaled (Model B)</th></tr></thead>
+      <tbody>
+        <tr><td><b>AI production layer (the "brain")</b></td><td>Claude / Cowork pod + prompt repo</td><td>Versioned skills repo + fine-tuned brand agents</td></tr>
+        <tr><td><b>AI video / mass personalization</b></td><td>HeyGen / Synthesia</td><td>HeyGen Enterprise + branded avatars</td></tr>
+        <tr><td>Event management / registration</td><td>Splash or Luma</td><td>Cvent / RainFocus</td></tr>
+        <tr><td>Virtual + hybrid</td><td>Zoom Events / Goldcast lite</td><td>Goldcast full</td></tr>
+        <tr><td>CRM + marketing automation</td><td>HubSpot (existing)</td><td>Salesforce + Marketo</td></tr>
+        <tr><td>ABM / intent</td><td>Clearbit + LinkedIn</td><td>6sense / Demandbase</td></tr>
+        <tr><td>Project &amp; ops (Sprint agent backbone)</td><td>Notion / Asana free</td><td>Asana / Monday enterprise</td></tr>
+        <tr><td>Design</td><td>Canva + brand templates</td><td>Canva Enterprise + Figma + designer</td></tr>
+        <tr><td>Lead capture on-site</td><td>iCapture / badge scan</td><td>Integrated capture + instant routing</td></tr>
+        <tr><td>Analytics &amp; attribution</td><td>HubSpot dashboards + sheet</td><td>Full attribution (Dreamdata/Bizible)</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- WORKFLOWS -->
+<section class="panel" id="p-flow">
+  <h2 class="sec">Workflows &amp; Feedback Loops</h2>
+  <h3 class="big">One lifecycle, nine stages, every event — only lead-time changes by tier</h3>
+  <p class="lead">The core asset is a set of tiered runbooks: a single source of truth defining every stage, owner, AI-assisted step, and SLA. <b>Lead times:</b> Tier 1 = 12–16 wks · Tier 2 = 6–8 wks · Tier 3 = 3–4 wks (dinners), &lt;2 wks (webinars).</p>
+  <div class="flow" style="margin-top:14px">
+    <div class="step"><div class="n">01</div><h5>Select</h5><p>Score vs ICP, tier, target-account overlap</p><span class="ai">AI · Scout</span></div>
+    <div class="step"><div class="n">02</div><h5>Brief</h5><p>One-page: objective, audience, offer, budget, KPI</p><span class="ai">AI · Scribe</span></div>
+    <div class="step"><div class="n">03</div><h5>Build</h5><p>Page, registration, creative, run-of-show</p><span class="ai">AI · Scribe/Concierge</span></div>
+    <div class="step"><div class="n">04</div><h5>Promote</h5><p>Multi-touch invites, sales-assisted outreach, social</p><span class="ai">AI · Scribe</span></div>
+    <div class="step"><div class="n">05</div><h5>Produce</h5><p>Vendor/partner coordination, rehearsal</p><span class="ai">Human + agency</span></div>
+    <div class="step"><div class="n">06</div><h5>Execute</h5><p>Deliver, capture leads &amp; conversations</p><span class="ai">Human + partner</span></div>
+    <div class="step"><div class="n">07</div><h5>Follow-up</h5><p>48-hr routing SLA, personalized follow-up</p><span class="ai">AI · Analyst/Scribe</span></div>
+    <div class="step"><div class="n">08</div><h5>Measure</h5><p>Pipeline, cost-per-opp, NPS to dashboard</p><span class="ai">AI · Analyst</span></div>
+    <div class="step"><div class="n">09</div><h5>Retro</h5><p>Within 5 days → into the backlog</p><span class="ai">Human + AI</span></div>
+  </div>
+  <h4 style="margin:22px 0 4px">Feedback loops that keep it agile</h4>
+  <div class="loop">
+    <div class="lp"><b>Pre-event:</b> target-list validation with Sales — kills wasted spend before it happens.</div>
+    <div class="lp"><b>In-event:</b> conversations + lead capture logged same day.</div>
+    <div class="lp"><b>48-hour rule:</b> every lead routed &amp; followed up in two business days — non-negotiable SLA.</div>
+    <div class="lp"><b>5-day retro:</b> fast, blameless, written into the backlog.</div>
+    <div class="lp"><b>Monthly pipeline review</b> with Sales — what's converting, what's stuck.</div>
+    <div class="lp"><b>Quarterly rebalance:</b> double down on winners, kill underperformers, reallocate budget.</div>
+  </div>
+  <h4 style="margin:22px 0 4px">Sprint cycles — manufacture "noise in the market"</h4>
+  <p style="margin:0 0 10px;font-size:14.5px;color:var(--ink2)"><b>Run field marketing like product engineering.</b> Replace the rigid annual plan with <b>sprint cycles</b> — 3-week and 2-month blocks — so the team is always <i>shipping</i>: a new field play, a local series, a personalized promo, a refreshed landing-page set. Constant shipping matches the speed of AI and creates a persistent <b>"noise in the market"</b> that makes a small team look larger and more innovative than rigid incumbents. Billion-dollar perception comes from visible, constant innovation — not one big annual bet.</p>
+  <div class="callout gold"><b>Operating rhythm:</b> Weekly standup + Kanban of every event by stage (the "Sprint" agent keeps it current) · sprint demos every 2–3 weeks · quarterly portfolio scoring &amp; budget rebalance. <b>Treat the event portfolio like a product backlog</b> — each event is a scored bet; the calendar is living, not frozen in January.</div>
+</section>
+
+<!-- ROADMAP -->
+<section class="panel" id="p-road">
+  <h2 class="sec">12-Month Roadmap</h2>
+  <h3 class="big">Build the machine first, then let pipeline proof unlock the resources</h3>
+  <p class="lead">Each phase has an exit metric and an explicit spend/hire trigger — so growth from Model A to Model B is earned by data, not argued in a meeting.</p>
+  <div style="margin-top:16px">
+    <div class="phase"><div class="dot">0</div><div class="body"><h4>Build the machine · Month 0–1</h4><p style="margin:0;font-size:14px;color:var(--mut)">Audit events, instrument attribution, stand up runbooks + AI agents + dashboards + Kanban. Tier the calendar, build the budget model. Quick wins: first exec dinner + accredited webinar in 30 days.</p><span class="trigger">Exit: system live · first 2 Tier 3 booked · attribution reporting</span></div></div>
+    <div class="phase"><div class="dot">1</div><div class="body"><h4>Stand up the Tier 3 engine · Q1 (Month 2–4)</h4><p style="margin:0;font-size:14px;color:var(--mut)">Launch always-on dinner + roundtable cadence; activate partner co-marketing (RKL + 2–3 more SIs); pilot AI workflows at volume.</p><span class="trigger">Exit: 6+ Tier 3 run · cost-per-opp baseline · 1st sourced pipeline → Hire: Field Marketing Manager</span></div></div>
+    <div class="phase"><div class="dot">2</div><div class="body"><h4>Flagship + roadshow · Q2 (Month 5–7)</h4><p style="margin:0;font-size:14px;color:var(--mut)">Execute Prophix Live! + regional editions; scale industry presence (CFMA, HFMA, AFP). Full runbook under load.</p><span class="trigger">Exit: flagship pipeline + NPS hit → Hire: Events Producer / Coordinator</span></div></div>
+    <div class="phase"><div class="dot">3</div><div class="body"><h4>Optimize &amp; integrate · Q3 (Month 8–10)</h4><p style="margin:0;font-size:14px;color:var(--mut)">ABM-integrate the field program; launch the Customer Advisory Board; expand regions; launch the awards program (steal from Datarails).</p><span class="trigger">Exit: target-account engagement up · CAB live · portfolio rebalanced</span></div></div>
+    <div class="phase"><div class="dot">4</div><div class="body"><h4>Measure, rebalance, scale the case · Q4 (Month 11–12)</h4><p style="margin:0;font-size:14px;color:var(--mut)">Full-year measurement; rebalance next-year portfolio; build the investment case to fully fund Model B.</p><span class="trigger">Exit: board-ready ROI story · next-year plan + budget approved</span></div></div>
+  </div>
+</section>
+
+<!-- CALENDAR -->
+<section class="panel" id="p-cal">
+  <h2 class="sec">12-Month Tiered Calendar</h2>
+  <h3 class="big">All three tiers, every month — anchored to real 2026 dates</h3>
+  <p class="lead">Confirmed anchors: Prophix Live! Denver May 26–28 · CFMA late May · HFMA early June · AFP fall · Vena Excelerate May (competitive watch). Beyond anchors the grid is illustrative and flexes with the agile cadence.</p>
+  <div class="card" style="overflow-x:auto;margin-top:14px">
+    <table>
+      <thead><tr><th>Month</th><th><span class="pill p-t1">Tier 1</span> Flagship / Owned</th><th><span class="pill p-t2">Tier 2</span> Industry / Roadshow</th><th><span class="pill p-t3">Tier 3</span> Field / Intimate</th></tr></thead>
+      <tbody>
+        <tr><td><b>Jun</b></td><td>Post-Prophix Live! content factory + nurture</td><td>HFMA Annual (National Harbor)</td><td>2 exec dinners (NYC, Chicago); accredited webinar</td></tr>
+        <tr><td><b>Jul</b></td><td>Regional roadshow planning</td><td>Regional AFP chapters ×2</td><td>2 dinners; CFO roundtable; partner happy hour (RKL)</td></tr>
+        <tr><td><b>Aug</b></td><td>Prophix Live! On Tour — city 1</td><td>Vertical webinar series kickoff</td><td>3 dinners; user-group meetup</td></tr>
+        <tr><td><b>Sep</b></td><td>On Tour — city 2</td><td>Sponsored speaking ×2</td><td>3 dinners; accredited roundtable; CAB recruiting</td></tr>
+        <tr><td><b>Oct</b></td><td>On Tour — city 3 (EMEA)</td><td>AFP Annual (booth + meetings)</td><td>4 dinners; partner co-host ×2</td></tr>
+        <tr><td><b>Nov</b></td><td>On Tour — city 4</td><td>Healthcare/construction vertical shows</td><td>3 dinners; awards program launch; webinar</td></tr>
+        <tr><td><b>Dec</b></td><td>Year-in-review + customer awards</td><td>Planning + holiday outreach</td><td>2 customer dinners; CAB session 1</td></tr>
+        <tr><td><b>Jan</b></td><td>Prophix Live! 2027 theme + site lock</td><td>Regional FP&amp;A events ×2</td><td>3 dinners; "finance leader" salon series</td></tr>
+        <tr><td><b>Feb</b></td><td>Flagship promotion engine on</td><td>Sponsored speaking ×2</td><td>4 dinners; accredited webinar; partner happy hour</td></tr>
+        <tr><td><b>Mar</b></td><td>Flagship registration push</td><td>CFMA regional + vertical shows</td><td>4 dinners; CFO council; CAB session 2</td></tr>
+        <tr><td><b>Apr</b></td><td>Flagship final prep + roadshow plan</td><td>Regional AFP ×2</td><td>3 dinners; pre-flagship VIP receptions</td></tr>
+        <tr style="background:#f0f0fb"><td><b>May</b></td><td><b>Prophix Live! flagship</b> + On Tour relaunch</td><td>CFMA Annual · (watch: Vena Excelerate)</td><td>VIP dinners at flagship; exec briefings on-site</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout"><b>Cadence totals (Model B):</b> 1 flagship + ~6–10 regional (Tier 1) · ~18–24 (Tier 2) · ~40 (Tier 3). Model A runs the same skeleton at ~half the Tier 2/3 volume with heavier partner + AI leverage.</div>
+</section>
+
+<!-- BUDGET -->
+<section class="panel" id="p-budget">
+  <h2 class="sec">Budget Model</h2>
+  <h3 class="big">Modeled bottom-up — recommend ~$2.5M to rival the benchmark set</h3>
+  <p class="lead">For a PE-backed, ~$100M+ FP&amp;A leader running a global flagship, a roadshow, a full industry calendar and an executive program, ~$2.5M is the rival-scale program budget. The solo model floors at ~$650K and still punches above weight.</p>
+  <div class="grid g2" style="margin-top:16px">
+    <div class="card">
+      <h4 style="margin:0 0 10px">Model B · Rival-scale <span class="pill p-t1">~$2.50M / yr</span></h4>
+      <div id="budgetB"></div>
+      <p style="font-size:12px;color:var(--mut);margin:10px 0 0">Headcount (~$550–650K loaded, 3–4 FTE) sits in a separate people-budget line, not double-counted here.</p>
+    </div>
+    <div class="card">
+      <h4 style="margin:0 0 10px">Model A · Solo operator <span class="pill p-t3">~$650K / yr</span></h4>
+      <div id="budgetA"></div>
+      <p style="font-size:12px;color:var(--mut);margin:10px 0 0">Plus 1 FTE. Heavier partner + AI leverage substitutes for spend.</p>
+    </div>
+  </div>
+  <div class="grid g3" style="margin-top:4px">
+    <div class="kpi"><div class="num">5:1</div><div class="lab">Blended pipeline-to-cost target (12 mo)</div></div>
+    <div class="kpi"><div class="num">8
