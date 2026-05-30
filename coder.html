@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coder Event &amp; Field Marketing Operating System</title>
+<style>
+  :root{
+    --ink:#14151a; --ink2:#3b4250; --green:#16a34a; --green-d:#107a37; --green-l:#e2f5e9;
+    --sand:#f5f6f7; --paper:#ffffff; --line:#e6e8ec; --mut:#5b6472; --slate:#475569; --amber:#d97706;
+    --t1:#16a34a; --t2:#475569; --t3:#d97706; --bad:#cf4035; --good:#16a34a;
+    --shadow:0 1px 2px rgba(20,21,26,.06),0 8px 24px rgba(20,21,26,.09);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    color:var(--ink);background:var(--sand);line-height:1.55;-webkit-font-smoothing:antialiased}
+  a{color:var(--green-d);text-decoration:none}
+  header{background:linear-gradient(125deg,#0e0f14 0%,#10241a 55%,#16a34a 140%);color:#fff;padding:34px 28px 26px}
+  .wrap{max-width:1120px;margin:0 auto}
+  .eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#7fe0a0;font-weight:700}
+  header h1{font-size:32px;line-height:1.15;margin:8px 0 6px;font-weight:800;letter-spacing:-.5px}
+  header p.sub{font-size:16px;color:#d2dbd6;max-width:790px;margin:0}
+  .meta{margin-top:16px;display:flex;flex-wrap:wrap;gap:10px;font-size:12.5px}
+  .meta span{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);padding:5px 11px;border-radius:999px}
+  nav{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .nav-inner{max-width:1120px;margin:0 auto;display:flex;gap:2px;overflow-x:auto;padding:0 14px}
+  nav button{flex:0 0 auto;background:none;border:none;padding:14px 14px;font-size:13.5px;font-weight:600;color:var(--mut);
+    cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;font-family:inherit}
+  nav button:hover{color:var(--ink)}
+  nav button.active{color:var(--green-d);border-bottom-color:var(--green)}
+  main{max-width:1120px;margin:0 auto;padding:30px 22px 70px}
+  .panel{display:none;animation:fade .25s ease}
+  .panel.show{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  h2.sec{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--green-d);font-weight:800;margin:0 0 4px}
+  h3.big{font-size:25px;font-weight:800;margin:0 0 14px;letter-spacing:-.3px;color:var(--ink)}
+  .lead{font-size:16.5px;color:var(--ink2);max-width:840px}
+  .card{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:22px;box-shadow:var(--shadow);margin-bottom:16px}
+  .grid{display:grid;gap:16px}
+  .g2{grid-template-columns:repeat(2,1fr)} .g3{grid-template-columns:repeat(3,1fr)} .g4{grid-template-columns:repeat(4,1fr)}
+  @media(max-width:860px){.g2,.g3,.g4{grid-template-columns:1fr}}
+  .kpi{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:var(--shadow)}
+  .kpi .num{font-size:30px;font-weight:800;color:var(--green-d);letter-spacing:-.5px}
+  .kpi .lab{font-size:13px;color:var(--mut);margin-top:2px}
+  .pill{display:inline-block;font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px;letter-spacing:.03em}
+  .p-t1{background:#dcf3e4;color:#107a37} .p-t2{background:#e4e8ee;color:#384559} .p-t3{background:#fcecd4;color:#a8590a}
+  .p-good{background:#dcf3e4;color:#107a37} .p-bad{background:#fbe0dd;color:#b2271c}
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  th,td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--mut);background:#fafbfb}
+  tbody tr:hover{background:#f8faf9}
+  .tag{font-weight:700}
+  ul.clean{margin:8px 0 0;padding-left:18px} ul.clean li{margin:5px 0}
+  .callout{border-left:4px solid var(--green);background:#e8f6ee;padding:14px 16px;border-radius:0 10px 10px 0;margin:14px 0;font-size:14.5px}
+  .callout.alt{border-left-color:var(--amber);background:#fdf1df}
+  .tier{border-radius:14px;padding:20px;color:#fff;position:relative;overflow:hidden;box-shadow:var(--shadow)}
+  .tier h4{margin:0 0 2px;font-size:19px;font-weight:800}
+  .tier .role{font-size:12.5px;opacity:.92;margin-bottom:12px}
+  .tier.t1{background:linear-gradient(135deg,#16a34a,#107a37)}
+  .tier.t2{background:linear-gradient(135deg,#475569,#2f3b4d)}
+  .tier.t3{background:linear-gradient(135deg,#d97706,#a8590a)}
+  .tier dl{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;font-size:13px;margin:0}
+  .tier dt{opacity:.85;font-weight:600} .tier dd{margin:0}
+  .vs th:nth-child(2){color:var(--green-d)} .vs th:nth-child(3){color:#a8590a}
+  .phase{display:flex;gap:16px;margin-bottom:14px}
+  .phase .dot{flex:0 0 auto;width:42px;height:42px;border-radius:50%;background:var(--green);color:#fff;display:flex;
+    align-items:center;justify-content:center;font-weight:800;font-size:15px;box-shadow:var(--shadow)}
+  .phase .body{flex:1;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:16px;box-shadow:var(--shadow)}
+  .phase h4{margin:0 0 4px;font-size:16px}
+  .trigger{display:inline-block;margin-top:8px;font-size:12.5px;background:#fdf1df;border:1px dashed var(--amber);color:#a8590a;padding:5px 10px;border-radius:8px;font-weight:600}
+  .flow{display:flex;flex-wrap:wrap;gap:8px;align-items:stretch}
+  .step{flex:1 1 150px;background:var(--paper);border:1px solid var(--line);border-radius:11px;padding:12px;box-shadow:var(--shadow);position:relative}
+  .step .n{font-size:11px;font-weight:800;color:var(--green-d)}
+  .step h5{margin:3px 0 4px;font-size:14.5px}
+  .step p{margin:0;font-size:12.5px;color:var(--mut)}
+  .step .ai{margin-top:6px;font-size:11px;font-weight:700;color:#a8590a;background:#fdf1df;border-radius:6px;padding:3px 7px;display:inline-block}
+  .loop{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+  .loop .lp{flex:1 1 200px;background:#e8f6ee;border:1px solid var(--green-l);border-radius:10px;padding:12px;font-size:13px}
+  .loop .lp b{color:var(--green-d)}
+  .bar{height:13px;border-radius:7px;background:var(--green);margin-top:5px}
+  .bartrk{background:#eaecee;border-radius:7px;overflow:hidden}
+  .agent{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:16px;box-shadow:var(--shadow)}
+  .agent .nm{font-weight:800;color:var(--green-d);font-size:16px}
+  footer{max-width:1120px;margin:0 auto;padding:26px 22px 50px;color:var(--mut);font-size:12.5px;border-top:1px solid var(--line)}
+  .toggle{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;margin:6px 0 14px}
+  .toggle button{background:#fff;border:none;padding:9px 18px;font-weight:700;font-size:13.5px;cursor:pointer;color:var(--mut);font-family:inherit}
+  .toggle button.on{background:var(--green);color:#fff}
+  .hide{display:none}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="eyebrow">Event &amp; Field Marketing · Systems-First Program Design</div>
+    <h1>The Coder Event Operating System</h1>
+    <p class="sub">How to own the hottest enterprise shift — running AI coding agents securely on your own infrastructure — by winning developer credibility and the CTO/CISO governance decision at once, run at startup speed by a team supercharged with an AI operating model (on Coder's own governed workspaces).</p>
+    <div class="meta">
+      <span>Prepared for Coder GTM leadership · the Office of the CMO</span>
+      <span>12-month horizon</span>
+      <span>Category: Secure self-hosted dev infra → governed AI coding agents</span>
+    </div>
+  </div>
+</header>
+
+<nav><div class="nav-inner" id="nav"></div></nav>
+
+<main>
+
+<!-- THESIS -->
+<section class="panel show" id="p-thesis">
+  <h2 class="sec">The Thesis</h2>
+  <h3 class="big">Coder sits at the center of the year's biggest enterprise question — events have to make the market feel it</h3>
+  <p class="lead">Every enterprise is racing to adopt AI coding agents — and discovering they can't run them safely on someone else's cloud. Coder is the answer: governed, self-hosted infrastructure for AI agents and developers, freshly backed by KKR. The event/field job is two-front: <b>win developer &amp; platform-engineering credibility</b> (you can't fake dev love) <i>and</i> <b>drive the CTO/CISO governance decision</b>. AI gives <b>10x–100x leverage</b> — and uniquely, Coder can run its own marketing agents on its own governed workspaces.</p>
+  <div class="grid g3" style="margin-top:18px">
+    <div class="card"><div class="pill p-t1">Layer 1</div><h4 style="margin:8px 0 4px">Repeatable playbooks</h4><p style="margin:0;color:var(--mut);font-size:14px">Tiered runbooks (as code) so nothing is invented twice. Quality stops being person-dependent as the team scales.</p></div>
+    <div class="card"><div class="pill p-t3">Layer 2</div><h4 style="margin:8px 0 4px">AI does the production load</h4><p style="margin:0;color:var(--mut);font-size:14px">Research, copy, briefs, recaps — run as governed agents on Coder's own workspaces. The ultimate proof point.</p></div>
+    <div class="card"><div class="pill p-t2">Layer 3</div><h4 style="margin:8px 0 4px">Community &amp; ecosystem leverage</h4><p style="margin:0;color:var(--mut);font-size:14px">Open-source contributors, the CNCF/platform-eng community, and partners (WWT) extend reach beyond the team.</p></div>
+  </div>
+  <div class="grid g4" style="margin-top:6px">
+    <div class="kpi"><div class="num">10–100×</div><div class="lab">Human leverage from AI</div></div>
+    <div class="kpi"><div class="num">2-front</div><div class="lab">Developer love + CISO governance</div></div>
+    <div class="kpi"><div class="num">Self-hosted</div><div class="lab">The wedge no cloud rival owns</div></div>
+    <div class="kpi"><div class="num">Customer-zero</div><div class="lab">Run marketing agents on Coder</div></div>
+  </div>
+  <div class="callout alt"><b>From "random acts of AI" to an operating model.</b> Templatize prompts into <b>workflows anyone can run</b> (versioned, as code). Apply <b>80/20 filtering</b> — ignore the AI noise; point it at the few tasks that compound — and a <b>"commercial major, marketing minor"</b> lens: optimize for pipeline velocity and category narrative, not vanity metrics. The marketer becomes a <b>system architect</b>.</div>
+  <div class="callout"><b>The one-line pitch:</b> Give me the system and the AI pod — running on Coder's own governed workspaces — and I'll make Coder the name enterprises trust for secure AI development in 90 days, while earning the developer community's respect, then show you exactly what to fund to extend the lead.</div>
+</section>
+
+<!-- CURRENT STATE -->
+<section class="panel" id="p-now">
+  <h2 class="sec">Current State</h2>
+  <h3 class="big">Every asset to own the secure-AI-dev category — the field motion must work both fronts</h3>
+  <p class="lead">An Austin-based, KKR-backed company ($90M Series C; $175M total raised; Redpoint, Notable, Uncork, QRT), with deep open-source roots and a perfectly-timed pivot to "Coder Agents" — running AI coding agents on self-hosted infrastructure. The opportunity is to make events carry that narrative to both developers and the enterprise security buyer.</p>
+  <div class="grid g2" style="margin-top:16px">
+    <div class="card">
+      <h4 style="margin:0 0 8px;color:var(--good)">✓ What's working</h4>
+      <ul class="clean" style="font-size:14px">
+        <li><b>A perfectly-timed wedge</b> — secure, self-hosted infra for AI coding agents, exactly as enterprises hit the "can't run agents on public cloud" wall.</li>
+        <li><b>Fresh enterprise fuel</b> — $90M Series C led by KKR; the credibility (and capital) to go upmarket fast.</li>
+        <li><b>Open-source roots &amp; community</b> — a developer-trust engine most enterprise vendors can't buy.</li>
+        <li><b>Strong partners</b> — World Wide Technology for self-hosted AI dev infra; CNCF/platform-eng ecosystem.</li>
+        <li><b>Drink-your-own-champagne</b> — Coder is the place to run AI agents securely; its own marketing can prove it.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4 style="margin:0 0 8px;color:var(--bad)">▲ Gaps to close</h4>
+      <ul class="clean" style="font-size:14px">
+        <li><b>No category-defining moment</b> for "secure enterprise AI development / governed agents" — the narrative needs an owned stage.</li>
+        <li><b>Two audiences, one motion</b> — developer credibility (KubeCon, OSS) and CISO/CTO governance demand need distinct but linked programs.</li>
+        <li><b>The community/OSS base is under-leveraged for field</b> — contributors and platform-eng champions aren't yet a field army.</li>
+        <li><b>The enterprise security exec motion is nascent</b> — governance roundtables &amp; regulated-industry briefings are missing.</li>
+        <li><b>AI under-leveraged in the workflow itself</b> — Coder should run its field on Coder, visibly, as the proof.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- COMPETITIVE -->
+<section class="panel" id="p-comp">
+  <h2 class="sec">Competitive Landscape</h2>
+  <h3 class="big">Win the dev-tool fight on trust — and own a category the cloud players structurally can't</h3>
+  <p class="lead">The CDE fight (Gitpod, Codespaces) is winnable; the bigger prize is defining "the secure, self-hosted control plane for enterprise AI coding agents" — a position the public-cloud incumbents can't credibly hold because self-hosting is the whole point.</p>
+  <div class="card" style="overflow-x:auto;margin-top:14px">
+    <table>
+      <thead><tr><th>Competitor</th><th>What they are</th><th>What they do well</th><th>What Coder should steal / where it wins</th></tr></thead>
+      <tbody>
+        <tr><td class="tag">GitHub Codespaces (Microsoft)</td><td>Cloud dev environments in the GitHub ecosystem</td><td>Massive distribution; zero-setup cloud CDEs</td><td>Steal: developer ubiquity playbook. Win: self-hosted control, governance, any-cloud/on-prem for regulated buyers</td></tr>
+        <tr><td class="tag">Gitpod</td><td>Cloud + self-hosted dev environments</td><td>Strong dev brand; modern CDE</td><td>Steal: dev-first content & OSS energy. Win: enterprise governance + the AI-agent control plane</td></tr>
+        <tr><td class="tag">DevPod / Okteto / Daytona</td><td>Open-source / dev-environment tooling</td><td>OSS credibility; flexible setups</td><td>Steal: OSS community motion. Win: enterprise scale, security posture, KKR-grade go-to-market</td></tr>
+        <tr><td class="tag">Public-cloud agent platforms</td><td>Hosted ways to run AI coding agents</td><td>Fast to start; broad reach</td><td>Steal: the "agents now" urgency. Win: data never leaves your infra — the enterprise non-negotiable</td></tr>
+        <tr style="background:#f8faf9"><td class="tag">The status quo</td><td>Local laptops + ungoverned agent experiments</td><td>Familiar; no procurement</td><td>The real risk — events that show the security/compliance cost of ungoverned agents create urgency</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout alt"><b>The white space:</b> No one owns "the trusted, self-hosted control plane for enterprise AI coding agents — where developers move fast and security stays in control." Cloud rivals can't claim self-hosting; OSS tools lack enterprise governance. That dual position is Coder's to define, and events make both audiences believe it.</div>
+</section>
+
+<!-- STRATEGY -->
+<section class="panel" id="p-strat">
+  <h2 class="sec">Strategy &amp; Positioning</h2>
+  <h3 class="big">Be the default for running AI coding agents securely on your own infrastructure</h3>
+  <p class="lead"><b>North Star:</b> <i>When an enterprise decides how to let AI coding agents work safely on its own infrastructure, Coder is the first and most trusted name — chosen by developers and approved by security.</i></p>
+  <div class="grid g3" style="margin-top:16px">
+    <div class="card" style="border-top:3px solid var(--t1)"><div class="pill p-t1">Pillar 1</div><h4 style="margin:8px 0 4px">Win developer &amp; platform-eng trust</h4><p style="margin:0;color:var(--mut);font-size:14px">Show up technical and useful at KubeCon, PlatformCon, AI Engineer &amp; in OSS. Developers and platform teams are the adoption engine — you earn them, you don't buy them.</p></div>
+    <div class="card" style="border-top:3px solid var(--t2)"><div class="pill p-t2">Pillar 2</div><h4 style="margin:8px 0 4px">Own the secure-AI-dev moment</h4><p style="margin:0;color:var(--mut);font-size:14px">An owned "governed AI development" summit + the security/governance narrative + Coder Agents launches — the moment that makes Coder the category.</p></div>
+    <div class="card" style="border-top:3px solid var(--t3)"><div class="pill p-t3">Pillar 3</div><h4 style="margin:8px 0 4px">Enterprise governance demand</h4><p style="margin:0;color:var(--mut);font-size:14px">CTO / CISO / VP Platform roundtables, regulated-industry briefings, and hands-on agent-security workshops — where the enterprise decision is made.</p></div>
+  </div>
+  <div class="grid g2" style="margin-top:6px">
+    <div class="card"><h4 style="margin:0 0 6px">Audiences (two-front)</h4><p style="margin:0;color:var(--ink2);font-size:14px"><b>Builders (bottoms-up):</b> developers, platform &amp; DevEx engineers, OSS contributors. <b>Economic / security buyers:</b> CTO, CISO, VP Platform Engineering, Head of AI/Developer Platform — especially in regulated industries (finance, government, defense, healthcare).</p></div>
+    <div class="card"><h4 style="margin:0 0 6px">Brand promise: move fast, stay in control</h4><p style="margin:0;color:var(--ink2);font-size:14px">AI coding agents are inevitable; ungoverned agents are a breach waiting to happen. Coder lets developers move fast while security keeps data on its own infrastructure — events make that dual promise tangible.</p></div>
+  </div>
+</section>
+
+<!-- TIERS -->
+<section class="panel" id="p-tiers">
+  <h2 class="sec">The Three-Tier Model</h2>
+  <h3 class="big">Tiering tells a scaling team where to go deep, templatize, and skip</h3>
+  <p class="lead"><b>Tier 1 defines the category. Tier 3 wins the enterprise decision. Tier 2 earns developer credibility where the community already gathers.</b></p>
+  <div class="grid g3" style="margin-top:16px">
+    <div class="tier t1">
+      <h4>Tier 1</h4><div class="role">Owned, community &amp; category-defining</div>
+      <dl>
+        <dt>What</dt><dd>A "Governed AI Development" summit · Coder Agents launch moments · OSS/community moments</dd>
+        <dt>Goal</dt><dd>Category authority, dev gravity, the security narrative</dd>
+        <dt>Cadence</dt><dd>1 flagship + community + launches</dd>
+        <dt>Cost</dt><dd>$300K–$800K flagship</dd>
+        <dt>KPI</dt><dd>Reach, narrative share, OSS signal, pipeline</dd>
+      </dl>
+    </div>
+    <div class="tier t2">
+      <h4>Tier 2</h4><div class="role">Developer &amp; platform-eng credibility</div>
+      <dl>
+        <dt>What</dt><dd>KubeCon EU/NA, PlatformCon, AI Engineer, GitHub Universe, re:Invent, RSA (security)</dd>
+        <dt>Goal</dt><dd>Earn dev trust + reach the security buyer at scale</dd>
+        <dt>Cadence</dt><dd>12–16/yr</dd>
+        <dt>Cost</dt><dd>$25K–$200K per event</dd>
+        <dt>KPI</dt><dd>Dev signups, meetings, accounts engaged, cost/lead</dd>
+      </dl>
+    </div>
+    <div class="tier t3">
+      <h4>Tier 3</h4><div class="role">Executive &amp; hands-on — the decision engine</div>
+      <dl>
+        <dt>What</dt><dd>CTO/CISO governance dinners, platform-eng meetups, hands-on agent-security workshops, OSS contributor events, CAB</dd>
+        <dt>Goal</dt><dd>Win the enterprise governance decision; deepen accounts</dd>
+        <dt>Cadence</dt><dd>35–55/yr</dd>
+        <dt>Cost</dt><dd>$3K–$20K each</dd>
+        <dt>KPI</dt><dd>Exec meetings, pipeline/$ (best in mix), expansion</dd>
+      </dl>
+    </div>
+  </div>
+  <div class="callout"><b>The logic:</b> define the category &amp; rally the community (Tier 1), earn developer credibility where they already gather (Tier 2), and run a relentless cadence of CISO governance dinners and hands-on agent-security workshops (Tier 3) — turning developer pull into security-approved enterprise deals.</div>
+</section>
+
+<!-- OPERATING MODEL -->
+<section class="panel" id="p-ops">
+  <h2 class="sec">Operating Model</h2>
+  <h3 class="big">Two versions of the same machine — scale the system, not the headcount</h3>
+  <p class="lead">Coder is scaling fast on the back of the KKR round. The smartest move is to stand up the operating system now, so new hires plug into a machine. Model A is the AI-leveraged core that proves the engine; Model B fully resources the two-front, category-leader build.</p>
+  <div class="toggle" id="modeToggle">
+    <button class="on" data-mode="A">Model A · AI-leveraged core</button>
+    <button data-mode="B">Model B · Category-leader build</button>
+  </div>
+  <div id="modeA">
+    <div class="card">
+      <h4 style="margin:0 0 6px">"A lean field pod, a team of AI agents (on Coder), retainer vendors, and the OSS community"</h4>
+      <p style="margin:0 0 6px;color:var(--mut);font-size:14px">The humans own strategy, developer &amp; executive relationships, on-site presence, and judgment. Everything reproducible is delegated to AI agents running on Coder's own governed workspaces — the most credible demo a "run agents securely" company could show.</p>
+    </div>
+    <div class="grid" style="grid-template-columns:repeat(5,1fr)">
+      <div class="agent"><div class="nm">Scout</div><p style="margin:4px 0 0;font-size:13px;color:var(--mut)">Account/persona research, show-ROI scoring, briefing docs</p></div>
+      <div class="agent"><div class="nm">Scribe</div><p style="margin:4px 0 0;font-size:13px;color:var(--mut)">Invites, pages, recaps, technical &amp; launch content</p></div>
+      <div class="agent"><div class="nm">Concierge</div><p style="margin:4px 0 0;font-size:13px;color:var(--mut)">RSVP, reminders, personalized agendas, logistics checklists</p></div>
+      <div class="agent"><div class="nm">Analyst</div><p style="margin:4px 0 0;font-size:13px;color:var(--mut)">Lead scoring/routing, budget, dashboards, retros</p></div>
+      <div class="agent"><div class="nm">Sprint</div><p style="margin:4px 0 0;font-size:13px;color:var(--mut)">PM agent CC'd on email + in meetings: tracks, updates, pings deadlines</p></div>
+    </div>
+    <div class="callout alt"><b>The leverage story:</b> a lean pod runs a flagship + a full developer-event calendar + a relentless exec cadence — with the AI agents running on Coder, so the field org is a live security/governance demo. The limits are reach &amp; parallelism, not quality.</div>
+  </div>
+  <div id="modeB" class="hide">
+    <div class="card">
+      <h4 style="margin:0 0 6px">Fully resourced for the two-front, global build</h4>
+      <table style="margin-top:8px">
+        <thead><tr><th>Role</th><th>Owns</th><th>Hire</th></tr></thead>
+        <tbody>
+          <tr><td class="tag">Head of Events &amp; Field</td><td>Strategy, flagship, executive program <span class="pill p-good">the role</span></td><td>Month 0</td></tr>
+          <tr><td class="tag">Developer / Community Marketing Mgr</td><td>KubeCon/PlatformCon, OSS, dev meetups</td><td>~Month 2</td></tr>
+          <tr><td class="tag">Enterprise Field / ABM Manager</td><td>CTO/CISO program, regulated-industry, ABM</td><td>~Month 4</td></tr>
+          <tr><td class="tag">Events Producer (fractional)</td><td>Flagship + Tier 3 production at volume</td><td>~Month 6</td></tr>
+          <tr><td class="tag">Agency + design</td><td>Production, brand, video, demos</td><td>Ongoing</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout"><b>Result:</b> a flagship category summit + a full developer + analyst calendar + an always-on CISO governance program + 35–55 intimate rooms — the footprint of the secure-AI-development category leader, on both fronts.</div>
+  </div>
+  <h4 style="margin:22px 0 6px">The trade-off at a glance</h4>
+  <div class="card" style="overflow-x:auto">
+    <table class="vs">
+      <thead><tr><th>Dimension</th><th>Model A · AI-leveraged core</th><th>Model B · Category-leader build</th></tr></thead>
+      <tbody>
+        <tr><td>Headcount</td><td>Lean pod + AI agents + vendors</td><td>3–4 FTE + agency</td></tr>
+        <tr><td>Annual budget</td><td>~$750K</td><td>~$2.5M</td></tr>
+        <tr><td>Flagship (Tier 1)</td><td>Focused summit + community</td><td>Full category summit + launches</td></tr>
+        <tr><td>Tier 2 events/yr</td><td>8–10 selective</td><td>12–16 (dev + analyst + security)</td></tr>
+        <tr><td>Tier 3 events/yr</td><td>~22</td><td>35–55 (exec + hands-on)</td></tr>
+        <tr><td>Quality bar</td><td>High — guaranteed by the system</td><td>High — same system</td></tr>
+        <tr><td>What more resources buy</td><td>—</td><td>Reach &amp; parallelism, not quality</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout"><b>Recommendation:</b> stand up the system in Model A immediately (and make it a customer-zero showcase running on Coder); graduate to Model B as pipeline + developer-community metrics prove out.</div>
+</section>
+
+<!-- AI OPERATING MODEL -->
+<section class="panel" id="p-ai">
+  <h2 class="sec">The AI Operating Model</h2>
+  <h3 class="big">Run the field's AI agents on Coder — the most credible demo a security company can give</h3>
+  <p class="lead">Not by chatting with a chatbot — by turning repeatable tasks into shared, governed workflows. For Coder uniquely, the operating model is the product story: a "run AI agents securely" company that runs its own marketing agents securely on Coder is unanswerable proof.</p>
+  <div class="grid g3" style="margin-top:16px">
+    <div class="card"><div class="pill p-t1">The Marketing Brain</div><p style="margin:8px 0 0;font-size:13.5px;color:var(--mut)">A versioned repo of prompts &amp; "skills" (as code) encoding Coder's brand &amp; the governance narrative. Invoke a <b>"KubeCon booth"</b> or <b>"CISO dinner"</b> skill → on-brand output in seconds.</p></div>
+    <div class="card"><div class="pill p-t3">Zero-to-One workflows</div><p style="margin:8px 0 0;font-size:13.5px;color:var(--mut)">Automate the first 80%. From one launch theme: research accounts, draft the technical abstract, invite sequence &amp; follow-up — run as governed agents on Coder.</p></div>
+    <div class="card"><div class="pill p-t2">Mass personalization</div><p style="margin:8px 0 0;font-size:13.5px;color:var(--mut)">HeyGen-style video where a Coder engineer invites each target CISO/platform lead by name. "Unfair" high-touch at scale.</p></div>
+    <div class="card"><div class="pill p-t1">Sales-enablement "brains"</div><p style="margin:8px 0 0;font-size:13.5px;color:var(--mut)">An approved library so AEs &amp; SEs generate bespoke, on-brand follow-ups &amp; security briefs off every event in real time.</p></div>
+    <div class="card"><div class="pill p-t3">Content &amp; SEO engines</div><p style="margin:8px 0 0;font-size:13.5px;color:var(--mut)">Programmatic SEO &amp; technical content for "self-hosted AI coding agents / secure dev environments"; quarterly refresh → <b>~3× more likely cited by AI search</b>.</p></div>
+    <div class="card"><div class="pill p-t2">Thought partner — CRIT</div><p style="margin:8px 0 0;font-size:13.5px;color:var(--mut)">Not an oracle. CRIT (Context, Role, Interview, Task) makes AI interview you one question at a time to find plan gaps before a dollar is spent.</p></div>
+  </div>
+  <div class="callout alt"><b>The Coder-only unlock — "run it on us."</b> Build the entire pod as governed agents on Coder's own workspaces. The field org becomes the <b>flagship customer-zero proof</b> ("our marketing AI agents run securely on Coder — here's the audit trail") that no cloud rival can match — and human-in-the-loop on everything customer-facing is itself the governance story Coder sells.</div>
+</section>
+
+<!-- WORKFLOWS -->
+<section class="panel" id="p-flow">
+  <h2 class="sec">Workflows &amp; Sprint Cadence</h2>
+  <h3 class="big">One lifecycle, nine stages — shipped in sprints, versioned as code</h3>
+  <p class="lead">A single source of truth: tiered runbooks defining every stage, owner, AI step, and SLA. <b>Lead times:</b> Tier 1 = 14–18 wks · Tier 2 = 6–10 wks (big dev cons book early) · Tier 3 = 3–4 wks (dinners/workshops), &lt;2 wks (webinars).</p>
+  <div class="flow" style="margin-top:14px">
+    <div class="step"><div class="n">01</div><h5>Select</h5><p>Score vs ICP, tier, named-account overlap</p><span class="ai">AI · Scout</span></div>
+    <div class="step"><div class="n">02</div><h5>Brief</h5><p>One-page: objective, audience, offer, budget, KPI</p><span class="ai">AI · Scribe</span></div>
+    <div class="step"><div class="n">03</div><h5>Build</h5><p>Page, registration, demo/workshop, run-of-show</p><span class="ai">AI · Scribe/Concierge</span></div>
+    <div class="step"><div class="n">04</div><h5>Promote</h5><p>Multi-touch invites, community-assisted, social</p><span class="ai">AI · Scribe</span></div>
+    <div class="step"><div class="n">05</div><h5>Produce</h5><p>Vendor/community coordination, rehearsal</p><span class="ai">Human + agency</span></div>
+    <div class="step"><div class="n">06</div><h5>Execute</h5><p>Deliver, capture conversations &amp; intent</p><span class="ai">Human</span></div>
+    <div class="step"><div class="n">07</div><h5>Follow-up</h5><p>48-hr routing SLA, personalized follow-up</p><span class="ai">AI · Analyst/Scribe</span></div>
+    <div class="step"><div class="n">08</div><h5>Measure</h5><p>Pipeline, signups, velocity to dashboard</p><span class="ai">AI · Analyst</span></div>
+    <div class="step"><div class="n">09</div><h5>Retro</h5><p>Within 5 days → into the backlog</p><span class="ai">Human + AI</span></div>
+  </div>
+  <h4 style="margin:22px 0 4px">Sprint cycles — ship at the speed developers respect</h4>
+  <p style="margin:0 0 10px;font-size:14.5px;color:var(--ink2)"><b>Run field marketing like product engineering.</b> Replace the annual plan with <b>3-week / 2-month sprints</b>, always shipping a dev meetup, a CISO roundtable, an agent-security workshop, a launch. For a developer brand, shipping cadence <i>is</i> credibility — constant momentum signals the platform is alive and the team thinks like engineers.</p>
+  <div class="loop">
+    <div class="lp"><b>48-hour rule:</b> every lead routed &amp; followed up in two business days.</div>
+    <div class="lp"><b>5-day retro:</b> fast, blameless, into the backlog.</div>
+    <div class="lp"><b>Sprint demo:</b> ship + show every 2–3 weeks — visible momentum.</div>
+    <div class="lp"><b>Quarterly rebalance:</b> double down on winners, cut the rest.</div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section class="panel" id="p-road">
+  <h2 class="sec">12-Month Roadmap</h2>
+  <h3 class="big">Build the machine, win developers, then let proof unlock the enterprise build</h3>
+  <p class="lead">Each phase has an exit metric and an explicit spend/hire trigger — growth is earned by pipeline, developer-signal and narrative data, not argued in a meeting.</p>
+  <div style="margin-top:16px">
+    <div class="phase"><div class="dot">0</div><div class="body"><h4>Build the machine · Month 0–1</h4><p style="margin:0;font-size:14px;color:var(--mut)">Audit, instrument attribution, stand up runbooks + the AI pod on Coder workspaces + dashboards. Quick wins: first CISO governance dinner + a platform-eng meetup in 30 days.</p><span class="trigger">Exit: system live · customer-zero pod on Coder · first 2 Tier 3 booked</span></div></div>
+    <div class="phase"><div class="dot">1</div><div class="body"><h4>Win developers — KubeCon EU + PlatformCon · Q1–Q2</h4><p style="margin:0;font-size:14px;color:var(--mut)">Show up technical at KubeCon EU (Mar) &amp; PlatformCon (Jun); activate OSS champions; launch the CISO dinner cadence; pilot HeyGen.</p><span class="trigger">Exit: dev signups + 6 Tier 3 run + first sourced pipeline → Hire Dev/Community Mgr</span></div></div>
+    <div class="phase"><div class="dot">2</div><div class="body"><h4>The category moment + AI Engineer · Summer</h4><p style="margin:0;font-size:14px;color:var(--mut)">Land at AI Engineer World's Fair (Jun–Jul); launch the owned "Governed AI Development" summit; tie a Coder Agents launch + CAB to it.</p><span class="trigger">Exit: summit reach + narrative-share hit → Hire Enterprise Field / ABM Mgr</span></div></div>
+    <div class="phase"><div class="dot">3</div><div class="body"><h4>Enterprise governance push · Fall</h4><p style="margin:0;font-size:14px;color:var(--mut)">GitHub Universe (Oct) + KubeCon NA (Nov); scale CISO/CTO roundtables &amp; regulated-industry briefings; RSA planning.</p><span class="trigger">Exit: enterprise pipeline + win-rate lift → portfolio rebalanced</span></div></div>
+    <div class="phase"><div class="dot">4</div><div class="body"><h4>Measure &amp; scale the case · Q4</h4><p style="margin:0;font-size:14px;color:var(--mut)">re:Invent + year-end; full-year measurement; rebalance; build the case to fully fund Model B + global dev presence.</p><span class="trigger">Exit: board-ready ROI + category-narrative story · budget approved</span></div></div>
+  </div>
+</section>
+
+<!-- CALENDAR -->
+<section class="panel" id="p-cal">
+  <h2 class="sec">12-Month Tiered Calendar</h2>
+  <h3 class="big">All three tiers — anchored to the real 2026 developer &amp; enterprise calendar</h3>
+  <p class="lead">Confirmed 2026 anchors: KubeCon EU (Mar 23–26, Amsterdam) · PlatformCon (Jun 22–26) · AI Engineer World's Fair (Jun 29–Jul 2, SF) · GitHub Universe (Oct 28–29, SF) · KubeCon NA (Nov 9–12, Salt Lake City) · AWS re:Invent (early Dec, Las Vegas) · RSA (spring, security). Beyond anchors the grid is illustrative.</p>
+  <div class="card" style="overflow-x:auto;margin-top:14px">
+    <table>
+      <thead><tr><th>Month</th><th><span class="pill p-t1">Tier 1</span> Owned / Community</th><th><span class="pill p-t2">Tier 2</span> Developer / Analyst / Security</th><th><span class="pill p-t3">Tier 3</span> Executive / Hands-on</th></tr></thead>
+      <tbody>
+        <tr><td><b>Jan</b></td><td>Governance POV content + summit theme</td><td>Platform-eng webinar series kickoff</td><td>2 CISO dinners (NYC, SF); platform-eng meetup</td></tr>
+        <tr><td><b>Feb</b></td><td>OSS community program launch</td><td>Regional dev meetups; DevOpsDays</td><td>3 dinners; CAB recruiting; agent-security workshop</td></tr>
+        <tr><td><b>Mar</b></td><td>KubeCon launch moment / OSS release</td><td><b>KubeCon EU (Mar 23–26, Amsterdam)</b></td><td>KubeCon CISO dinner; 2 platform-eng meetups</td></tr>
+        <tr><td><b>Apr</b></td><td>Coder Agents launch content</td><td>RSA (security); Google Cloud Next</td><td>4 dinners; regulated-industry briefing; webinar</td></tr>
+        <tr><td><b>May</b></td><td>Summit promotion + curation begins</td><td>Microsoft Build; vertical security events</td><td>3 dinners; CAB session 1; workshops ×2</td></tr>
+        <tr style="background:#f8faf9"><td><b>Jun</b></td><td>Big developer presence (Platform + AI)</td><td><b>PlatformCon (Jun 22–26)</b>; AI Engineer begins</td><td>4 meetups; pre-summit VIP receptions</td></tr>
+        <tr><td><b>Jul</b></td><td><b>"Governed AI Development" Summit</b> (flagship)</td><td><b>AI Engineer World's Fair (Jun 29–Jul 2)</b></td><td>Summit exec program + CAB; CISO dinners on-site</td></tr>
+        <tr><td><b>Aug</b></td><td>Post-summit content factory + nurture</td><td>Sponsored speaking ×2; regional roadshows</td><td>3 dinners; platform-eng meetups ×2</td></tr>
+        <tr><td><b>Sep</b></td><td>Enterprise governance content series</td><td>Security / CISO events ×2</td><td>4 dinners; regulated-industry briefings</td></tr>
+        <tr><td><b>Oct</b></td><td>OSS milestone / community awards</td><td><b>GitHub Universe (Oct 28–29, SF)</b></td><td>4 meetups; CAB session 2</td></tr>
+        <tr><td><b>Nov</b></td><td>KubeCon NA launch moment</td><td><b>KubeCon NA (Nov 9–12, Salt Lake City)</b></td><td>KubeCon CISO dinner; 3 meetups</td></tr>
+        <tr><td><b>Dec</b></td><td>Year-in-review + 2027 summit planning</td><td>AWS re:Invent (Las Vegas)</td><td>re:Invent CISO dinners; 2 customer dinners</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout"><b>Totals (Model B):</b> flagship summit + community moments + launches (Tier 1) · 12–16 (Tier 2) · ~45 (Tier 3). Model A runs the same skeleton selectively with heavier AI + community leverage.</div>
+</section>
+
+<!-- BUDGET -->
+<section class="panel" id="p-budget">
+  <h2 class="sec">Budget Model</h2>
+  <h3 class="big">Series-C scale — recommend ~$2.5M to win both fronts</h3>
+  <p class="lead">Sized for a KKR-backed company going upmarket fast while protecting developer credibility. Big developer conferences (KubeCon) are expensive and book early; the AI operating model and OSS community keep spend from scaling linearly. The AI-leveraged core runs at ~$750K.</p>
+  <div class="grid g2" style="margin-top:16px">
+    <div class="card">
+      <h4 style="margin:0 0 10px">Model B · Category-leader build <span class="pill p-t1">~$2.5M / yr</span></h4>
+      <div id="budgetB"></div>
+      <p style="font-size:12px;color:var(--mut);margin:10px 0 0">Headcount (~$500K–$700K loaded for 3–4 FTE) is a separate people-budget line.</p>
+    </div>
+    <div class="card">
+      <h4 style="margin:0 0 10px">Model A · AI-leveraged core <span class="pill p-t3">~$750K / yr</span></h4>
+      <div id="budgetA"></div>
+      <p style="font-size:12px;color:var(--mut);margin:10px 0 0">Plus the core team. Heavier AI + OSS-community leverage substitutes for spend.</p>
+    </div>
+  </div>
+  <div class="grid g3" style="margin-top:4px">
+    <div class="kpi"><div class="num">5:1</div><div class="lab">Blended pipeline-to-cost target (12 mo)</div></div>
+    <div class="kpi"><div class="num">8–12:1</div><div class="lab">CISO dinner / workshop ROI</div></div>
+    <div class="kpi"><div class="num">↓ QoQ</div><div class="lab">Cost-per-opp as the system matures</div></div>
+  </div>
+</section>
+
+<!-- KPIS -->
+<section class="panel" id="p-kpi">
+  <h2 class="sec">KPIs &amp; Measurement</h2>
+  <h3 class="big">Commercial major, marketing minor — plus developer &amp; narrative signal</h3>
+  <p class="lead">Measure on the numbers a board respects — <b>pipeline and pipeline velocity</b> — alongside the <b>developer &amp; narrative signals</b> that decide whether the bottoms-up engine and the category fight are being won. Not vanity counts.</p>
+  <div class="grid g2" style="margin-top:16px">
+    <div class="card"><h4 style="margin:0 0 8px">Commercial (the headline)</h4>
+      <ul class="clean" style="font-size:14px"><li>Sourced + influenced pipeline · pipeline velocity</li><li>Meetings booked with named enterprise / regulated accounts</li><li>Win-rate lift on event-touched deals · cost per opp</li><li>Expansion / seats within accounts</li></ul></div>
+    <div class="card"><h4 style="margin:0 0 8px">Developer &amp; narrative (the moat)</h4>
+      <ul class="clean" style="font-size:14px"><li>OSS signal (stars, contributors), dev signups &amp; activation</li><li>Share of voice in "secure / self-hosted AI development"</li><li>KubeCon/PlatformCon presence &amp; earned media</li><li>CISO/CTO relationships &amp; CAB depth</li></ul></div>
+  </div>
+  <div class="callout alt"><b>De-emphasize vanity metrics</b> — booth scans, impressions, raw registrations. For a developer-infra company, <b>activated developers and security-approved enterprise pipeline beat counting badges.</b></div>
+  <div class="callout"><b>The dashboard:</b> one live view refreshed by the <i>Analyst</i> agent — pipeline by tier, dev signups &amp; activation, narrative-share, account coverage, and a portfolio scorecard so the quarterly rebalance is data-driven.</div>
+</section>
+
+<!-- 90 DAYS -->
+<section class="panel" id="p-90">
+  <h2 class="sec">First 90 Days</h2>
+  <h3 class="big">How I'd start</h3>
+  <div class="grid g3" style="margin-top:16px">
+    <div class="card"><div class="pill p-t1">Days 1–30</div><p style="margin:8px 0 0;font-size:14px">Audit current events &amp; return. Stand up runbooks, the AI pod on Coder workspaces, the attribution dashboard. Tier the calendar. Launch the first CISO governance dinner + a platform-eng meetup.</p></div>
+    <div class="card"><div class="pill p-t2">Days 31–60</div><p style="margin:8px 0 0;font-size:14px">Lock the KubeCon EU + PlatformCon plan; activate OSS champions; ship the first Zero-to-One workflow + a HeyGen pilot; stand up the customer-zero showcase on Coder. Run the first sprint.</p></div>
+    <div class="card"><div class="pill p-t3">Days 61–90</div><p style="margin:8px 0 0;font-size:14px">Report first sourced pipeline + dev-signal baseline. Lock the "Governed AI Development" summit plan. Bring the quarterly rebalance + spend/hire triggers to the CMO.</p></div>
+  </div>
+  <div class="callout" style="margin-top:18px;font-size:16px"><b>Give me the system and the AI pod — running on Coder's own governed workspaces — and I'll make Coder the name enterprises trust for secure AI development in 90 days, while earning the developer community's respect, then show you exactly what to fund to extend the lead.</b></div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <b>Coder Event &amp; Field Marketing Operating System</b> · A strategic teardown prepared for Coder GTM leadership.<br>
+    Built from public research on Coder and its event/competitive landscape. Budgets, calendar details beyond confirmed event anchors, headcount, and tool/agent names are illustrative planning models, not Coder-internal figures.
+  </div>
+</footer>
+
+<script>
+  const sections = [
+    ['p-thesis','Thesis'],['p-now','Current State'],['p-comp','Competitive'],['p-strat','Strategy'],['p-tiers','Tier Model'],
+    ['p-ops','Operating Model'],['p-ai','AI Operating Model'],['p-flow','Workflows'],['p-road','Roadmap'],
+    ['p-cal','Calendar'],['p-budget','Budget'],['p-kpi','KPIs'],['p-90','First 90 Days']
+  ];
+  const nav = document.getElementById('nav');
+  sections.forEach(([id,label],i)=>{
+    const b=document.createElement('button');
+    b.textContent=label; b.dataset.t=id; if(i===0)b.classList.add('active');
+    b.onclick=()=>{
+      document.querySelectorAll('.panel').forEach(pn=>pn.classList.remove('show'));
+      document.getElementById(id).classList.add('show');
+      document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));
+      b.classList.add('active');
+      window.scrollTo({top:0,behavior:'smooth'});
+    };
+    nav.appendChild(b);
+  });
+  document.querySelectorAll('#modeToggle button').forEach(btn=>{
+    btn.onclick=()=>{
+      document.querySelectorAll('#modeToggle button').forEach(x=>x.classList.remove('on'));
+      btn.classList.add('on');
+      const m=btn.dataset.mode;
+      document.getElementById('modeA').classList.toggle('hide',m!=='A');
+      document.getElementById('modeB').classList.toggle('hide',m!=='B');
+    };
+  });
+  const budgetB=[['"Governed AI Development" summit',600],['Developer events (KubeCon etc., 12–16)',650],['OSS / community program',250],
+    ['CISO dinners / workshops (45)',360],['Coder Agents launch moments',150],['Tooling + AI',150],['Agency / design',190],['Contingency',150]];
+  const budgetA=[['Summit (focused)',250],['Developer events (8–10)',230],['Dinners + workshops (~22)',160],
+    ['OSS / community',60],['Tooling (lean + AI)',35],['Vendors',15]];
+  function renderBudget(el,data,max,color){
+    const c=document.getElementById(el);
+    data.forEach(([lab,val])=>{
+      const row=document.createElement('div'); row.style.marginBottom='9px';
+      row.innerHTML='<div style="display:flex;justify-content:space-between;font-size:13px"><span>'+lab+'</span><b>$'+val+'K</b></div>'+
+        '<div class="bartrk"><div class="bar" style="width:'+(val/max*100).toFixed(1)+'%;background:'+color+'"></div></div>';
+      c.appendChild(row);
+    });
+  }
+  renderBudget('budgetB',budgetB,650,'#16a34a');
+  renderBudget('budgetA',budgetA,250,'#d97706');
+</script>
+</body>
+</html>

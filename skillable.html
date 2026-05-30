@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skillable Event &amp; Field Marketing Operating System</title>
+<style>
+  :root{
+    --ink:#152a20; --ink2:#3c5246; --green:#0f7a4e; --green-d:#0a5c3a; --green-l:#e2f4ec;
+    --sand:#f3f7f4; --paper:#ffffff; --line:#e2e9e5; --mut:#586a60; --purple:#6a0fe0; --amber:#c77f0a;
+    --t1:#0f7a4e; --t2:#6a0fe0; --t3:#c77f0a; --bad:#cf4035; --good:#0f7a4e;
+    --shadow:0 1px 2px rgba(10,62,40,.06),0 8px 24px rgba(10,62,40,.10);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    color:var(--ink);background:var(--sand);line-height:1.55;-webkit-font-smoothing:antialiased}
+  a{color:var(--green-d);text-decoration:none}
+  header{background:linear-gradient(125deg,#072518 0%,#0a3e28 50%,#7000ff 140%);color:#fff;padding:34px 28px 26px}
+  .wrap{max-width:1120px;margin:0 auto}
+  .eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#5fe6b0;font-weight:700}
+  header h1{font-size:32px;line-height:1.15;margin:8px 0 6px;font-weight:800;letter-spacing:-.5px}
+  header p.sub{font-size:16px;color:#d4ecdf;max-width:790px;margin:0}
+  .meta{margin-top:16px;display:flex;flex-wrap:wrap;gap:10px;font-size:12.5px}
+  .meta span{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);padding:5px 11px;border-radius:999px}
+  nav{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .nav-inner{max-width:1120px;margin:0 auto;display:flex;gap:2px;overflow-x:auto;padding:0 14px}
+  nav button{flex:0 0 auto;background:none;border:none;padding:14px 14px;font-size:13.5px;font-weight:600;color:var(--mut);
+    cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;font-family:inherit}
+  nav button:hover{color:var(--ink)}
+  nav button.active{color:var(--green-d);border-bottom-color:var(--green)}
+  main{max-width:1120px;margin:0 auto;padding:30px 22px 70px}
+  .panel{display:none;animation:fade .25s ease}
+  .panel.show{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  h2.sec{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--green-d);font-weight:800;margin:0 0 4px}
+  h3.big{font-size:25px;font-weight:800;margin:0 0 14px;letter-spacing:-.3px;color:var(--ink)}
+  .lead{font-size:16.5px;color:var(--ink2);max-width:840px}
+  .card{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:22px;box-shadow:var(--shadow);margin-bottom:16px}
+  .grid{display:grid;gap:16px}
+  .g2{grid-template-columns:repeat(2,1fr)} .g3{grid-template-columns:repeat(3,1fr)} .g4{grid-template-columns:repeat(4,1fr)}
+  @media(max-width:860px){.g2,.g3,.g4{grid-template-columns:1fr}}
+  .kpi{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:var(--shadow)}
+  .kpi .num{font-size:30px;font-weight:800;color:var(--green-d);letter-spacing:-.5px}
+  .kpi .lab{font-size:13px;color:var(--mut);margin-top:2px}
+  .pill{display:inline-block;font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px;letter-spacing:.03em}
+  .p-t1{background:#daf0e5;color:#0a5c3a} .p-t2{background:#ece0ff;color:#5610b8} .p-t3{background:#fbeccc;color:#9a6208}
+  .p-good{background:#daf0e5;color:#0a5c3a} .p-bad{background:#fbe0dd;color:#b2271c}
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  th,td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--mut);background:#fafbfa}
+  tbody tr:hover{background:#f7faf8}
+  .tag{font-weight:700}
+  ul.clean{margin:8px 0 0;padding-left:18px} ul.clean li{margin:5px 0}
+  .callout{border-left:4px solid var(--green);background:#e7f4ee;padding:14px 16px;border-radius:0 10px 10px 0;margin:14px 0;font-size:14.5px}
+  .callout.alt{border-left-color:var(--purple);background:#f1e9ff}
+  .tier{border-radius:14px;padding:20px;color:#fff;position:relative;overflow:hidden;box-shadow:var(--shadow)}
+  .tier h4{margin:0 0 2px;font-size:19px;font-weight:800}
+  .tier .role{font-size:12.5px;opacity:.92;margin-bottom:12px}
+  .tier.t1{background:linear-gradient(135deg,#0f7a4e,#0a5c3a)}
+  .tier.t2{background:linear-gradient(135deg,#7000ff,#5610b8)}
+  .tier.t3{background:linear-gradient(135deg,#c77f0a,#9a6208)}
+  .tier dl{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;font-size:13px;margin:0}
+  .tier dt{opacity:.85;font-weight:600} .tier dd{margin:0}
+  .vs th:nth-child(2){color:var(--green-d)} .vs th:nth-child(3){color:#5610b8}
+  .phase{display:flex;gap:16px;margin-bottom:14px}
+  .phase .dot{flex:0 0 auto;width:42px;height:42px;border-radius:50%;background:var(--green);color:#fff;display:flex;
+    align-items:center;justify-content:center;font-weight:800;font-size:15px;box-shadow:var(--shadow)}
+  .phase .body{flex:1;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:16px;box-shadow:var(--shadow)}
+  .phase h4{margin:0 0 4px;font-size:16px}
+  .trigger{display:inline-block;margin-top:8px;font-size:12.5px;background:#f1e9ff;border:1px dashed var(--purple);color:#5610b8;padding:5px 10px;border-radius:8px;font-weight:600}
+  .flow{display:flex;flex-wrap:wrap;gap:8px;align-items:stretch}
+  .step{flex:1 1 150px;background:var(--paper);border:1px solid var(--line);border-radius:11px;padding:12px;box-shadow:var(--shadow);position:relative}
+  .step .n{font-size:11px;font-weight:800;color:var(--green-d)}
+  .step h5{margin:3px 0 4px;font-size:14.5px}
+  .step p{margin:0;font-size:12.5px;color:var(--mut)}
+  .step .ai{margin-top:6px;font-size:11px;font-weight:700;color:#5610b8;background:#f1e9ff;border-radius:6px;padding:3px 7px;display:inline-block}
+  .loop{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+  .loop .lp{flex:1 1 200px;background:#e7f4ee;border:1px solid var(--green-l);border-radius:10px;padding:12px;font-size:13px}
+  .loop .lp b{color:var(--green-d)}
+  .bar{height:13px;border-radius:7px;background:var(--green);margin-top:5px}
+  .bartrk{background:#e9ece9;border-radius:7px;overflow:hidden}
+  .agent{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:16px;box-shadow:var(--shadow)}
+  .agent .nm{font-weight:800;color:var(--green-d);font-size:16px}
+  footer{max-width:1120px;margin:0 auto;padding:26px 22px 50px;color:var(--mut);font-size:12.5px;border-top:1px solid var(--line)}
+  .toggle{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;margin:6px 0 14px}
+  .toggle button{background:#fff;border:none;padding:9px 18px;font-weight:700;font-size:13.5px;cursor:pointer;color:var(--mut);font-family:inherit}
+  .toggle button.on{background:var(--green);color:#fff}
+  .hide{display:none}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="eyebrow">Event &amp; Field Marketing · Systems-First Program Design</div>
+    <h1>The Skillable Event Operating System</h1>
+    <p class="sub">In the "prove it, don't claim it" era, Skillable owns hands-on skill validation — so every event should be a live lab. A system + AI lets a lean, PE-disciplined team turn that product-native advantage into pipeline, without scaling spend linearly.</p>
+    <div class="meta">
+      <span>Prepared for Skillable GTM leadership · the Office of the CMO</span>
+      <span>12-month horizon</span>
+      <span>Category: Experiential learning &amp; hands-on skill validation</span>
+    </div>
+  </div>
+</header>
+
+<nav><div class="nav-inner" id="nav"></div></nav>
+
+<main>
+
+<!-- THESIS -->
+<section class="panel show" id="p-thesis">
+  <h2 class="sec">The Thesis</h2>
+  <h3 class="big">Skillable's product is hands-on labs — so the field strategy is simple: make every event a live lab</h3>
+  <p class="lead">In an AI era where skills beat credentials and buyers want proof, Skillable owns the validated, hands-on way to build, prove, and sell a skill. The most powerful field move is also the most obvious: <b>don't pitch the product — let people prove themselves on it.</b> A system + AI gives a PE-disciplined team <b>10x–100x leverage</b>, so it can run an experience-led program at scale without growing spend in lockstep. The system, not the headcount, produces quality at volume.</p>
+  <div class="grid g3" style="margin-top:18px">
+    <div class="card"><div class="pill p-t1">Layer 1</div><h4 style="margin:8px 0 4px">Repeatable playbooks</h4><p style="margin:0;color:var(--mut);font-size:14px">Tiered runbooks (and reusable lab templates) so nothing is invented twice. Quality stops being person-dependent.</p></div>
+    <div class="card"><div class="pill p-t3">Layer 2</div><h4 style="margin:8px 0 4px">AI does the production load</h4><p style="margin:0;color:var(--mut);font-size:14px">Research, copy, briefs, recaps, lab-challenge generation — so human hours go to judgment, relationships, the room.</p></div>
+    <div class="card"><div class="pill p-t2">Layer 3</div><h4 style="margin:8px 0 4px">Community &amp; lab-author leverage</h4><p style="margin:0;color:var(--mut);font-size:14px">Customers and lab creators are a built-in field army — activate them around live-lab moments.</p></div>
+  </div>
+  <div class="grid g4" style="margin-top:6px">
+    <div class="kpi"><div class="num">10–100×</div><div class="lab">Human leverage from AI</div></div>
+    <div class="kpi"><div class="num">Live labs</div><div class="lab">Every event = a hands-on lab</div></div>
+    <div class="kpi"><div class="num">2 worlds</div><div class="lab">Skill it (L&amp;D) + sell it (enablement)</div></div>
+    <div class="kpi"><div class="num">Prove it</div><div class="lab">The category &amp; the wedge</div></div>
+  </div>
+  <div class="callout alt"><b>From "random acts of AI" to an operating model.</b> Templatize prompts into <b>workflows anyone can run</b>. Apply <b>80/20 filtering</b> — ignore the AI noise; point it at the few tasks that compound — and a <b>"commercial major, marketing minor"</b> lens: optimize for pipeline velocity and category narrative, not vanity metrics. The marketer becomes a <b>system architect</b>.</div>
+  <div class="callout"><b>The one-line pitch:</b> Give me the system and the AI pod, and I'll make every Skillable touchpoint a live lab that proves the product on contact — turning hands-on experiences into pipeline in 90 days, then show you exactly what to fund to scale it.</div>
+</section>
+
+<!-- CURRENT STATE -->
+<section class="panel" id="p-now">
+  <h2 class="sec">Current State</h2>
+  <h3 class="big">A 20-year category leader with a perfectly-timed story — the field should be experience-led, not demo-led</h3>
+  <p class="lead">Founded in 2004 (as Learn on Demand Systems), Skillable is the PE-backed (Shamrock, Quad) leader in hands-on labs — 20M+ lab launches, 40,000 concurrent users, powering skilling and sales-enablement labs for major technology brands. The opportunity is to make events <i>demonstrate</i> the product by having attendees use it.</p>
+  <div class="grid g2" style="margin-top:16px">
+    <div class="card">
+      <h4 style="margin:0 0 8px;color:var(--good)">✓ What's working</h4>
+      <ul class="clean" style="font-size:14px">
+        <li><b>A 20-year track record</b> — 20M+ lab launches, 40K concurrent users; deep credibility most challengers can't match.</li>
+        <li><b>A multi-use-case platform</b> — skilling &amp; validation, sales-enablement labs, certification, customer support.</li>
+        <li><b>A perfectly-timed narrative</b> — "skills &gt; credentials, prove it" and validating AI skills, hands-on.</li>
+        <li><b>PE discipline</b> — Shamrock &amp; Quad backing means a focus on efficient, profitable, ROI-led growth.</li>
+        <li><b>The ultimate product-event fit</b> — the product <i>is</i> a hands-on experience; events can be the product.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4 style="margin:0 0 8px;color:var(--bad)">▲ Gaps to close</h4>
+      <ul class="clean" style="font-size:14px">
+        <li><b>Events are likely demo-led, not experience-led</b> — the booth should be a live lab, not a slideshow.</li>
+        <li><b>Two buyer worlds, one motion</b> — L&amp;D/training and software sales-enablement/presales need distinct but linked programs.</li>
+        <li><b>No category-defining moment</b> for "experiential skill validation in the AI era."</li>
+        <li><b>The lab-author / customer community is under-leveraged for field.</b></li>
+        <li><b>PE efficiency mandate demands tight attribution</b> — every event tied to pipeline, not vanity counts.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- COMPETITIVE -->
+<section class="panel" id="p-comp">
+  <h2 class="sec">Competitive Landscape</h2>
+  <h3 class="big">Out-experience the lab rivals — and own the proof layer the content players can't</h3>
+  <p class="lead">Direct hands-on-lab rivals are winnable on breadth and validation depth; the bigger prize is owning "the validated, hands-on proof layer for skills — for learning <i>and</i> selling" — a span the pure-play labs and the passive-content platforms don't have.</p>
+  <div class="card" style="overflow-x:auto;margin-top:14px">
+    <table>
+      <thead><tr><th>Competitor</th><th>What they are</th><th>What they do well</th><th>What Skillable should steal / where it wins</th></tr></thead>
+      <tbody>
+        <tr><td class="tag">Instruqt</td><td>Hands-on labs for tech sales &amp; training</td><td>Modern UX; strong in tech-sales demos</td><td>Steal: sharp sales-enablement positioning. Win: validation/scoring depth, scale, 20-yr enterprise trust</td></tr>
+        <tr><td class="tag">CloudShare</td><td>Virtual IT labs / sales enablement &amp; training</td><td>Established; virtual training environments</td><td>Steal: enablement use-case clarity. Win: breadth across skilling + cert + enablement, validation engine</td></tr>
+        <tr><td class="tag">Strigo</td><td>Instructor-led virtual training labs</td><td>Live, instructor-led delivery</td><td>Steal: live-classroom polish. Win: self-paced + validated + multi-use-case platform</td></tr>
+        <tr><td class="tag">Qwiklabs / Cloud Skills Boost</td><td>Cloud-vendor hands-on labs</td><td>Deep single-cloud integration</td><td>Steal: hands-on-credential model. Win: cloud-neutral, any-platform, sales + learning</td></tr>
+        <tr style="background:#f7faf8"><td class="tag">Passive content (Pluralsight, LMS)</td><td>Courses, videos, learning paths</td><td>Huge libraries; brand reach</td><td>The real shift — "watching ≠ knowing." Events that make people <i>do</i> expose the gap and create urgency</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout alt"><b>The white space:</b> No one owns "the validated, hands-on proof layer for skills — across learning <i>and</i> selling." Pure-play labs pick one use case; content platforms can't prove anything. Skillable spans both — and events that <i>are</i> labs make that span undeniable.</div>
+</section>
+
+<!-- STRATEGY -->
+<section class="panel" id="p-strat">
+  <h2 class="sec">Strategy &amp; Positioning</h2>
+  <h3 class="big">When you need to build, prove, or sell a skill by doing — Skillable is the platform</h3>
+  <p class="lead"><b>North Star:</b> <i>When an organization wants people to prove a skill by doing it — to learn it, validate it, or sell on it — Skillable is the first and most trusted name, and the experience starts at the first touch.</i></p>
+  <div class="grid g3" style="margin-top:16px">
+    <div class="card" style="border-top:3px solid var(--t1)"><div class="pill p-t1">Pillar 1</div><h4 style="margin:8px 0 4px">Make every event a live lab</h4><p style="margin:0;color:var(--mut);font-size:14px">The booth is a challenge; the workshop is hands-on; the webinar is interactive. Prospects prove the product on contact — the field move only Skillable can credibly make.</p></div>
+    <div class="card" style="border-top:3px solid var(--t2)"><div class="pill p-t2">Pillar 2</div><h4 style="margin:8px 0 4px">Own the "prove it" category moment</h4><p style="margin:0;color:var(--mut);font-size:14px">An owned summit + the AI-skills-validation narrative — the moment that makes Skillable the category for experiential, validated skilling.</p></div>
+    <div class="card" style="border-top:3px solid var(--t3)"><div class="pill p-t3">Pillar 3</div><h4 style="margin:8px 0 4px">Serve both buyer worlds</h4><p style="margin:0;color:var(--mut);font-size:14px">L&amp;D/training AND software sales-enablement/presales — distinct, linked programs plus exec roundtables for CLOs and enablement leaders.</p></div>
+  </div>
+  <div class="grid g2" style="margin-top:6px">
+    <div class="card"><h4 style="margin:0 0 6px">Audiences (two worlds)</h4><p style="margin:0;color:var(--ink2);font-size:14px"><b>Learning:</b> CLO, VP L&amp;D, technical training &amp; certification leaders. <b>Selling:</b> VP Sales Enablement, Presales/SE leaders, customer-education leaders who use labs for demos, POCs &amp; onboarding. Plus the AI-skilling / transformation buyer.</p></div>
+    <div class="card"><h4 style="margin:0 0 6px">Brand promise: proof, not promises</h4><p style="margin:0;color:var(--ink2);font-size:14px">Watching isn't knowing, and a slide isn't proof. Skillable turns skills into something people <i>do</i> and you can <i>measure</i> — events make that promise visceral the moment someone touches a keyboard.</p></div>
+  </div>
+</section>
+
+<!-- TIERS -->
+<section class="panel" id="p-tiers">
+  <h2 class="sec">The Three-Tier Model</h2>
+  <h3 class="big">Tiering tells a lean team where to go deep, templatize, and skip</h3>
+  <p class="lead"><b>Tier 1 builds the category. Tier 3 wins both buyer worlds. Tier 2 puts a live lab in front of every learning and enablement audience.</b></p>
+  <div class="grid g3" style="margin-top:16px">
+    <div class="tier t1">
+      <h4>Tier 1</h4><div class="role">Owned, community &amp; category-defining</div>
+      <dl>
+        <dt>What</dt><dd>A "Prove It / Skills in the AI era" summit · a live-lab Challenge · AI-skills-validation launch moments</dd>
+        <dt>Goal</dt><dd>Category authority, community gravity, brand</dd>
+        <dt>Cadence</dt><dd>1 flagship + community + launches</dd>
+        <dt>Cost</dt><dd>$150K–$400K flagship</dd>
+        <dt>KPI</dt><dd>Reach, narrative share, lab launches, pipeline</dd>
+      </dl>
+    </div>
+    <div class="tier t2">
+      <h4>Tier 2</h4><div class="role">Industry — every learning &amp; selling room</div>
+      <dl>
+        <dt>What</dt><dd>ATD, DevLearn, Training Industry, CompTIA, Sales Enablement Summit, SaaStr, PreSales — each a live-lab booth</dd>
+        <dt>Goal</dt><dd>Reach L&amp;D + enablement buyers; prove on contact</dd>
+        <dt>Cadence</dt><dd>10–12/yr</dd>
+        <dt>Cost</dt><dd>$15K–$70K per event</dd>
+        <dt>KPI</dt><dd>Lab launches, meetings, accounts engaged, cost/lead</dd>
+      </dl>
+    </div>
+    <div class="tier t3">
+      <h4>Tier 3</h4><div class="role">Executive &amp; hands-on — the conversion engine</div>
+      <dl>
+        <dt>What</dt><dd>CLO/enablement exec roundtables, hands-on lab workshops, presales/demo community meetups, CAB, webinars-as-labs</dd>
+        <dt>Goal</dt><dd>Convert hands-on experiences to deals; deepen accounts</dd>
+        <dt>Cadence</dt><dd>30–45/yr</dd>
+        <dt>Cost</dt><dd>$2K–$12K each</dd>
+        <dt>KPI</dt><dd>Hands-on-to-pipeline conversion, pipeline/$, advocacy</dd>
+      </dl>
+    </div>
+  </div>
+  <div class="callout"><b>The logic:</b> create the "prove it" category moment and rally the community (Tier 1), bring a live lab to every learning &amp; enablement audience (Tier 2), and run a relentless cadence of exec roundtables and hands-on workshops (Tier 3) that turn doing into deals.</div>
+</section>
+
+<!-- OPERATING MODEL -->
+<section class="panel" id="p-ops">
+  <h2 class="sec">Operating Model</h2>
+  <h3 class="big">Two versions of the same machine — built for PE-grade efficiency</h3>
+  <p class="lead">A PE-backed company is measured on efficient, profitable growth. The system + AI is how a lean field team produces a big-company, experience-led program without scaling spend in lockstep. Model A proves the engine; Model B scales it as ROI is proven.</p>
+  <div class="toggle" id="modeToggle">
+    <button class="on" data-mode="A">Model A · AI-leveraged core</button>
+    <button data-mode="B">Model B · Scaled build</button>
+  </div>
+  <div id="modeA">
+    <div class="card">
+      <h4 style="margin:0 0 6px">"A lean field pod, a team of AI agents, retainer vendors, and the lab-author community"</h4>
+      <p style="margin:0 0 6px;color:var(--mut);font-size:14px">The humans own strategy, executive relationships, on-site presence, and judgment. Everything reproducible is delegated to AI agents — including generating the live-lab challenges that power every event. Marketing onboards its own field team in Skillable labs.</p>
+    </div>
+    <div class="grid" style="grid-template-columns:repeat(5,1fr)">
+      <div class="agent"><div class="nm">Scout</div><p style="margin:4px 0 0;font-size:13px;color:var(--mut)">Account/persona research, show-ROI scoring, briefing docs</p></div>
+      <div class="agent"><div class="nm">Scribe</div><p style="margin:4px 0 0;font-size:13px;color:var(--mut)">Invites, pages, recaps, lab-challenge &amp; launch content</p></div>
+      <div class="agent"><div class="nm">Concierge</div><p style="margin:4px 0 0;font-size:13px;color:var(--mut)">RSVP, reminders, personalized agendas, logistics checklists</p></div>
+      <div class="agent"><div class="nm">Analyst</div><p style="margin:4px 0 0;font-size:13px;color:var(--mut)">Lead scoring/routing, budget, dashboards, retros</p></div>
+      <div class="agent"><div class="nm">Sprint</div><p style="margin:4px 0 0;font-size:13px;color:var(--mut)">PM agent CC'd on email + in meetings: tracks, updates, pings deadlines</p></div>
+    </div>
+    <div class="callout alt"><b>The leverage story:</b> a lean pod runs a flagship + a full live-lab industry calendar + a relentless exec/workshop cadence — with AI generating lab challenges and follow-up. The limits are reach &amp; parallelism, not quality.</div>
+  </div>
+  <div id="modeB" class="hide">
+    <div class="card">
+      <h4 style="margin:0 0 6px">Scaled to serve both buyer worlds, efficiently</h4>
+      <table style="margin-top:8px">
+        <thead><tr><th>Role</th><th>Owns</th><th>Hire</th></tr></thead>
+        <tbody>
+          <tr><td class="tag">Head of Events &amp; Field</td><td>Strategy, flagship, executive program <span class="pill p-good">the role</span></td><td>Month 0</td></tr>
+          <tr><td class="tag">Field Marketing Manager (L&amp;D)</td><td>Learning/training events + live-lab booths</td><td>~Month 3</td></tr>
+          <tr><td class="tag">Field Marketing Manager (Enablement)</td><td>Sales-enablement/presales events + demos-as-labs</td><td>~Month 5</td></tr>
+          <tr><td class="tag">Community / Lab-author Manager (fractional)</td><td>Customer &amp; lab-author program, CAB</td><td>~Month 6</td></tr>
+          <tr><td class="tag">Agency + design</td><td>Production, brand, video, lab UX</td><td>Ongoing</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout"><b>Result:</b> a flagship "prove it" summit + a full live-lab calendar across both buyer worlds + an always-on exec &amp; community program + 30–45 hands-on rooms — the footprint of the experiential-skilling category leader.</div>
+  </div>
+  <h4 style="margin:22px 0 6px">The trade-off at a glance</h4>
+  <div class="card" style="overflow-x:auto">
+    <table class="vs">
+      <thead><tr><th>Dimension</th><th>Model A · AI-leveraged core</th><th>Model B · Scaled build</th></tr></thead>
+      <tbody>
+        <tr><td>Headcount</td><td>Lean pod + AI agents + vendors</td><td>3–4 FTE + agency</td></tr>
+        <tr><td>Annual budget</td><td>~$500K</td><td>~$1.6M</td></tr>
+        <tr><td>Flagship (Tier 1)</td><td>Focused summit + community</td><td>Full "prove it" summit + launches</td></tr>
+        <tr><td>Tier 2 events/yr</td><td>6–8 selective (live-lab booths)</td><td>10–12 (both buyer worlds)</td></tr>
+        <tr><td>Tier 3 events/yr</td><td>~18</td><td>30–45 (exec + hands-on)</td></tr>
+        <tr><td>Quality bar</td><td>High — guaranteed by the system</td><td>High — same system</td></tr>
+        <tr><td>What more resources buy</td><td>—</td><td>Reach &amp; parallelism, not quality</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout"><b>Recommendation:</b> stand up the system in Model A immediately (and prove the live-lab event model on a few flagship shows); graduate to Model B as hands-on-to-pipeline conversion proves out.</div>
+</section>
+
+<!-- AI OPERATING MODEL -->
+<section class="panel" id="p-ai">
+  <h2 class="sec">The AI Operating Model</h2>
+  <h3 class="big">AI generates the labs, the content, and the follow-up — humans run the room</h3>
+  <p class="lead">Not by chatting with a chatbot — by turning repeatable tasks into shared, governed workflows. For Skillable, AI is also a product accelerant: it can spin up the live-lab challenges that make every event experiential, fast.</p>
+  <div class="grid g3" style="margin-top:16px">
+    <div class="card"><div class="pill p-t1">The Marketing Brain</div><p style="margin:8px 0 0;font-size:13.5px;color:var(--mut)">A versioned repo of prompts, "skills" &amp; lab templates encoding Skillable's brand &amp; the "prove it" narrative. Invoke a <b>"live-lab booth"</b> or <b>"CLO roundtable"</b> skill → on-brand output in seconds.</p></div>
+    <div class="card"><div class="pill p-t3">Zero-to-One workflows</div><p style="margin:8px 0 0;font-size:13.5px;color:var(--mut)">Automate the first 80%. From one event theme: research accounts, generate the lab challenge, draft the invite &amp; follow-up sequence — in minutes.</p></div>
+    <div class="card"><div class="pill p-t2">Mass personalization</div><p style="margin:8px 0 0;font-size:13.5px;color:var(--mut)">HeyGen-style video where a Skillable leader invites each CLO/enablement lead by name to a hands-on challenge. "Unfair" high-touch at scale.</p></div>
+    <div class="card"><div class="pill p-t1">Sales-enablement "brains"</div><p style="margin:8px 0 0;font-size:13.5px;color:var(--mut)">An approved library so AEs turn a prospect's lab score into a bespoke, on-brand follow-up in real time — hands-on result → conversation.</p></div>
+    <div class="card"><div class="pill p-t3">Content &amp; SEO engines</div><p style="margin:8px 0 0;font-size:13.5px;color:var(--mut)">Programmatic SEO for "hands-on [skill] labs / validate [X] skills" by domain; quarterly refresh keeps pages <b>~3× more likely cited by AI search</b>.</p></div>
+    <div class="card"><div class="pill p-t2">Thought partner — CRIT</div><p style="margin:8px 0 0;font-size:13.5px;color:var(--mut)">Not an oracle. CRIT (Context, Role, Interview, Task) makes AI interview you one question at a time to find plan gaps before a dollar is spent.</p></div>
+  </div>
+  <div class="callout alt"><b>The Skillable-only unlock — "experience it to believe it."</b> Use Skillable to run the field itself: onboard the field team in Skillable labs, power every booth and workshop with a live lab, and let the platform's scoring become the marketing metric (hands-on completion → pipeline). The product proves itself every time someone touches it — with human-in-the-loop on everything customer-facing.</div>
+</section>
+
+<!-- WORKFLOWS -->
+<section class="panel" id="p-flow">
+  <h2 class="sec">Workflows &amp; Sprint Cadence</h2>
+  <h3 class="big">One lifecycle, nine stages — every event ships a working lab</h3>
+  <p class="lead">A single source of truth: tiered runbooks defining every stage, owner, AI step, and SLA — including the lab build. <b>Lead times:</b> Tier 1 = 12–16 wks · Tier 2 = 6–8 wks · Tier 3 = 3–4 wks (workshops/dinners), &lt;2 wks (webinars-as-labs).</p>
+  <div class="flow" style="margin-top:14px">
+    <div class="step"><div class="n">01</div><h5>Select</h5><p>Score vs ICP, tier, account overlap</p><span class="ai">AI · Scout</span></div>
+    <div class="step"><div class="n">02</div><h5>Brief</h5><p>One-page: objective, audience, lab, KPI</p><span class="ai">AI · Scribe</span></div>
+    <div class="step"><div class="n">03</div><h5>Build</h5><p>Page, registration, the live lab, run-of-show</p><span class="ai">AI · Scribe/Concierge</span></div>
+    <div class="step"><div class="n">04</div><h5>Promote</h5><p>Multi-touch invites, community-assisted, social</p><span class="ai">AI · Scribe</span></div>
+    <div class="step"><div class="n">05</div><h5>Produce</h5><p>Vendor/community coordination, lab rehearsal</p><span class="ai">Human + agency</span></div>
+    <div class="step"><div class="n">06</div><h5>Execute</h5><p>Run the lab; capture scores &amp; conversations</p><span class="ai">Human</span></div>
+    <div class="step"><div class="n">07</div><h5>Follow-up</h5><p>48-hr SLA; score-driven personalized follow-up</p><span class="ai">AI · Analyst/Scribe</span></div>
+    <div class="step"><div class="n">08</div><h5>Measure</h5><p>Lab launches, pipeline, velocity to dashboard</p><span class="ai">AI · Analyst</span></div>
+    <div class="step"><div class="n">09</div><h5>Retro</h5><p>Within 5 days → into the backlog</p><span class="ai">Human + AI</span></div>
+  </div>
+  <h4 style="margin:22px 0 4px">Sprint cycles — keep the experiences coming</h4>
+  <p style="margin:0 0 10px;font-size:14.5px;color:var(--ink2)"><b>Run field marketing like product engineering.</b> Replace the annual plan with <b>3-week / 2-month sprints</b>, always shipping a new live-lab challenge, an exec roundtable, a workshop, a launch. Constant shipping creates persistent <b>"noise in the market"</b> — and a steady stream of reusable labs that compound the team's leverage every quarter.</p>
+  <div class="loop">
+    <div class="lp"><b>48-hour rule:</b> every lead routed &amp; followed up in two business days.</div>
+    <div class="lp"><b>5-day retro:</b> fast, blameless, into the backlog.</div>
+    <div class="lp"><b>Sprint demo:</b> ship + show every 2–3 weeks — visible momentum.</div>
+    <div class="lp"><b>Quarterly rebalance:</b> double down on winners, cut the rest.</div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section class="panel" id="p-road">
+  <h2 class="sec">12-Month Roadmap</h2>
+  <h3 class="big">Build the machine, prove the live-lab model, then let ROI unlock the scale</h3>
+  <p class="lead">Each phase has an exit metric and an explicit spend/hire trigger — growth is earned by pipeline, lab-engagement and conversion data, not argued in a meeting.</p>
+  <div style="margin-top:16px">
+    <div class="phase"><div class="dot">0</div><div class="body"><h4>Build the machine · Month 0–1</h4><p style="margin:0;font-size:14px;color:var(--mut)">Audit, instrument attribution, stand up runbooks + the AI pod + reusable lab templates + dashboards. Quick wins: first CLO roundtable + a webinar-as-lab in 30 days.</p><span class="trigger">Exit: system live · first live-lab event booked · attribution reporting</span></div></div>
+    <div class="phase"><div class="dot">1</div><div class="body"><h4>Prove the live-lab booth + spring events · Q1–Q2</h4><p style="margin:0;font-size:14px;color:var(--mut)">Pilot the live-lab booth at the spring cluster (ATD, SaaStr, Sales Enablement Summit); activate the lab-author community; pilot HeyGen.</p><span class="trigger">Exit: live-lab booth beats demo booth on pipeline → Hire L&amp;D Field Manager</span></div></div>
+    <div class="phase"><div class="dot">2</div><div class="body"><h4>Serve both worlds + the category moment · Summer</h4><p style="margin:0;font-size:14px;color:var(--mut)">Stand up the enablement/presales motion; launch the owned "Prove It / Skills in the AI era" summit; tie an AI-skills-validation launch + CAB to it.</p><span class="trigger">Exit: summit reach + enablement pipeline → Hire Enablement Field + Community Mgr</span></div></div>
+    <div class="phase"><div class="dot">3</div><div class="body"><h4>Scale the calendar · Fall</h4><p style="margin:0;font-size:14px;color:var(--mut)">DevLearn, Training Industry, CompTIA + enablement events; scale exec roundtables &amp; hands-on workshops across both buyer worlds.</p><span class="trigger">Exit: hands-on-to-pipeline conversion proven · portfolio rebalanced</span></div></div>
+    <div class="phase"><div class="dot">4</div><div class="body"><h4>Measure &amp; scale the case · Q4</h4><p style="margin:0;font-size:14px;color:var(--mut)">Full-year measurement; rebalance; build the ROI-led case to fully fund Model B (the PE-friendly, efficiency-proven investment ask).</p><span class="trigger">Exit: board-ready ROI story · budget approved</span></div></div>
+  </div>
+</section>
+
+<!-- CALENDAR -->
+<section class="panel" id="p-cal">
+  <h2 class="sec">12-Month Tiered Calendar</h2>
+  <h3 class="big">All three tiers — anchored to the real 2026 learning &amp; enablement calendar</h3>
+  <p class="lead">Confirmed 2026 anchors: SaaStr AI Annual (May 12–14, SF Bay) · ATD International (May 17–20, LA) · Sales Enablement Summit (Feb Austin / Mar NYC / Jun Seattle / Sep SF / Nov Chicago) · DevLearn (Nov 4–6, Las Vegas) · plus Training Industry Conference (fall) and Microsoft Ignite (fall). Beyond anchors the grid is illustrative.</p>
+  <div class="card" style="overflow-x:auto;margin-top:14px">
+    <table>
+      <thead><tr><th>Month</th><th><span class="pill p-t1">Tier 1</span> Owned / Community</th><th><span class="pill p-t2">Tier 2</span> Industry (live-lab booths)</th><th><span class="pill p-t3">Tier 3</span> Executive / Hands-on</th></tr></thead>
+      <tbody>
+        <tr><td><b>Jan</b></td><td>"Prove it" POV content + summit theme</td><td>Function webinar-as-lab series kickoff</td><td>2 CLO roundtables (NYC, SF); enablement workshop</td></tr>
+        <tr><td><b>Feb</b></td><td>Lab-author community program launch</td><td>Sales Enablement Summit (Austin)</td><td>3 hands-on workshops; CAB recruiting</td></tr>
+        <tr><td><b>Mar</b></td><td>AI-skills-validation launch content</td><td>Sales Enablement Summit (NYC); cert events</td><td>3 roundtables; presales/demo community meetup</td></tr>
+        <tr><td><b>Apr</b></td><td>Summit promotion + curation begins</td><td>L&amp;D / vertical events ×2 (live-lab booth)</td><td>4 workshops; CAB session 1; webinar-as-lab</td></tr>
+        <tr style="background:#f7faf8"><td><b>May</b></td><td>Big live-lab presence across the cluster</td><td><b>SaaStr AI · ATD International</b></td><td>CLO dinners on-site; enablement roundtables ×3</td></tr>
+        <tr><td><b>Jun</b></td><td>Mid-year community lab awards</td><td>Sales Enablement Summit (Seattle)</td><td>4 workshops; hands-on labs ×2</td></tr>
+        <tr><td><b>Jul</b></td><td><b>"Prove It" Summit</b> (flagship)</td><td>Regional roadshows ×2 (live-lab)</td><td>Summit exec program + CAB; CLO dinners</td></tr>
+        <tr><td><b>Aug</b></td><td>Post-summit content factory + nurture</td><td>Sponsored speaking ×2</td><td>3 roundtables; presales community meetups ×2</td></tr>
+        <tr><td><b>Sep</b></td><td>AI-skills content series</td><td>Sales Enablement Summit (SF); cert events</td><td>4 workshops; enablement roundtables</td></tr>
+        <tr><td><b>Oct</b></td><td>Customer lab-author showcase</td><td>Microsoft Ignite (ecosystem); CompTIA</td><td>4 roundtables; hands-on labs ×2</td></tr>
+        <tr><td><b>Nov</b></td><td>Year-in-review + community awards</td><td><b>DevLearn (Nov 4–6)</b>; Training Industry Conf</td><td>3 workshops; CAB session 2</td></tr>
+        <tr><td><b>Dec</b></td><td>Year-end + 2027 summit planning</td><td>Holiday community outreach</td><td>2 intimate customer dinners</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout"><b>Totals (Model B):</b> flagship summit + community moments + launches (Tier 1) · 10–12 (Tier 2) · ~38 (Tier 3). Model A runs the same skeleton selectively with heavier AI + community leverage.</div>
+</section>
+
+<!-- BUDGET -->
+<section class="panel" id="p-budget">
+  <h2 class="sec">Budget Model</h2>
+  <h3 class="big">PE-disciplined scale — recommend ~$1.6M to own the experiential category</h3>
+  <p class="lead">Sized for a profitable, PE-backed leader where every dollar must show pipeline. The live-lab model and AI keep spend from scaling linearly with ambition, and reusable labs compound. The AI-leveraged core runs at ~$500K.</p>
+  <div class="grid g2" style="margin-top:16px">
+    <div class="card">
+      <h4 style="margin:0 0 10px">Model B · Scaled build <span class="pill p-t1">~$1.6M / yr</span></h4>
+      <div id="budgetB"></div>
+      <p style="font-size:12px;color:var(--mut);margin:10px 0 0">Headcount (~$450K–$600K loaded for 3–4 FTE) is a separate people-budget line.</p>
+    </div>
+    <div class="card">
+      <h4 style="margin:0 0 10px">Model A · AI-leveraged core <span class="pill p-t3">~$500K / yr</span></h4>
+      <div id="budgetA"></div>
+      <p style="font-size:12px;color:var(--mut);margin:10px 0 0">Plus the core team. Heavier AI + community leverage substitutes for spend.</p>
+    </div>
+  </div>
+  <div class="grid g3" style="margin-top:4px">
+    <div class="kpi"><div class="num">5:1</div><div class="lab">Blended pipeline-to-cost target (12 mo)</div></div>
+    <div class="kpi"><div class="num">8–12:1</div><div class="lab">Exec roundtable / workshop ROI</div></div>
+    <div class="kpi"><div class="num">↓ QoQ</div><div class="lab">Cost-per-opp as the system matures</div></div>
+  </div>
+</section>
+
+<!-- KPIS -->
+<section class="panel" id="p-kpi">
+  <h2 class="sec">KPIs &amp; Measurement</h2>
+  <h3 class="big">Commercial major, marketing minor — plus the experiential proof</h3>
+  <p class="lead">Measure on the numbers a PE board respects — <b>pipeline and pipeline velocity</b> — alongside the <b>experiential signals</b> that prove the live-lab strategy works. Not vanity counts.</p>
+  <div class="grid g2" style="margin-top:16px">
+    <div class="card"><h4 style="margin:0 0 8px">Commercial (the headline)</h4>
+      <ul class="clean" style="font-size:14px"><li>Sourced + influenced pipeline · pipeline velocity</li><li>Hands-on-to-pipeline conversion (lab → opp)</li><li>Win-rate lift on event-touched deals · cost per opp</li><li>Expansion across both buyer worlds</li></ul></div>
+    <div class="card"><h4 style="margin:0 0 8px">Experiential (the proof)</h4>
+      <ul class="clean" style="font-size:14px"><li>Lab launches &amp; completions at events</li><li>Active lab authors &amp; community labs created</li><li>Share of voice in "skills validation / experiential learning"</li><li>Summit reach, NPS &amp; CAB depth</li></ul></div>
+  </div>
+  <div class="callout alt"><b>De-emphasize vanity metrics</b> — booth scans, impressions, raw registrations. For Skillable, <b>a lab someone actually completed beats a badge they scanned</b> — and it converts far better.</div>
+  <div class="callout"><b>The dashboard:</b> one live view refreshed by the <i>Analyst</i> agent — pipeline by tier &amp; buyer world, lab launches, hands-on conversion, narrative-share, and a portfolio scorecard so the quarterly rebalance is data-driven.</div>
+</section>
+
+<!-- 90 DAYS -->
+<section class="panel" id="p-90">
+  <h2 class="sec">First 90 Days</h2>
+  <h3 class="big">How I'd start</h3>
+  <div class="grid g3" style="margin-top:16px">
+    <div class="card"><div class="pill p-t1">Days 1–30</div><p style="margin:8px 0 0;font-size:14px">Audit current events &amp; return. Stand up runbooks, the AI pod, reusable lab templates, the attribution dashboard. Tier the calendar. Launch the first CLO roundtable + a webinar-as-lab.</p></div>
+    <div class="card"><div class="pill p-t2">Days 31–60</div><p style="margin:8px 0 0;font-size:14px">Pilot the live-lab booth at a spring show (ATD/SaaStr); activate the lab-author community; ship the first Zero-to-One workflow + a HeyGen pilot. Run the first sprint.</p></div>
+    <div class="card"><div class="pill p-t3">Days 61–90</div><p style="margin:8px 0 0;font-size:14px">Report first sourced pipeline + hands-on-conversion baseline (live-lab vs demo booth). Lock the "Prove It" summit plan. Bring the quarterly rebalance + spend/hire triggers to the CMO.</p></div>
+  </div>
+  <div class="callout" style="margin-top:18px;font-size:16px"><b>Give me the system and the AI pod, and I'll make every Skillable touchpoint a live lab that proves the product on contact — turning hands-on experiences into pipeline in 90 days, then show you exactly what to fund to scale it.</b></div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <b>Skillable Event &amp; Field Marketing Operating System</b> · A strategic teardown prepared for Skillable GTM leadership.<br>
+    Built from public research on Skillable and its event/competitive landscape. Budgets, calendar details beyond confirmed event anchors, headcount, and tool/agent names are illustrative planning models, not Skillable-internal figures.
+  </div>
+</footer>
+
+<script>
+  const sections = [
+    ['p-thesis','Thesis'],['p-now','Current State'],['p-comp','Competitive'],['p-strat','Strategy'],['p-tiers','Tier Model'],
+    ['p-ops','Operating Model'],['p-ai','AI Operating Model'],['p-flow','Workflows'],['p-road','Roadmap'],
+    ['p-cal','Calendar'],['p-budget','Budget'],['p-kpi','KPIs'],['p-90','First 90 Days']
+  ];
+  const nav = document.getElementById('nav');
+  sections.forEach(([id,label],i)=>{
+    const b=document.createElement('button');
+    b.textContent=label; b.dataset.t=id; if(i===0)b.classList.add('active');
+    b.onclick=()=>{
+      document.querySelectorAll('.panel').forEach(pn=>pn.classList.remove('show'));
+      document.getElementById(id).classList.add('show');
+      document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));
+      b.classList.add('active');
+      window.scrollTo({top:0,behavior:'smooth'});
+    };
+    nav.appendChild(b);
+  });
+  document.querySelectorAll('#modeToggle button').forEach(btn=>{
+    btn.onclick=()=>{
+      document.querySelectorAll('#modeToggle button').forEach(x=>x.classList.remove('on'));
+      btn.classList.add('on');
+      const m=btn.dataset.mode;
+      document.getElementById('modeA').classList.toggle('hide',m!=='A');
+      document.getElementById('modeB').classList.toggle('hide',m!=='B');
+    };
+  });
+  const budgetB=[['"Prove It" summit (flagship)',350],['Live-lab booth program (10–12)',400],['Community / lab-author program',180],
+    ['Exec roundtables + workshops (35)',240],['AI-skills launch moments',100],['Tooling + AI',120],['Agency / design',130],['Contingency',80]];
+  const budgetA=[['Summit (focused)',160],['Industry live-lab (6–8)',150],['Workshops + webinars (~18)',100],
+    ['Community program',40],['Tooling (lean + AI)',35],['Vendors',15]];
+  function renderBudget(el,data,max,color){
+    const c=document.getElementById(el);
+    data.forEach(([lab,val])=>{
+      const row=document.createElement('div'); row.style.marginBottom='9px';
+      row.innerHTML='<div style="display:flex;justify-content:space-between;font-size:13px"><span>'+lab+'</span><b>$'+val+'K</b></div>'+
+        '<div class="bartrk"><div class="bar" style="width:'+(val/max*100).toFixed(1)+'%;background:'+color+'"></div></div>';
+      c.appendChild(row);
+    });
+  }
+  renderBudget('budgetB',budgetB,400,'#0f7a4e');
+  renderBudget('budgetA',budgetA,160,'#6a0fe0');
+</script>
+</body>
+</html>
