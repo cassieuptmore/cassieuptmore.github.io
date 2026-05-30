@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scribe Event &amp; Field Marketing Operating System</title>
+<style>
+  :root{
+    --ink:#1e1b3a; --ink2:#43406a; --indigo:#4535ff; --indigo-d:#2e22a8; --indigo-l:#e8e7ff;
+    --sand:#f5f5fb; --paper:#ffffff; --line:#e5e5f0; --mut:#5d5a78; --amber:#e8820a; --green:#10b981;
+    --t1:#4535ff; --t2:#0e9d6e; --t3:#e8820a; --bad:#cf4035; --good:#0e9d6e;
+    --shadow:0 1px 2px rgba(30,27,58,.06),0 8px 24px rgba(30,27,58,.09);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    color:var(--ink);background:var(--sand);line-height:1.55;-webkit-font-smoothing:antialiased}
+  a{color:var(--indigo-d);text-decoration:none}
+  header{background:linear-gradient(125deg,#16112e 0%,#2a2270 52%,#4535ff 130%);color:#fff;padding:34px 28px 26px}
+  .wrap{max-width:1120px;margin:0 auto}
+  .eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#bdb6ff;font-weight:700}
+  header h1{font-size:32px;line-height:1.15;margin:8px 0 6px;font-weight:800;letter-spacing:-.5px}
+  header p.sub{font-size:16px;color:#d9d6ff;max-width:790px;margin:0}
+  .meta{margin-top:16px;display:flex;flex-wrap:wrap;gap:10px;font-size:12.5px}
+  .meta span{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);padding:5px 11px;border-radius:999px}
+  nav{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .nav-inner{max-width:1120px;margin:0 auto;display:flex;gap:2px;overflow-x:auto;padding:0 14px}
+  nav button{flex:0 0 auto;background:none;border:none;padding:14px 14px;font-size:13.5px;font-weight:600;color:var(--mut);
+    cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;font-family:inherit}
+  nav button:hover{color:var(--ink)}
+  nav button.active{color:var(--indigo-d);border-bottom-color:var(--indigo)}
+  main{max-width:1120px;margin:0 auto;padding:30px 22px 70px}
+  .panel{display:none;animation:fade .25s ease}
+  .panel.show{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  h2.sec{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--indigo-d);font-weight:800;margin:0 0 4px}
+  h3.big{font-size:25px;font-weight:800;margin:0 0 14px;letter-spacing:-.3px;color:var(--ink)}
+  .lead{font-size:16.5px;color:var(--ink2);max-width:840px}
+  .card{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:22px;box-shadow:var(--shadow);margin-bottom:16px}
+  .grid{display:grid;gap:16px}
+  .g2{grid-template-columns:repeat(2,1fr)} .g3{grid-template-columns:repeat(3,1fr)} .g4{grid-template-columns:repeat(4,1fr)}
+  @media(max-width:860px){.g2,.g3,.g4{grid-template-columns:1fr}}
+  .kpi{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:var(--shadow)}
+  .kpi .num{font-size:30px;font-weight:800;color:var(--indigo-d);letter-spacing:-.5px}
+  .kpi .lab{font-size:13px;color:var(--mut);margin-top:2px}
+  .pill{display:inline-block;font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px;letter-spacing:.03em}
+  .p-t1{background:#e6e4ff;color:#2e22a8} .p-t2{background:#d9f5ec;color:#0a7d54} .p-t3{background:#fdeccf;color:#b5680a}
+  .p-good{background:#d9f5ec;color:#0a7d54} .p-bad{background:#fbe0dd;color:#b2271c}
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  th,td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--mut);background:#fbfbfe}
+  tbody tr:hover{background:#f9f9ff}
+  .tag{font-weight:700}
+  ul.clean{margin:8px 0 0;padding-left:18px} ul.clean li{margin:5px 0}
+  .callout{border-left:4px solid var(--indigo);background:#eeedff;padding:14px 16px;border-radius:0 10px 10px 0;margin:14px 0;font-size:14.5px}
+  .callout.alt{border-left-color:var(--amber);background:#fdf1de}
+  .tier{border-radius:14px;padding:20px;color:#fff;position:relative;overflow:hidden;box-shadow:var(--shadow)}
+  .tier h4{margin:0 0 2px;font-size:19px;font-weight:800}
+  .tier .role{font-size:12.5px;opacity:.92;margin-bottom:12px}
+  .tier.t1{background:linear-gradient(135deg,#4535ff,#2e22a8)}
+  .tier.t2{background:linear-gradient(135deg,#10b981,#0a7d54)}
+  .tier.t3{background:linear-gradient(135deg,#f0890a,#c06806)}
+  .tier dl{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;font-size:13px;margin:0}
+  .tier dt{opacity:.85;font-weight:600} .tier dd{margin:0}
+  .vs th:nth-child(2){color:var(--indigo-d)} .vs th:nth-child(3){color:#b5680a}
+  .phase{display:flex;gap:16px;margin-bottom:14px}
+  .phase .dot{flex:0 0 auto;width:42px;height:42px;border-radius:50%;background:var(--indigo);color:#fff;display:flex;
+    align-items:center;justify-content:center;font-weight:800;font-size:15px;box-shadow:var(--shadow)}
+  .phase .body{flex:1;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:16px;box-shadow:var(--shadow)}
+  .phase h4{margin:0 0 4px;font-size:16px}
+  .trigger{display:inline-block;margin-top:8px;font-size:12.5px;background:#fdf1de;border:1px dashed var(--amber);color:#b5680a;padding:5px 10px;border-radius:8px;font-weight:600}
+  .flow{display:flex;flex-wrap:wrap;gap:8px;align-items:stretch}
+  .step{flex:1 1 150px;background:var(--paper);border:1px solid var(--line);border-radius:11px;padding:12px;box-shadow:var(--shadow);position:relative}
+  .step .n{font-size:11px;font-weight:800;color:var(--indigo-d)}
+  .step h5{margin:3px 0 4px;font-size:14.5px}
+  .step p{margin:0;font-size:12.5px;color:var(--mut)}
+  .step .ai{margin-top:6px;font-size:11px;font-weight:700;color:#b5680a;background:#fdf1de;border-radius:6px;padding:3px 7px;display:inline-block}
+  .loop{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+  .loop .lp{flex:1 1 200px;background:#eeedff;border:1px solid var(--indigo-l);border-radius:10px;padding:12px;font-size:13px}
+  .loop .lp b{color:var(--indigo-d)}
+  .bar{height:13px;border-radius:7px;background:var(--indigo);margin-top:5px}
+  .bartrk{background:#ececf4;border-radius:7px;overflow:hidden}
+  .agent{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:16px;box-shadow:var(--shadow)}
+  .agent .nm{font-weight:800;color:var(--indigo-d);font-size:16px}
+  footer{max-width:1120px;margin:0 auto;padding:26px 22px 50px;color:var(--mut);font-size:12.5px;border-top:1px solid var(--line)}
+  .toggle{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;margin:6px 0 14px}
+  .toggle button{background:#fff;border:none;padding:9px 18px;font-weight:700;font-size:13.5px;cursor:pointer;color:var(--mut);font-family:inherit}
+  .toggle button.on{background:var(--indigo);color:#fff}
+  .hide{display:none}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="eyebrow">Event &amp; Field Marketing · Systems-First Program Design</div>
+    <h1>The Scribe Event Operating System</h1>
+    <p class="sub">How a fresh PLG unicorn turns its community flywheel into enterprise demand — and defines the category for "how work gets done with AI" — run at startup speed by a doubling team supercharged with an AI operating model (built on Scribe itself).</p>
+    <div class="meta">
+      <span>Prepared for Scribe GTM leadership · the Office of the CMO</span>
+      <span>12-month horizon</span>
+      <span>Category: AI process documentation → workflow intelligence</span>
+    </div>
+  </div>
+</header>
+
+<nav><div class="nav-inner" id="nav"></div></nav>
+
+<main>
+
+<!-- THESIS -->
+<section class="panel show" id="p-thesis">
+  <h2 class="sec">The Thesis</h2>
+  <h3 class="big">Don't bolt enterprise field marketing onto a PLG rocket — build a system that amplifies the flywheel</h3>
+  <p class="lead">Scribe is a fresh $1.3B unicorn with a viral PLG flywheel, a doubling team, and a new "where AI actually pays off" narrative. The risk at this moment isn't budget — it's bolting on slow, traditional enterprise field motions that fight the PLG grain, or scaling people before the system. The play: a system + AI that <b>amplifies community into enterprise demand</b> at the speed a doubling team needs. AI gives <b>10x–100x leverage</b> — and uniquely, Scribe can run the entire field on its own product.</p>
+  <div class="grid g3" style="margin-top:18px">
+    <div class="card"><div class="pill p-t1">Layer 1</div><h4 style="margin:8px 0 4px">Repeatable playbooks</h4><p style="margin:0;color:var(--mut);font-size:14px">Tiered runbooks — every one a public Scribe. Quality stops being person-dependent as the team doubles.</p></div>
+    <div class="card"><div class="pill p-t3">Layer 2</div><h4 style="margin:8px 0 4px">AI does the production load</h4><p style="margin:0;color:var(--mut);font-size:14px">Research, copy, briefs, recaps — and the workflow-mapping that maps the marketing process itself. Customer-zero.</p></div>
+    <div class="card"><div class="pill p-t2">Layer 3</div><h4 style="margin:8px 0 4px">Community &amp; champion leverage</h4><p style="margin:0;color:var(--mut);font-size:14px">Millions of users who already make Scribes are an unfair field-marketing army — activate them.</p></div>
+  </div>
+  <div class="grid g4" style="margin-top:6px">
+    <div class="kpi"><div class="num">10–100×</div><div class="lab">Human leverage from AI</div></div>
+    <div class="kpi"><div class="num">PLG → ENT</div><div class="lab">Amplify the flywheel upmarket</div></div>
+    <div class="kpi"><div class="num">Community</div><div class="lab">The unfair field-marketing army</div></div>
+    <div class="kpi"><div class="num">Customer-zero</div><div class="lab">Run the field on Scribe itself</div></div>
+  </div>
+  <div class="callout alt"><b>From "random acts of AI" to an operating model.</b> Templatize prompts into <b>workflows anyone can run</b> (as Scribes). Apply <b>80/20 filtering</b> — ignore the AI noise; point it at the few tasks that compound — and a <b>"commercial major, marketing minor"</b> lens: optimize for pipeline velocity and category narrative, not vanity metrics. The marketer becomes a <b>system architect</b>.</div>
+  <div class="callout"><b>The one-line pitch:</b> Give me the system and the AI pod — built on Scribe — and I'll turn the community flywheel into an enterprise demand engine and make Scribe the name for "how work gets done with AI" in 90 days, then show you exactly what to fund as the team doubles.</div>
+</section>
+
+<!-- CURRENT STATE -->
+<section class="panel" id="p-now">
+  <h2 class="sec">Current State</h2>
+  <h3 class="big">A PLG rocket with a new enterprise story — the field motion has to scale with it</h3>
+  <p class="lead">Founded 2019 (Jennifer Smith, Aaron Podolny), Scribe just raised a $75M Series C at a $1.3B valuation ($130M total; StepStone, Amplify, Redpoint, Tiger Global). ~120 employees, doubling in 12 months. The opportunity: build the field/event system <i>before</i> the headcount, and aim it at the move upmarket + the AI-workflow narrative.</p>
+  <div class="grid g2" style="margin-top:16px">
+    <div class="card">
+      <h4 style="margin:0 0 8px;color:var(--good)">✓ What's working</h4>
+      <ul class="clean" style="font-size:14px">
+        <li><b>A viral PLG flywheel</b> — bottoms-up adoption; millions of guides created and shared. The growth engine most companies dream of.</li>
+        <li><b>Fresh unicorn fuel</b> — $1.3B valuation, $130M raised, top-tier investors, headcount doubling.</li>
+        <li><b>A new, timely narrative</b> — "where AI actually pays off / AI workflow mapping" — moving from guides to process intelligence.</li>
+        <li><b>A credible founder voice</b> — Jennifer Smith (ex-McKinsey) on the future of work and AI ROI.</li>
+        <li><b>Drink-your-own-champagne</b> — Scribe is itself a how-to/AI-workflow tool; the marketing org can be a living demo.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4 style="margin:0 0 8px;color:var(--bad)">▲ Gaps to close</h4>
+      <ul class="clean" style="font-size:14px">
+        <li><b>No flagship / owned-event motion</b> — no category moment to anchor the AI-workflow narrative.</li>
+        <li><b>The community asset is under-leveraged for events</b> — champions aren't yet a field-marketing army.</li>
+        <li><b>Enterprise field is nascent</b> — moving upmarket needs an exec demand motion (roundtables, ABM) that PLG didn't require.</li>
+        <li><b>Scaling people before the system</b> — doubling the team without runbooks bakes in chaos.</li>
+        <li><b>AI under-leveraged in the workflow itself</b> — Scribe should run its own field on Scribe, visibly.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- COMPETITIVE -->
+<section class="panel" id="p-comp">
+  <h2 class="sec">Competitive Landscape</h2>
+  <h3 class="big">Out-execute the direct rivals — and define a category the DAPs can't claim</h3>
+  <p class="lead">The direct fight (Tango, Guidde) is winnable on speed and breadth; the bigger prize is defining "the AI layer for how work actually gets done" before the enterprise DAPs (Whatfix, WalkMe, Pendo) stretch into it. Events are how Scribe claims that ground.</p>
+  <div class="card" style="overflow-x:auto;margin-top:14px">
+    <table>
+      <thead><tr><th>Competitor</th><th>What they are</th><th>What they do well</th><th>What Scribe should steal / where it wins</th></tr></thead>
+      <tbody>
+        <tr><td class="tag">Tango</td><td>Closest direct — auto step-by-step guides (browser-only)</td><td>Clean capture; strong comparison content</td><td>Steal: sharp comparison/SEO play. Win: native desktop + browser, PLG scale, the AI-workflow layer</td></tr>
+        <tr><td class="tag">Guidde</td><td>AI-generated video walkthroughs</td><td>Narrated video; modern feel</td><td>Steal: video polish. Win: speed, breadth, and process-intelligence beyond a single walkthrough</td></tr>
+        <tr><td class="tag">Whatfix / WalkMe</td><td>Enterprise Digital Adoption Platforms (in-app overlays)</td><td>Deep enterprise footprint; in-app guidance + analytics</td><td>Steal: enterprise credibility & analytics narrative. Win: time-to-value, bottoms-up adoption, no heavy implementation</td></tr>
+        <tr><td class="tag">Pendo / Userpilot</td><td>Product analytics + in-app onboarding</td><td>Behavioral data; product-led onboarding</td><td>Steal: the data/ROI story. Win: "how work gets done" across any app, not just your own product</td></tr>
+        <tr style="background:#f9f9ff"><td class="tag">The status quo</td><td>Tribal knowledge, stale wikis, "ask a coworker"</td><td>Free; already there</td><td>The real enemy — events that quantify the cost of undocumented work create the urgency to adopt</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout alt"><b>The white space:</b> No one owns "the AI layer for how work actually gets done — captured, shared, and continuously improved." Direct rivals are point tools; DAPs are heavy and app-bound. That category — light, viral, AI-native, cross-app — is Scribe's to define, and events make the market believe it.</div>
+</section>
+
+<!-- STRATEGY -->
+<section class="panel" id="p-strat">
+  <h2 class="sec">Strategy &amp; Positioning</h2>
+  <h3 class="big">Make Scribe the name for "how work gets done with AI"</h3>
+  <p class="lead"><b>North Star:</b> <i>When a team wants to capture, share, and improve how work gets done — and prove where AI pays off — Scribe is the first name they reach for, from the first user to the enterprise rollout.</i></p>
+  <div class="grid g3" style="margin-top:16px">
+    <div class="card" style="border-top:3px solid var(--t1)"><div class="pill p-t1">Pillar 1</div><h4 style="margin:8px 0 4px">Amplify the flywheel</h4><p style="margin:0;color:var(--mut);font-size:14px">Turn the community into a field-marketing army: champions, user-generated Scribes, meetups, awards. The PLG base is the unfair advantage.</p></div>
+    <div class="card" style="border-top:3px solid var(--t2)"><div class="pill p-t2">Pillar 2</div><h4 style="margin:8px 0 4px">Define the category moment</h4><p style="margin:0;color:var(--mut);font-size:14px">An owned "how work gets done / AI at work" summit + the AI-workflow ROI narrative — the moment that makes Scribe the category, not a tool.</p></div>
+    <div class="card" style="border-top:3px solid var(--t3)"><div class="pill p-t3">Pillar 3</div><h4 style="margin:8px 0 4px">Enterprise expansion demand</h4><p style="margin:0;color:var(--mut);font-size:14px">Exec roundtables &amp; hands-on workshops for Heads of Enablement, CS, Ops, IT, L&amp;D — and the emerging AI-transformation buyer.</p></div>
+  </div>
+  <div class="grid g2" style="margin-top:6px">
+    <div class="card"><h4 style="margin:0 0 6px">Audiences (PLG → enterprise)</h4><p style="margin:0;color:var(--ink2);font-size:14px"><b>Champions (bottoms-up):</b> ops, enablement, CS/support, L&amp;D, IT power-users who already make Scribes. <b>Economic buyers:</b> VP Enablement, VP CS, Head of Ops/IT/L&amp;D, and Chief AI / Transformation officers for the ROI story.</p></div>
+    <div class="card"><h4 style="margin:0 0 6px">Brand promise: capture the value of how work gets done</h4><p style="margin:0;color:var(--ink2);font-size:14px">In an AI world, the bottleneck is knowing how work actually happens. Scribe captures it, shares it, and shows where AI pays off — events make that promise tangible and viral.</p></div>
+  </div>
+</section>
+
+<!-- TIERS -->
+<section class="panel" id="p-tiers">
+  <h2 class="sec">The Three-Tier Model</h2>
+  <h3 class="big">Tiering tells a doubling team where to go deep, templatize, and skip</h3>
+  <p class="lead"><b>Tier 1 builds the category &amp; the brand. Tier 3 wins the enterprise expansion. Tier 2 puts Scribe in front of every function that documents work.</b></p>
+  <div class="grid g3" style="margin-top:16px">
+    <div class="tier t1">
+      <h4>Tier 1</h4><div class="role">Owned, community &amp; category-defining</div>
+      <dl>
+        <dt>What</dt><dd>A "How Work Gets Done / AI at Work" summit · community moments &amp; awards · AI-workflow launch moments</dd>
+        <dt>Goal</dt><dd>Category authority, brand, community gravity</dd>
+        <dt>Cadence</dt><dd>1 flagship + community moments + launches</dd>
+        <dt>Cost</dt><dd>$200K–$600K flagship</dd>
+        <dt>KPI</dt><dd>Reach, narrative share, signups, pipeline</dd>
+      </dl>
+    </div>
+    <div class="tier t2">
+      <h4>Tier 2</h4><div class="role">Industry — every function that documents</div>
+      <dl>
+        <dt>What</dt><dd>SaaStr AI, Gainsight Pulse, ATD, Sales Enablement Summit, DevLearn, RevOps/ops events</dd>
+        <dt>Goal</dt><dd>Reach enablement, CS, L&amp;D, ops buyers at scale</dd>
+        <dt>Cadence</dt><dd>10–14/yr</dd>
+        <dt>Cost</dt><dd>$15K–$80K per event</dd>
+        <dt>KPI</dt><dd>Meetings, accounts engaged, signups, cost/lead</dd>
+      </dl>
+    </div>
+    <div class="tier t3">
+      <h4>Tier 3</h4><div class="role">Champions &amp; executive — the expansion engine</div>
+      <dl>
+        <dt>What</dt><dd>Champion meetups, exec roundtables, hands-on Scribe/AI workshops, accredited webinars, CAB</dd>
+        <dt>Goal</dt><dd>Convert PLG champions to enterprise deals; deepen accounts</dd>
+        <dt>Cadence</dt><dd>35–50/yr</dd>
+        <dt>Cost</dt><dd>$2K–$12K each</dd>
+        <dt>KPI</dt><dd>Champion-to-enterprise conversion, pipeline/$, advocacy</dd>
+      </dl>
+    </div>
+  </div>
+  <div class="callout"><b>The logic:</b> create the category moment + activate the community (Tier 1), show up where every documenting function gathers (Tier 2), and run a relentless cadence of champion meetups and exec workshops (Tier 3) that turn bottoms-up love into top-down deals.</div>
+</section>
+
+<!-- OPERATING MODEL -->
+<section class="panel" id="p-ops">
+  <h2 class="sec">Operating Model</h2>
+  <h3 class="big">Two versions of the same machine — build the system before you double the team</h3>
+  <p class="lead">Scribe's team is about to double. The smartest move is to stand up the operating system <i>now</i>, so new hires plug into a machine instead of inheriting chaos. Model A is the AI-leveraged core that proves the engine; Model B scales it as headcount lands.</p>
+  <div class="toggle" id="modeToggle">
+    <button class="on" data-mode="A">Model A · AI-leveraged core</button>
+    <button data-mode="B">Model B · Scaled build</button>
+  </div>
+  <div id="modeA">
+    <div class="card">
+      <h4 style="margin:0 0 6px">"A lean field pod, a team of AI agents (built on Scribe), retainer vendors, and the community"</h4>
+      <p style="margin:0 0 6px;color:var(--mut);font-size:14px">The humans own strategy, champion &amp; executive relationships, on-site presence, and judgment. Everything reproducible is delegated to AI agents and captured as Scribes — so the field org is a living demo of the product.</p>
+    </div>
+    <div class="grid" style="grid-template-columns:repeat(5,1fr)">
+      <div class="agent"><div class="nm">Scout</div><p style="margin:4px 0 0;font-size:13px;color:var(--mut)">Champion/account research, show-ROI scoring, briefing docs</p></div>
+      <div class="agent"><div class="nm">Scribe</div><p style="margin:4px 0 0;font-size:13px;color:var(--mut)">Invites, pages, recaps, and every runbook as a public Scribe</p></div>
+      <div class="agent"><div class="nm">Concierge</div><p style="margin:4px 0 0;font-size:13px;color:var(--mut)">RSVP, reminders, personalized agendas, logistics checklists</p></div>
+      <div class="agent"><div class="nm">Analyst</div><p style="margin:4px 0 0;font-size:13px;color:var(--mut)">Lead scoring/routing, budget, dashboards, retros</p></div>
+      <div class="agent"><div class="nm">Sprint</div><p style="margin:4px 0 0;font-size:13px;color:var(--mut)">PM agent CC'd on email + in meetings: tracks, updates, pings deadlines</p></div>
+    </div>
+    <div class="callout alt"><b>The leverage story:</b> a lean pod runs a flagship + a focused industry calendar + a relentless champion/exec cadence — and every SOP is a public Scribe, so onboarding the doubling team is instant and the field org doubles as customer-zero proof.</div>
+  </div>
+  <div id="modeB" class="hide">
+    <div class="card">
+      <h4 style="margin:0 0 6px">Scaled as headcount doubles — without losing PLG speed</h4>
+      <table style="margin-top:8px">
+        <thead><tr><th>Role</th><th>Owns</th><th>Hire</th></tr></thead>
+        <tbody>
+          <tr><td class="tag">Head of Events &amp; Community</td><td>Strategy, flagship, champion program <span class="pill p-good">the role</span></td><td>Month 0</td></tr>
+          <tr><td class="tag">Field Marketing Manager</td><td>Industry calendar + enterprise field + ABM</td><td>~Month 3</td></tr>
+          <tr><td class="tag">Community Programs Manager</td><td>Champions, meetups, user-generated Scribes, awards</td><td>~Month 4</td></tr>
+          <tr><td class="tag">Events Producer (fractional)</td><td>Flagship + Tier 3 production at volume</td><td>~Month 6</td></tr>
+          <tr><td class="tag">Agency + design</td><td>Production, brand, video</td><td>Ongoing</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout"><b>Result:</b> a flagship category summit + a full industry calendar + an always-on champion &amp; exec program + 35–50 intimate rooms — the footprint of the category definer, while preserving the bottoms-up PLG motion.</div>
+  </div>
+  <h4 style="margin:22px 0 6px">The trade-off at a glance</h4>
+  <div class="card" style="overflow-x:auto">
+    <table class="vs">
+      <thead><tr><th>Dimension</th><th>Model A · AI-leveraged core</th><th>Model B · Scaled build</th></tr></thead>
+      <tbody>
+        <tr><td>Headcount</td><td>Lean pod + AI agents + vendors</td><td>3–4 FTE + agency</td></tr>
+        <tr><td>Annual budget</td><td>~$600K</td><td>~$2M</td></tr>
+        <tr><td>Flagship (Tier 1)</td><td>Focused summit + community moments</td><td>Full category summit + launches</td></tr>
+        <tr><td>Tier 2 events/yr</td><td>6–8 selective</td><td>10–14 (all functions)</td></tr>
+        <tr><td>Tier 3 events/yr</td><td>~20</td><td>35–50 (champion + exec)</td></tr>
+        <tr><td>Quality bar</td><td>High — guaranteed by the system</td><td>High — same system</td></tr>
+        <tr><td>What more resources buy</td><td>—</td><td>Reach &amp; parallelism, not quality</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout"><b>Recommendation:</b> stand up the system in Model A immediately (and make it a customer-zero showcase); graduate to Model B as the doubling headcount lands and pipeline + community metrics prove out.</div>
+</section>
+
+<!-- AI OPERATING MODEL -->
+<section class="panel" id="p-ai">
+  <h2 class="sec">The AI Operating Model</h2>
+  <h3 class="big">Run the field on Scribe — every runbook a public Scribe, the marketing org a live demo</h3>
+  <p class="lead">Not by chatting with a chatbot — by turning repeatable tasks into shared, governed workflows. For Scribe uniquely, the operating model is also the product story: every Scribe the team publishes is proof the product works.</p>
+  <div class="grid g3" style="margin-top:16px">
+    <div class="card"><div class="pill p-t1">The Marketing Brain</div><p style="margin:8px 0 0;font-size:13.5px;color:var(--mut)">A versioned repo of prompts, "skills" &amp; Scribes encoding Scribe's brand &amp; the AI-workflow narrative. Invoke a <b>"champion meetup"</b> or <b>"summit session"</b> skill → on-brand output in seconds.</p></div>
+    <div class="card"><div class="pill p-t3">Zero-to-One workflows</div><p style="margin:8px 0 0;font-size:13.5px;color:var(--mut)">Automate the first 80%. From one event topic: research accounts, draft the invite sequence &amp; follow-up, and publish the run-of-show as a Scribe — in minutes.</p></div>
+    <div class="card"><div class="pill p-t2">Mass personalization</div><p style="margin:8px 0 0;font-size:13.5px;color:var(--mut)">HeyGen-style video where a Scribe leader invites each champion/exec by name. An "unfair" high-touch move at PLG scale.</p></div>
+    <div class="card"><div class="pill p-t1">Sales-enablement "brains"</div><p style="margin:8px 0 0;font-size:13.5px;color:var(--mut)">An approved library so AEs generate bespoke, on-brand follow-ups off every event in real time — turning PLG signups into enterprise conversations.</p></div>
+    <div class="card"><div class="pill p-t3">Content &amp; SEO engines</div><p style="margin:8px 0 0;font-size:13.5px;color:var(--mut)">Programmatic SEO + community Scribes for "how to [do X]" by tool &amp; function; quarterly refresh keeps pages <b>~3× more likely cited by AI search</b>.</p></div>
+    <div class="card"><div class="pill p-t2">Thought partner — CRIT</div><p style="margin:8px 0 0;font-size:13.5px;color:var(--mut)">Not an oracle. CRIT (Context, Role, Interview, Task) makes AI interview you one question at a time to find plan gaps before a dollar is spent.</p></div>
+  </div>
+  <div class="callout alt"><b>The Scribe-only unlock — "show your work."</b> Build the pod on Scribe and its AI workflow-mapping; publish the field team's runbooks as public Scribes and let the workflow-mapping measure the marketing process itself. The field org becomes a <b>customer-zero showcase</b> ("here's how we run on Scribe") that no competitor can copy — and governance (human-in-the-loop on everything customer-facing) keeps the brand safe.</div>
+</section>
+
+<!-- WORKFLOWS -->
+<section class="panel" id="p-flow">
+  <h2 class="sec">Workflows &amp; Sprint Cadence</h2>
+  <h3 class="big">One lifecycle, nine stages — shipped in sprints, captured as Scribes</h3>
+  <p class="lead">A single source of truth: tiered runbooks (each a Scribe) defining every stage, owner, AI step, and SLA. <b>Lead times:</b> Tier 1 = 12–16 wks · Tier 2 = 6–8 wks · Tier 3 = 3–4 wks (meetups/dinners), &lt;2 wks (webinars).</p>
+  <div class="flow" style="margin-top:14px">
+    <div class="step"><div class="n">01</div><h5>Select</h5><p>Score vs ICP, tier, champion/account overlap</p><span class="ai">AI · Scout</span></div>
+    <div class="step"><div class="n">02</div><h5>Brief</h5><p>One-page: objective, audience, offer, budget, KPI</p><span class="ai">AI · Scribe</span></div>
+    <div class="step"><div class="n">03</div><h5>Build</h5><p>Page, registration, run-of-show (as a Scribe)</p><span class="ai">AI · Scribe/Concierge</span></div>
+    <div class="step"><div class="n">04</div><h5>Promote</h5><p>Multi-touch invites, champion-assisted, social</p><span class="ai">AI · Scribe</span></div>
+    <div class="step"><div class="n">05</div><h5>Produce</h5><p>Vendor/community coordination, rehearsal</p><span class="ai">Human + agency</span></div>
+    <div class="step"><div class="n">06</div><h5>Execute</h5><p>Deliver, capture conversations &amp; intent</p><span class="ai">Human</span></div>
+    <div class="step"><div class="n">07</div><h5>Follow-up</h5><p>48-hr routing SLA, personalized follow-up</p><span class="ai">AI · Analyst/Scribe</span></div>
+    <div class="step"><div class="n">08</div><h5>Measure</h5><p>Pipeline, signups, velocity to dashboard</p><span class="ai">AI · Analyst</span></div>
+    <div class="step"><div class="n">09</div><h5>Retro</h5><p>Within 5 days → into the backlog</p><span class="ai">Human + AI</span></div>
+  </div>
+  <h4 style="margin:22px 0 4px">Sprint cycles — match the speed of a doubling team</h4>
+  <p style="margin:0 0 10px;font-size:14.5px;color:var(--ink2)"><b>Run field marketing like product engineering.</b> Replace the annual plan with <b>3-week / 2-month sprints</b>, always shipping a champion meetup, an exec roundtable, a community moment, a launch. Constant shipping creates persistent <b>"noise in the market"</b> that makes a 120-person company feel like the established category — and keeps pace with a team that's doubling.</p>
+  <div class="loop">
+    <div class="lp"><b>48-hour rule:</b> every lead routed &amp; followed up in two business days.</div>
+    <div class="lp"><b>5-day retro:</b> fast, blameless, into the backlog (as a Scribe).</div>
+    <div class="lp"><b>Sprint demo:</b> ship + show every 2–3 weeks — visible momentum.</div>
+    <div class="lp"><b>Quarterly rebalance:</b> double down on winners, cut the rest.</div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section class="panel" id="p-road">
+  <h2 class="sec">12-Month Roadmap</h2>
+  <h3 class="big">Build the machine, activate the community, then let proof unlock the next hire</h3>
+  <p class="lead">Each phase has an exit metric and an explicit spend/hire trigger — growth is earned by pipeline, signup and community data, not argued in a meeting.</p>
+  <div style="margin-top:16px">
+    <div class="phase"><div class="dot">0</div><div class="body"><h4>Build the machine · Month 0–1</h4><p style="margin:0;font-size:14px;color:var(--mut)">Audit, instrument attribution, stand up runbooks (as Scribes) + the AI pod + dashboards. Quick wins: first champion meetup + an exec roundtable in 30 days.</p><span class="trigger">Exit: system live · customer-zero pod running · first 2 Tier 3 booked</span></div></div>
+    <div class="phase"><div class="dot">1</div><div class="body"><h4>Activate the community + spring events · Q1–Q2</h4><p style="margin:0;font-size:14px;color:var(--mut)">Launch the champions program; show up at the May cluster (SaaStr AI, ATD, Pulse); pilot the AI-workflow ROI narrative; HeyGen personalization.</p><span class="trigger">Exit: champions live · 6+ Tier 3 run · first sourced pipeline → Hire Field Marketing Manager</span></div></div>
+    <div class="phase"><div class="dot">2</div><div class="body"><h4>Enterprise expansion engine · Q2–Q3</h4><p style="margin:0;font-size:14px;color:var(--mut)">Stand up the exec roundtable + ABM motion for enablement/CS/ops/IT/L&amp;D; convert PLG champions into enterprise deals.</p><span class="trigger">Exit: champion-to-enterprise conversion proven → Hire Community + Events Producer</span></div></div>
+    <div class="phase"><div class="dot">3</div><div class="body"><h4>The category moment · Q3–Q4</h4><p style="margin:0;font-size:14px;color:var(--mut)">Launch the owned "How Work Gets Done / AI at Work" summit; tie a major AI-workflow launch + CAB + awards to it.</p><span class="trigger">Exit: summit reach + pipeline + narrative-share targets hit</span></div></div>
+    <div class="phase"><div class="dot">4</div><div class="body"><h4>Measure &amp; scale the case · Q4</h4><p style="margin:0;font-size:14px;color:var(--mut)">DevLearn + year-end; full-year measurement; rebalance; build the case to fully fund Model B as the team doubles.</p><span class="trigger">Exit: board-ready ROI + category-narrative story · budget approved</span></div></div>
+  </div>
+</section>
+
+<!-- CALENDAR -->
+<section class="panel" id="p-cal">
+  <h2 class="sec">12-Month Tiered Calendar</h2>
+  <h3 class="big">All three tiers — anchored to the real 2026 buyer calendar</h3>
+  <p class="lead">Confirmed 2026 anchors: SaaStr AI Annual (May 12–14, SF Bay) · ATD International (May 17–20, LA) · Gainsight Pulse (May 27–28, Las Vegas) · Sales Enablement Summit (Feb Austin / Mar NYC / Jun Seattle / Sep SF / Nov Chicago) · DevLearn (Nov 4–6, Las Vegas). Beyond anchors the grid is illustrative.</p>
+  <div class="card" style="overflow-x:auto;margin-top:14px">
+    <table>
+      <thead><tr><th>Month</th><th><span class="pill p-t1">Tier 1</span> Owned / Community</th><th><span class="pill p-t2">Tier 2</span> Industry</th><th><span class="pill p-t3">Tier 3</span> Champion / Executive</th></tr></thead>
+      <tbody>
+        <tr><td><b>Jan</b></td><td>AI-workflow POV content + summit theme</td><td>Function webinar series kickoff</td><td>2 exec roundtables (NYC, SF); champion meetup</td></tr>
+        <tr><td><b>Feb</b></td><td>Champions program launch</td><td>Sales Enablement Summit (Austin)</td><td>3 champion meetups; ops roundtable</td></tr>
+        <tr><td><b>Mar</b></td><td>AI-workflow launch moment</td><td>Sales Enablement Summit (NYC)</td><td>3 roundtables; hands-on Scribe workshop</td></tr>
+        <tr><td><b>Apr</b></td><td>Summit promotion + curation begins</td><td>Vertical / RevOps events ×2</td><td>4 meetups; CAB recruiting; webinar</td></tr>
+        <tr style="background:#f9f9ff"><td><b>May</b></td><td>Big presence across the May cluster</td><td><b>SaaStr AI · ATD International · Gainsight Pulse</b></td><td>Champion dinners on-site; exec roundtables ×3</td></tr>
+        <tr><td><b>Jun</b></td><td>Mid-year community awards</td><td>Sales Enablement Summit (Seattle)</td><td>4 meetups; hands-on workshops ×2</td></tr>
+        <tr><td><b>Jul</b></td><td>Summit speaker + content build</td><td>Regional roadshows ×2</td><td>3 roundtables; CAB session 1</td></tr>
+        <tr><td><b>Aug</b></td><td>Summit promotion engine on</td><td>Sponsored speaking ×2</td><td>4 meetups; pre-summit VIP receptions</td></tr>
+        <tr><td><b>Sep</b></td><td><b>"How Work Gets Done" Summit</b> (flagship)</td><td>Sales Enablement Summit (SF)</td><td>Summit exec program + awards; champion dinners</td></tr>
+        <tr><td><b>Oct</b></td><td>Post-summit content factory + nurture</td><td>Pulse Europe (London); KM/IT events</td><td>4 roundtables; EMEA champion meetups</td></tr>
+        <tr><td><b>Nov</b></td><td>AI-at-work content series</td><td><b>DevLearn (Nov 4–6)</b>; Sales Enablement (Chicago)</td><td>3 meetups; CAB session 2</td></tr>
+        <tr><td><b>Dec</b></td><td>Year-in-review + 2027 summit planning</td><td>Holiday community outreach</td><td>2 intimate customer dinners</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout"><b>Totals (Model B):</b> flagship summit + community moments + launches (Tier 1) · 10–14 (Tier 2) · ~45 (Tier 3). Model A runs the same skeleton selectively with heavier AI + community leverage.</div>
+</section>
+
+<!-- BUDGET -->
+<section class="panel" id="p-budget">
+  <h2 class="sec">Budget Model</h2>
+  <h3 class="big">Series-C scale — recommend ~$2M to define the category as the team doubles</h3>
+  <p class="lead">Sized for a fresh unicorn investing in enterprise expansion while protecting the PLG flywheel. The AI operating model and the community keep spend from scaling linearly with ambition. The AI-leveraged core runs at ~$600K.</p>
+  <div class="grid g2" style="margin-top:16px">
+    <div class="card">
+      <h4 style="margin:0 0 10px">Model B · Scaled build <span class="pill p-t1">~$2.0M / yr</span></h4>
+      <div id="budgetB"></div>
+      <p style="font-size:12px;color:var(--mut);margin:10px 0 0">Headcount (~$450K–$600K loaded for 3–4 FTE) is a separate people-budget line.</p>
+    </div>
+    <div class="card">
+      <h4 style="margin:0 0 10px">Model A · AI-leveraged core <span class="pill p-t3">~$600K / yr</span></h4>
+      <div id="budgetA"></div>
+      <p style="font-size:12px;color:var(--mut);margin:10px 0 0">Plus the core team. Heavier AI + community leverage substitutes for spend.</p>
+    </div>
+  </div>
+  <div class="grid g3" style="margin-top:4px">
+    <div class="kpi"><div class="num">5:1</div><div class="lab">Blended pipeline-to-cost target (12 mo)</div></div>
+    <div class="kpi"><div class="num">8–12:1</div><div class="lab">Champion meetup / exec roundtable ROI</div></div>
+    <div class="kpi"><div class="num">↓ QoQ</div><div class="lab">Cost-per-opp as the system matures</div></div>
+  </div>
+</section>
+
+<!-- KPIS -->
+<section class="panel" id="p-kpi">
+  <h2 class="sec">KPIs &amp; Measurement</h2>
+  <h3 class="big">Commercial major, marketing minor — plus PLG &amp; community signal</h3>
+  <p class="lead">Measure on the numbers a board respects — <b>pipeline and pipeline velocity</b> — alongside the <b>PLG &amp; community signals</b> that make Scribe's model special. Not vanity counts.</p>
+  <div class="grid g2" style="margin-top:16px">
+    <div class="card"><h4 style="margin:0 0 8px">Commercial (the headline)</h4>
+      <ul class="clean" style="font-size:14px"><li>Sourced + influenced pipeline · pipeline velocity</li><li>Champion-to-enterprise conversion (PLG → sales)</li><li>Win-rate lift on event-touched deals · cost per opp</li><li>Expansion / seats within accounts</li></ul></div>
+    <div class="card"><h4 style="margin:0 0 8px">PLG &amp; community (the flywheel)</h4>
+      <ul class="clean" style="font-size:14px"><li>Event-driven signups &amp; activated users</li><li>Active champions &amp; user-generated Scribes</li><li>Share of voice in "process docs / AI at work"</li><li>Summit reach, NPS &amp; CAB depth</li></ul></div>
+  </div>
+  <div class="callout alt"><b>De-emphasize vanity metrics</b> — booth scans, impressions, raw registrations. For a PLG company, <b>activated users and champion-to-enterprise conversion beat counting badges.</b></div>
+  <div class="callout"><b>The dashboard:</b> one live view refreshed by the <i>Analyst</i> agent — pipeline by tier, signups &amp; activation, champion conversion, narrative-share, and a portfolio scorecard so the quarterly rebalance is data-driven, not political.</div>
+</section>
+
+<!-- 90 DAYS -->
+<section class="panel" id="p-90">
+  <h2 class="sec">First 90 Days</h2>
+  <h3 class="big">How I'd start</h3>
+  <div class="grid g3" style="margin-top:16px">
+    <div class="card"><div class="pill p-t1">Days 1–30</div><p style="margin:8px 0 0;font-size:14px">Audit current activity &amp; return. Stand up runbooks (as Scribes), the AI pod, the attribution dashboard. Tier the calendar. Launch the first champion meetup + an exec roundtable.</p></div>
+    <div class="card"><div class="pill p-t2">Days 31–60</div><p style="margin:8px 0 0;font-size:14px">Launch the champions program + the May-cluster plan (SaaStr AI/ATD/Pulse). Ship the first Zero-to-One workflow + a HeyGen pilot. Stand up the customer-zero showcase. Run the first sprint.</p></div>
+    <div class="card"><div class="pill p-t3">Days 61–90</div><p style="margin:8px 0 0;font-size:14px">Report first sourced pipeline + champion-conversion baseline. Lock the "How Work Gets Done" summit plan. Bring the quarterly rebalance + spend/hire triggers to the CMO.</p></div>
+  </div>
+  <div class="callout" style="margin-top:18px;font-size:16px"><b>Give me the system and the AI pod — built on Scribe — and I'll turn the community flywheel into an enterprise demand engine and make Scribe the name for "how work gets done with AI" in 90 days, then show you exactly what to fund as the team doubles.</b></div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <b>Scribe Event &amp; Field Marketing Operating System</b> · A strategic teardown prepared for Scribe GTM leadership.<br>
+    Built from public research on Scribe and its event/competitive landscape. Budgets, calendar details beyond confirmed event anchors, headcount, and tool/agent names are illustrative planning models, not Scribe-internal figures.
+  </div>
+</footer>
+
+<script>
+  const sections = [
+    ['p-thesis','Thesis'],['p-now','Current State'],['p-comp','Competitive'],['p-strat','Strategy'],['p-tiers','Tier Model'],
+    ['p-ops','Operating Model'],['p-ai','AI Operating Model'],['p-flow','Workflows'],['p-road','Roadmap'],
+    ['p-cal','Calendar'],['p-budget','Budget'],['p-kpi','KPIs'],['p-90','First 90 Days']
+  ];
+  const nav = document.getElementById('nav');
+  sections.forEach(([id,label],i)=>{
+    const b=document.createElement('button');
+    b.textContent=label; b.dataset.t=id; if(i===0)b.classList.add('active');
+    b.onclick=()=>{
+      document.querySelectorAll('.panel').forEach(pn=>pn.classList.remove('show'));
+      document.getElementById(id).classList.add('show');
+      document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));
+      b.classList.add('active');
+      window.scrollTo({top:0,behavior:'smooth'});
+    };
+    nav.appendChild(b);
+  });
+  document.querySelectorAll('#modeToggle button').forEach(btn=>{
+    btn.onclick=()=>{
+      document.querySelectorAll('#modeToggle button').forEach(x=>x.classList.remove('on'));
+      btn.classList.add('on');
+      const m=btn.dataset.mode;
+      document.getElementById('modeA').classList.toggle('hide',m!=='A');
+      document.getElementById('modeB').classList.toggle('hide',m!=='B');
+    };
+  });
+  const budgetB=[['"How Work Gets Done" summit',500],['Community / champions program',250],['Industry events (10–14)',450],
+    ['Champion meetups / exec roundtables (35)',280],['AI-workflow launch moments',120],['Tooling + AI',130],['Agency / design',170],['Contingency',100]];
+  const budgetA=[['Summit (focused)',200],['Industry (6–8 selective)',180],['Meetups + webinars (~20)',120],
+    ['Community program',50],['Tooling (lean + AI)',35],['Vendors',15]];
+  function renderBudget(el,data,max,color){
+    const c=document.getElementById(el);
+    data.forEach(([lab,val])=>{
+      const row=document.createElement('div'); row.style.marginBottom='9px';
+      row.innerHTML='<div style="display:flex;justify-content:space-between;font-size:13px"><span>'+lab+'</span><b>$'+val+'K</b></div>'+
+        '<div class="bartrk"><div class="bar" style="width:'+(val/max*100).toFixed(1)+'%;background:'+color+'"></div></div>';
+      c.appendChild(row);
+    });
+  }
+  renderBudget('budgetB',budgetB,500,'#4535ff');
+  renderBudget('budgetA',budgetA,200,'#e8820a');
+</script>
+</body>
+</html>
