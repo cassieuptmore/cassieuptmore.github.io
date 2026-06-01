@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cassie Uptmore — Event &amp; Field Marketing Operating Systems</title>
+<meta name="description" content="Systems-first event &amp; field marketing. A growing library of Event Operating System teardowns — built to show how a lean team plus AI can run a category-leader field motion.">
+<style>
+  :root{
+    --bg:#0d1117; --bg2:#141b24; --panel:#161e28; --line:#26313d;
+    --ink:#f2f5f8; --mut:#9fb0c0; --mut2:#6f8295;
+    --accent:#ff7a4d; --accent2:#ffb37a; --teal:#3dd1b0; --gold:#f4c267;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 28px}
+  a{color:inherit;text-decoration:none}
+
+  /* HERO */
+  header{position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+  header::before{content:"";position:absolute;top:-180px;right:-160px;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,rgba(255,122,77,.22),transparent 62%)}
+  header::after{content:"";position:absolute;bottom:-220px;left:-160px;width:480px;height:480px;border-radius:50%;background:radial-gradient(circle,rgba(61,209,176,.14),transparent 62%)}
+  .hero{position:relative;padding:84px 0 64px}
+  .eyebrow{font-size:13px;letter-spacing:3px;text-transform:uppercase;color:var(--accent2);font-weight:700;margin-bottom:22px}
+  h1{font-size:clamp(34px,5.6vw,58px);line-height:1.04;font-weight:800;letter-spacing:-1.2px}
+  h1 .g{background:linear-gradient(90deg,var(--accent),var(--gold));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .lead{margin-top:24px;font-size:clamp(17px,2.1vw,21px);color:var(--mut);max-width:720px}
+  .thesis{margin-top:26px;padding:18px 22px;border-left:3px solid var(--accent);background:var(--panel);border-radius:0 12px 12px 0;max-width:760px;color:var(--ink);font-size:15.5px}
+  .cta-row{margin-top:34px;display:flex;gap:14px;flex-wrap:wrap}
+  .btn{display:inline-flex;align-items:center;gap:9px;padding:13px 22px;border-radius:11px;font-weight:700;font-size:15px;border:1px solid transparent;transition:.18s}
+  .btn-p{background:linear-gradient(90deg,var(--accent),var(--accent2));color:#1a0f08}
+  .btn-p:hover{transform:translateY(-2px)}
+  .btn-s{border-color:var(--line);color:var(--ink);background:var(--bg2)}
+  .btn-s:hover{border-color:var(--accent);color:var(--accent2)}
+
+  /* SECTION */
+  section{padding:62px 0}
+  .sec-head{display:flex;align-items:baseline;justify-content:space-between;gap:18px;margin-bottom:30px;flex-wrap:wrap}
+  h2{font-size:clamp(24px,3.4vw,32px);font-weight:800;letter-spacing:-.6px}
+  .sec-sub{color:var(--mut2);font-size:14.5px;max-width:460px}
+
+  /* GRID */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:18px}
+  .card{position:relative;display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:24px 24px 20px;transition:.2s;overflow:hidden}
+  .card::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:var(--bar,var(--accent))}
+  .card:hover{transform:translateY(-4px);border-color:var(--bar,var(--accent));box-shadow:0 18px 40px -22px rgba(0,0,0,.7)}
+  .c-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+  .c-name{font-size:21px;font-weight:800;letter-spacing:-.4px}
+  .c-tag{font-size:11px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;padding:5px 10px;border-radius:20px;background:var(--chipbg,rgba(255,122,77,.14));color:var(--bar,var(--accent))}
+  .c-angle{color:var(--mut);font-size:14.5px;flex-grow:1}
+  .c-go{margin-top:18px;display:inline-flex;align-items:center;gap:7px;font-weight:700;font-size:14px;color:var(--bar,var(--accent))}
+  .c-go span{transition:.18s}
+  .card:hover .c-go span{transform:translateX(4px)}
+
+  /* INCLUDES */
+  .inc{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;margin-top:6px}
+  .inc-item{background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:22px}
+  .inc-item h3{font-size:16px;font-weight:800;margin-bottom:8px;display:flex;align-items:center;gap:9px}
+  .dot{width:9px;height:9px;border-radius:50%;display:inline-block}
+  .inc-item p{color:var(--mut);font-size:14px}
+
+  /* CTA */
+  .endcta{margin:30px 0 70px;background:linear-gradient(135deg,var(--bg2),var(--panel));border:1px solid var(--line);border-radius:20px;padding:48px 40px;text-align:center;position:relative;overflow:hidden}
+  .endcta::before{content:"";position:absolute;top:-120px;right:-80px;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(255,122,77,.18),transparent 60%)}
+  .endcta h2{margin-bottom:14px}
+  .endcta p{color:var(--mut);max-width:560px;margin:0 auto 26px;font-size:16px;position:relative}
+  footer{border-top:1px solid var(--line);padding:30px 0;color:var(--mut2);font-size:13.5px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+  @media(max-width:600px){.hero{padding:60px 0 44px}.endcta{padding:36px 24px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap hero">
+    <div class="eyebrow">Event &amp; Field Marketing · Systems-First</div>
+    <h1>I build <span class="g">Event Operating Systems</span><br>that make a lean team look like a category leader.</h1>
+    <p class="lead">I'm Cassie Uptmore. I design the systems, playbooks, and AI operating models that let one operator run an event &amp; field marketing motion with the output of a full team.</p>
+    <div class="thesis">The marketers winning right now aren't doing more events — they're designing <strong>systems</strong>. Repeatable playbooks, AI doing the production load, and tight feedback loops. Below is a growing library of teardowns: real companies, real brand systems, real operating models — each one built in a day.</div>
+    <div class="cta-row">
+      <a class="btn btn-p" href="#work">See the teardowns →</a>
+      <a class="btn btn-s" href="mailto:cassieuptmore@gmail.com">Get a teardown of your events</a>
+    </div>
+  </div>
+</header>
+
+<section id="work" class="wrap">
+  <div class="sec-head">
+    <h2>The teardowns</h2>
+    <div class="sec-sub">Each is a full Event Operating System on the company's real brand — interactive page, executive deck, and strategy doc.</div>
+  </div>
+  <div class="grid" id="cards"></div>
+</section>
+
+<section class="wrap" style="padding-top:6px">
+  <div class="sec-head"><h2>What's in every teardown</h2></div>
+  <div class="inc">
+    <div class="inc-item"><h3><span class="dot" style="background:var(--accent)"></span>Interactive page</h3><p>A tabbed, on-brand microsite: thesis, competitive landscape, tier model, AI operating model, tooling, calendar, budget, and KPIs.</p></div>
+    <div class="inc-item"><h3><span class="dot" style="background:var(--teal)"></span>Executive deck</h3><p>A 16-slide, CMO-ready presentation that walks the strategy from thesis to the ask — designed in the company's palette.</p></div>
+    <div class="inc-item"><h3><span class="dot" style="background:var(--gold)"></span>Strategy document</h3><p>A written operating system (Word + PDF): the full model, 90-day rollout, budget envelope, and honest notes on what's verified vs. illustrative.</p></div>
+  </div>
+</section>
+
+<section class="wrap" style="padding-top:6px">
+  <div class="endcta">
+    <h2>Want one of these for your company?</h2>
+    <p>I'll build a custom Event Operating System teardown for your brand — the same three deliverables you see here. It's the fastest way to see how a systems-first, AI-leveraged field motion would look for you.</p>
+    <a class="btn btn-p" href="mailto:cassieuptmore@gmail.com">Start a conversation →</a>
+  </div>
+</section>
+
+<footer class="wrap">
+  <div>© 2026 Cassie Uptmore · Event &amp; Field Marketing Operating Systems</div>
+  <div><a href="mailto:cassieuptmore@gmail.com" style="color:var(--accent2)">cassieuptmore@gmail.com</a></div>
+</footer>
+
+<script>
+  const colors=[
+    {bar:'#ff7a4d',chip:'rgba(255,122,77,.14)'},
+    {bar:'#3dd1b0',chip:'rgba(61,209,176,.14)'},
+    {bar:'#f4c267',chip:'rgba(244,194,103,.15)'},
+    {bar:'#7aa2ff',chip:'rgba(122,162,255,.15)'},
+    {bar:'#c78bff',chip:'rgba(199,139,255,.15)'},
+    {bar:'#ff9bb0',chip:'rgba(255,155,176,.15)'},
+    {bar:'#5fe6b0',chip:'rgba(95,230,176,.14)'}
+  ];
+  const work=[
+    {name:'Prophix',tag:'FP&A AI',angle:'Make a finance-AI platform’s events look like the category leader against Workday, Datarails &amp; IBM — run by one operator + an AI pod.',url:'prophix.html'},
+    {name:'Workato',tag:'Enterprise iPaaS',angle:'A field motion for the #1 integration platform: orchestrate events the way Workato orchestrates workflows — automated, agent-driven, enterprise-grade.',url:'workato.html'},
+    {name:'Coder',tag:'Dev Infrastructure',angle:'Win developer hearts with a technical, hands-on field program — workshops and proof over booths, built for an engineering audience.',url:'coder.html'},
+    {name:'Skillable',tag:'Hands-on Labs',angle:'Their product is live labs — so make every event a live lab. Let buyers prove themselves on the product instead of pitching it.',url:'skillable.html'},
+    {name:'Scribe',tag:'Enterprise AI · Optimize',angle:'Get CIOs and VPs of Finance in the room for Scribe Optimize — then prove sourced pipeline, not attendance. A green-field field-marketing program built from scratch.',url:'scribe.html'},
+    {name:'Kodex',tag:'Data Privacy',angle:'A trust-first field program for a sensitive-data platform — high-signal roundtables and community over high-volume noise.',url:'kodex.html'},
+    {name:'Kodex',tag:'Field Variant',angle:'An alternate, field-marketing-led cut of the Kodex operating system — a second angle on the same company.',url:'kodex-field-marketing.html'}
+  ];
+  const grid=document.getElementById('cards');
+  work.forEach((w,i)=>{
+    const c=colors[i%colors.length];
+    const a=document.createElement('a');
+    a.href=w.url; a.className='card';
+    a.style.setProperty('--bar',c.bar); a.style.setProperty('--chipbg',c.chip);
+    a.innerHTML='<div class="c-top"><div class="c-name">'+w.name+'</div><div class="c-tag">'+w.tag+'</div></div>'+
+      '<div class="c-angle">'+w.angle+'</div>'+
+      '<div class="c-go">View the system <span>&rarr;</span></div>';
+    grid.appendChild(a);
+  });
+</script>
+</body>
+</html>
