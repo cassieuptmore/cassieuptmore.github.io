@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Experiential Marketing Operating System — WordPress VIP · Cassie Uptmore</title>
+<meta name="description" content="An experiential marketing plan for WordPress VIP: a global event portfolio that owns pipeline, not logistics. Built by Cassie Uptmore for the Senior Manager of Experiential Marketing role.">
+<style>
+  :root{
+    --ink:#13191e; --ink2:#212529; --green:#01a77d; --green-d:#018a67; --green-l:#d6f3ea;
+    --blue:#3858e9; --blue-l:#e3e8fe; --amber:#c8842f; --amber-l:#f7ecdb;
+    --sand:#f4f7f9; --paper:#ffffff; --line:#e2e9ed; --mut:#5b6b73; --mut2:#7d8c93;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--sand);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 26px}
+  a{color:var(--green-d);text-decoration:none}
+
+  header{background:linear-gradient(135deg,#0c1115 0%,#13191e 55%,#15463a 120%);color:#fff;position:relative;overflow:hidden}
+  header::after{content:"";position:absolute;right:-130px;top:-130px;width:440px;height:440px;border-radius:50%;background:radial-gradient(circle,rgba(1,167,125,.28),transparent 65%)}
+  .hwrap{position:relative;padding:46px 26px 40px;max-width:1080px;margin:0 auto;z-index:1}
+  .badge{display:inline-block;font-size:12px;letter-spacing:2.5px;text-transform:uppercase;font-weight:700;background:rgba(1,167,125,.18);border:1px solid rgba(1,167,125,.4);padding:6px 13px;border-radius:20px;color:#46e3b8;margin-bottom:18px}
+  h1{font-size:clamp(28px,4.6vw,44px);line-height:1.08;font-weight:800;letter-spacing:-.8px;max-width:900px}
+  .sub{margin-top:16px;font-size:clamp(15px,2vw,18px);color:#c4d2d2;max-width:780px}
+  .meta{margin-top:22px;font-size:13.5px;color:#8fa3a3;border-top:1px solid rgba(255,255,255,.18);padding-top:16px;max-width:780px}
+  .meta b{color:#fff}
+
+  nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);overflow-x:auto}
+  .navin{display:flex;gap:2px;max-width:1080px;margin:0 auto;padding:0 18px;white-space:nowrap}
+  .tab{padding:15px 15px;font-size:13.5px;font-weight:600;color:var(--mut);border:none;background:none;cursor:pointer;border-bottom:3px solid transparent;transition:.15s}
+  .tab:hover{color:var(--green-d)}
+  .tab.active{color:var(--green-d);border-bottom-color:var(--green)}
+
+  main{padding:40px 0 70px}
+  .panel{display:none;animation:fade .35s ease}
+  .panel.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  .eyebrow{font-size:12.5px;letter-spacing:2.5px;text-transform:uppercase;font-weight:700;color:var(--green-d);margin-bottom:10px}
+  h2{font-size:clamp(23px,3.3vw,31px);font-weight:800;letter-spacing:-.5px;margin-bottom:14px;line-height:1.12}
+  h3{font-size:18px;font-weight:700;margin:0 0 8px}
+  p{color:var(--ink2);margin-bottom:14px;font-size:15.5px}
+  .lead{font-size:17.5px;color:var(--ink);max-width:830px}
+  .pillars{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin-top:26px}
+  .pillar{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:22px;border-top:4px solid var(--green)}
+  .pillar:nth-child(2){border-top-color:var(--blue)}
+  .pillar:nth-child(3){border-top-color:var(--amber)}
+  .pillar .n{font-size:13px;font-weight:800;color:var(--green-d);letter-spacing:1px}
+  .pillar:nth-child(2) .n{color:var(--blue)}
+  .pillar:nth-child(3) .n{color:var(--amber)}
+  .pillar h3{margin-top:6px}
+  .pillar p{font-size:14px;margin:0}
+
+  .card{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:24px;margin-bottom:16px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .stat{background:var(--green-l);border-radius:12px;padding:18px 20px}
+  .stat .big{font-size:29px;font-weight:800;color:var(--green-d);letter-spacing:-1px}
+  .stat .lbl{font-size:13px;color:var(--ink2);margin-top:2px}
+  ul.clean{list-style:none;margin:6px 0 0}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;font-size:14.5px;color:var(--ink2)}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:8px;height:8px;border-radius:2px;background:var(--green)}
+  ul.clean.blue li::before{background:var(--blue)}
+  ul.clean.amber li::before{background:var(--amber)}
+
+  table{width:100%;border-collapse:collapse;background:var(--paper);border-radius:12px;overflow:hidden;border:1px solid var(--line);font-size:14px}
+  th{background:var(--ink);color:#fff;text-align:left;padding:12px 14px;font-size:12.5px;letter-spacing:.4px;text-transform:uppercase;font-weight:700}
+  td{padding:12px 14px;border-top:1px solid var(--line);color:var(--ink2);vertical-align:top}
+  tr:nth-child(even) td{background:#f5f9fa}
+  td b{color:var(--ink)}
+  .tag{display:inline-block;font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;background:var(--green-l);color:var(--green-d)}
+  .tag.b{background:var(--blue-l);color:#2742c0}
+  .tag.a{background:var(--amber-l);color:#9a6014}
+
+  .callout{background:linear-gradient(135deg,var(--green-l),#eafaf5);border-left:4px solid var(--green);border-radius:0 12px 12px 0;padding:18px 22px;margin:18px 0;font-size:15px;color:var(--ink)}
+  .callout b{color:var(--green-d)}
+  .callout.blue{background:linear-gradient(135deg,var(--blue-l),#eef1fe);border-left-color:var(--blue)}
+  .callout.blue b{color:#2742c0}
+
+  .tl-item{display:grid;grid-template-columns:120px 1fr;gap:18px;padding:16px 0;border-top:1px solid var(--line)}
+  .tl-item:first-child{border-top:none}
+  .tl-phase{font-weight:800;color:var(--green-d);font-size:15px}
+  .tl-phase span{display:block;font-size:12px;color:var(--mut);font-weight:600}
+
+  .bar-row{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+  .bar-lbl{width:160px;font-size:13.5px;color:var(--ink);text-align:right;flex-shrink:0;font-weight:600}
+  .bar-track{flex:1;background:#e9eff1;border-radius:6px;height:30px;position:relative;overflow:hidden;display:flex;align-items:center}
+  .bar-fill{height:100%;border-radius:6px;display:flex;align-items:center;padding-left:12px;color:#fff;font-size:12.5px;font-weight:700}
+
+  footer{border-top:1px solid var(--line);background:var(--paper);padding:28px 0;font-size:13px;color:var(--mut)}
+  .disc{background:#f7fafb;border:1px dashed var(--line);border-radius:10px;padding:16px 18px;font-size:12.5px;color:var(--mut);margin-top:16px}
+  @media(max-width:720px){.grid2,.grid3{grid-template-columns:1fr}.tl-item{grid-template-columns:84px 1fr}.bar-lbl{width:110px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="hwrap">
+    <span class="badge">Experiential Marketing Operating System</span>
+    <h1>Events that own pipeline — not logistics.</h1>
+    <p class="sub">An experiential marketing plan for <b>WordPress VIP</b>: a global portfolio of in-person events engineered to generate pipeline, accelerate deals, and strengthen relationships with the world's biggest brands — run by a small senior team with AI leverage.</p>
+    <div class="meta">Prepared by <b>Cassie Uptmore</b> for the <b>Senior Manager of Experiential Marketing</b> role (WordPress VIP) · 30+ events a year · revenue-accountable · 12-month view</div>
+  </div>
+</header>
+
+<nav><div class="navin" id="nav"></div></nav>
+
+<main class="wrap">
+
+  <section class="panel active" data-panel="thesis">
+    <div class="eyebrow">The Thesis</div>
+    <h2>Experiential marketing is a revenue function — the events that earn their budget own pipeline end to end</h2>
+    <p class="lead">WordPress VIP sells the enterprise content platform behind Meta, Salesforce, and Disney. The buyers are senior, skeptical, and hard to reach — so events aren't brand theater, they're a commercial instrument. Every event on the calendar should be designed backward from sourced pipeline, accelerated deals, and deeper customer relationships. Logistics are table stakes; the job is business outcomes, not activity for its own sake.</p>
+    <div class="pillars">
+      <div class="pillar"><div class="n">01</div><h3>Designed backward from pipeline</h3><p>Target account lists, ICP-fit invitees, BDR/Sales activation, and a follow-up motion are built <em>before</em> the SOW — not bolted on after. Every event has a number.</p></div>
+      <div class="pillar"><div class="n">02</div><h3>Operationally flawless</h3><p>Agency, vendors, venue, AV, catering, swag, run-of-show and budget managed end to end, so problems get solved before an attendee ever sees them.</p></div>
+      <div class="pillar"><div class="n">03</div><h3>Measured in Salesforce</h3><p>SAOs sourced, pipeline influenced, deals accelerated — tracked, reported, and fed back into the next event. The data decides what scales and what gets cut.</p></div>
+    </div>
+    <div class="callout"><b>The operating idea:</b> a small senior team plus AI can run a 30+ event global portfolio that punches far above its headcount — if the work is systematized, the pipeline motion is disciplined, and AI absorbs the production load so human judgment goes to strategy, relationships, and the room.</div>
+  </section>
+
+  <section class="panel" data-panel="mandate">
+    <div class="eyebrow">The Mandate</div>
+    <h2>A revenue-generating event portfolio for the enterprise content platform</h2>
+    <div class="grid3" style="margin-bottom:18px">
+      <div class="stat"><div class="big">30+</div><div class="lbl">In-person events a year, on time &amp; on budget</div></div>
+      <div class="stat"><div class="big">~10</div><div class="lbl">Thought-leadership events with demand-gen outcomes</div></div>
+      <div class="stat"><div class="big">Meta · Salesforce · Disney</div><div class="lbl">The caliber of brand VIP already serves</div></div>
+    </div>
+    <div class="grid2">
+      <div class="card"><h3>What WordPress VIP sells</h3>
+        <p style="font-size:14.5px">The world's leading enterprise WordPress platform — high-volume publishing, content velocity, and editorial strength for the largest brands. It wins on speed-to-market and flexibility where heavyweight suites are slow.</p>
+        <p style="font-size:14.5px;margin:0"><b>Competes with</b> Adobe Experience Manager, Sitecore, Contentful, and Acquia/Drupal — so events must make VIP feel like the modern, credible enterprise choice, in the rooms where those deals are won.</p>
+      </div>
+      <div class="card"><h3>What this role owns</h3>
+        <ul class="clean">
+          <li><b>Pipeline</b> — target accounts, SAOs, influenced pipeline, accelerated deals</li>
+          <li><b>Event ops</b> — agency, vendors, budget, run-of-show, on-site execution</li>
+          <li><b>Integrated marketing</b> — segmentation, campaign calendar, channel mix</li>
+          <li><b>Cross-functional alignment</b> — Sales, CS, Partnerships, Content, MOPs</li>
+        </ul>
+      </div>
+    </div>
+    <div class="callout blue"><b>The team model fits the moment:</b> a peer senior experiential marketer and a small senior "lab," each deep in a discipline, deploying against the highest-priority revenue opportunities. That's a small, senior team — exactly the shape an AI-leveraged operating system is built for. The answer to scale isn't more headcount; it's a better system.</div>
+  </section>
+
+  <section class="panel" data-panel="jobs">
+    <div class="eyebrow">Every Event's Three Jobs</div>
+    <h2>No event earns its budget on one metric</h2>
+    <p class="lead">WordPress VIP's own brief says it plainly: events exist to <b>generate pipeline, accelerate deals, and strengthen customer relationships</b>. The system designs and scores every event against all three — plus thought leadership where it drives demand — so the portfolio always balances the number with what compounds.</p>
+    <div class="grid3" style="margin-top:6px">
+      <div class="card" style="border-top:4px solid var(--green)"><div class="tag">Job 1</div><h3 style="margin-top:12px">Generate pipeline</h3><p style="font-size:14px;margin:0">SAOs sourced and ICP-fit accounts engaged. The number the team is measured on.</p></div>
+      <div class="card" style="border-top:4px solid var(--blue)"><div class="tag b">Job 2</div><h3 style="margin-top:12px">Accelerate deals</h3><p style="font-size:14px;margin:0">Open opportunities advanced — executive programs and customer moments that move late-stage deals, tracked in Salesforce.</p></div>
+      <div class="card" style="border-top:4px solid var(--amber)"><div class="tag a">Job 3</div><h3 style="margin-top:12px">Strengthen relationships</h3><p style="font-size:14px;margin:0">Retention, expansion &amp; advocacy with customers like the world's biggest brands — plus thought leadership that builds demand.</p></div>
+    </div>
+    <div class="callout"><b>How the system uses this:</b> every event is tagged with a primary and secondary job before it's greenlit, so the calendar stays balanced — enough sourced pipeline to hit the number, enough deal acceleration and relationship depth to compound. An event that can't articulate its job doesn't make the calendar.</div>
+  </section>
+
+  <section class="panel" data-panel="formats">
+    <div class="eyebrow">Format Portfolio</div>
+    <h2>Which format, for which buyer, at which deal stage</h2>
+    <p>The role spans the full spectrum — major sponsorships to highly targeted executive programs. Format follows the commercial job: top-of-funnel reach, mid-funnel engagement, or late-stage acceleration.</p>
+    <table>
+      <thead><tr><th>Format</th><th>Primary job</th><th>Best for</th><th>Why it works</th></tr></thead>
+      <tbody>
+        <tr><td><b>Third-party sponsorships</b><br><span class="tag">Reach</span></td><td>Generate pipeline</td><td>ICP-fit accounts already at industry shows</td><td>Be where enterprise buyers are — but activate around named accounts, not booth traffic.</td></tr>
+        <tr><td><b>Proprietary events</b><br><span class="tag">Owned</span></td><td>Pipeline + brand</td><td>VIP-curated summits &amp; field events</td><td>Full control of the audience, narrative, and room — the flagship demand moments.</td></tr>
+        <tr><td><b>Executive programs</b><br><span class="tag b">Accelerate</span></td><td>Accelerate deals</td><td>Late-stage opps &amp; multi-thread targets</td><td>Intimate dinners and briefings that move the deals already in the pipeline.</td></tr>
+        <tr><td><b>Customer programs</b><br><span class="tag a">Expand</span></td><td>Strengthen relationships</td><td>Existing customers (Meta-caliber brands)</td><td>Retention, expansion &amp; advocacy — the references that win the next deal.</td></tr>
+        <tr><td><b>Thought-leadership events</b><br><span class="tag">Demand</span></td><td>Brand + demand</td><td>Category moments with a demand-gen hook</td><td>~10/yr — brand that converts, never brand for its own sake.</td></tr>
+      </tbody>
+    </table>
+    <div class="callout"><b>The POV:</b> sponsorships and proprietary events carry top-of-funnel pipeline; executive and customer programs carry acceleration and expansion; thought leadership earns the right to be in the conversation. Spend follows the formats that source and accelerate pipeline — proven each quarter, not assumed.</div>
+  </section>
+
+  <section class="panel" data-panel="vertical">
+    <div class="eyebrow">The Vertical Mix</div>
+    <h2>A portfolio built to WordPress VIP's target mix — by design, not by accident</h2>
+    <p class="lead">The role's own KPI sets the mix: roughly half enterprise, a sixth public sector, a third media. The calendar is allocated to hit it deliberately — so the event portfolio mirrors where the revenue is.</p>
+    <div class="card" id="mixchart" style="margin-top:6px"></div>
+    <table style="margin-top:16px">
+      <thead><tr><th>Segment</th><th>Share</th><th>Where the buyers are</th><th>Event play</th></tr></thead>
+      <tbody>
+        <tr><td><b>Enterprise</b><br><span style="color:var(--mut);font-weight:400">prof. services · finance · manufacturing · healthcare</span></td><td>~50%</td><td>Vertical industry shows + enterprise DX/marketing events</td><td>Sponsorships for reach + executive dinners by vertical (finance, healthcare) to accelerate deals</td></tr>
+        <tr><td><b>Media</b></td><td>~35%</td><td>Publishing &amp; media events — VIP's editorial heartland</td><td>Proprietary editorial roundtables + media-conference presence where VIP's content-velocity story wins</td></tr>
+        <tr><td><b>Public sector</b></td><td>~15%</td><td>Gov digital &amp; civic-tech events</td><td>Targeted briefings + compliance-forward proprietary sessions</td></tr>
+      </tbody>
+    </table>
+    <div class="callout blue"><b>Growth by vertical:</b> go deep where VIP already wins (media), build a repeatable enterprise track for the four enterprise verticals, and run a focused public-sector motion. Each vertical gets a reusable track — sponsorship + executive program + customer story — so adding depth in a vertical is cheap once the system exists.</div>
+  </section>
+
+  <section class="panel" data-panel="pipeline">
+    <div class="eyebrow">The Pipeline Engine</div>
+    <h2>Owning pipeline contribution end to end — not just logistics</h2>
+    <p class="lead">This is the part of the role that earns the seat in the revenue conversation. Every event runs a disciplined pre / during / post motion, built with BDRs and Sales, and wired to Salesforce before the doors open.</p>
+    <div class="grid3">
+      <div class="card"><h3 style="color:var(--green-d)">Before</h3>
+        <ul class="clean">
+          <li>Define the <b>target account list</b> and opportunity goals with Sales</li>
+          <li>Prioritize <b>ICP-fit attendees</b>; intent-based outreach with BDRs</li>
+          <li><b>Salesforce campaign</b>, lead capture &amp; follow-up sequences set up <em>before</em> the event</li>
+          <li>Arm every rep with a per-account brief</li>
+        </ul>
+      </div>
+      <div class="card"><h3 style="color:var(--blue)">During</h3>
+        <ul class="clean blue">
+          <li>Every rep walks in with a per-attendee objective</li>
+          <li>Capture intent signals and meetings in real time</li>
+          <li>On-site lead = run-of-show owner and problem-solver</li>
+        </ul>
+      </div>
+      <div class="card"><h3 style="color:var(--amber)">After</h3>
+        <ul class="clean amber">
+          <li>Follow-up motion fires within 24–48h, by account</li>
+          <li>Report <b>SAOs sourced, pipeline influenced, deals accelerated</b></li>
+          <li>Feed the data back to improve the next event's ROI</li>
+        </ul>
+      </div>
+    </div>
+    <div class="callout"><b>Answers the application question directly</b> ("an event where you owned pipeline end-to-end, not just logistics"): pipeline ownership isn't a post-event report — it's an account list, a rep-activation plan, and a Salesforce-wired follow-up motion designed before the SOW is signed.</div>
+  </section>
+
+  <section class="panel" data-panel="ops">
+    <div class="eyebrow">Run of Show</div>
+    <h2>Operational excellence is the price of admission</h2>
+    <p class="lead">Thirty-plus events a year, on time and on budget, means the operating system has to make complexity boring. Every event runs the same nine-stage lifecycle so nothing is invented twice and nothing is dropped.</p>
+    <div class="grid2">
+      <div class="card"><h3>End-to-end ownership</h3>
+        <ul class="clean">
+          <li>Agency relationship, timelines &amp; production schedules</li>
+          <li>Vendor sourcing, venue, AV, catering, swag &amp; shipping logistics</li>
+          <li>Contracts, invoices &amp; expense tracking — on-budget, timely AP</li>
+          <li>Full scoping <em>before</em> SOW so staffing &amp; logistics gaps are caught early</li>
+        </ul>
+      </div>
+      <div class="card"><h3>On-site leadership</h3>
+        <ul class="clean blue">
+          <li>Own the run-of-show; manage logistics in real time</li>
+          <li>Solve problems before they're visible to attendees</li>
+          <li>Single point of accountability, kickoff through post-event report</li>
+          <li>Surface risks early — with proposed solutions, not just problems</li>
+        </ul>
+      </div>
+    </div>
+    <div class="callout"><b>Answers the application question</b> ("most operationally complex event you've managed"): complexity is handled by the system — a reusable lifecycle, vendor playbooks, and a PM cadence — so the senior hours go to the judgment calls, not the checklist.</div>
+  </section>
+
+  <section class="panel" data-panel="ai">
+    <div class="eyebrow">The AI Operating Layer</div>
+    <h2>Where AI adds leverage — and where human judgment stays</h2>
+    <p class="lead">The role asks for a clear point of view on AI. Mine: point AI at the reproducible 80% — research, drafting, scoring, reporting — and keep humans on the 20% that's judgment, relationships, and the room. That's how a small senior team runs a big portfolio.</p>
+    <div class="grid2">
+      <div class="card"><h3 style="color:var(--green-d)">AI does the load</h3>
+        <ul class="clean">
+          <li>Account &amp; attendee research; show-ROI scoring</li>
+          <li>First-draft invites, pages, briefs, recaps, follow-ups</li>
+          <li>Pulling Product Marketing narratives &amp; customer insights into briefs</li>
+          <li>Budget tracking, dashboards, post-event reporting</li>
+        </ul>
+      </div>
+      <div class="card"><h3 style="color:var(--amber)">Humans own the judgment</h3>
+        <ul class="clean amber">
+          <li>Which accounts, which formats, which rooms</li>
+          <li>The relationships and the on-site read</li>
+          <li>Final approval on anything customer- or brand-facing</li>
+          <li>Critically evaluating and refining every AI output (brief → critique → refine)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="callout blue"><b>Answers the application question</b> ("how are you using AI today"): not as an oracle, but as a briefed, supervised teammate — accelerating planning, research, and execution while a human makes the final call. The leverage is real (a small team produces like a much bigger one); the accountability stays human.</div>
+  </section>
+
+  <section class="panel" data-panel="calendar">
+    <div class="eyebrow">The Calendar</div>
+    <h2>30+ events a year, allocated to the target mix</h2>
+    <p>A quarter-by-quarter rhythm across the three segments, anchored to real moments where VIP's buyers gather. Anchor events below are targets to confirm against 2026 schedules.</p>
+    <table>
+      <thead><tr><th>Quarter</th><th>Focus</th><th>The rooms</th></tr></thead>
+      <tbody>
+        <tr><td><b>Q1</b></td><td>Stand up the engine</td><td>Salesforce campaign &amp; attribution wired · first enterprise executive dinners (finance, healthcare) · media editorial roundtable</td></tr>
+        <tr><td><b>Q2</b></td><td>Reach + acceleration</td><td>Enterprise DX/marketing sponsorships · media-conference presence (publishing/Digiday-type) · customer program for marquee accounts</td></tr>
+        <tr><td><b>Q3</b></td><td>Owned flagship</td><td>VIP proprietary summit · public-sector briefing series · vertical executive dinners</td></tr>
+        <tr><td><b>Q4</b></td><td>Pipeline + plan</td><td>Year-end executive programs · ~10 thought-leadership events landed · 2027 plan on real attribution data</td></tr>
+      </tbody>
+    </table>
+    <div class="callout"><b>Cadence:</b> a steady drumbeat of executive and customer programs (high-intent, lower-cost) around a few flagship sponsorships and proprietary events — weighted to the formats and verticals that prove cost-per-SAO.</div>
+  </section>
+
+  <section class="panel" data-panel="scoreboard">
+    <div class="eyebrow">The Scoreboard</div>
+    <h2>Measured on the team's real KPIs — pipeline, not attendance</h2>
+    <p class="lead">Straight from the role's performance indicators. This is the dashboard I'd run the portfolio against and defend in every revenue review.</p>
+    <div class="grid2">
+      <div class="card"><h3>Commercial</h3>
+        <ul class="clean">
+          <li><b>Pipeline generated</b> — SAO attainment &amp; sourced pipeline from events</li>
+          <li><b>Pipeline influenced</b> — deals accelerated or influenced, tracked in Salesforce</li>
+          <li><b>Cost per SAO</b> — trending down event over event</li>
+        </ul>
+      </div>
+      <div class="card"><h3>Delivery &amp; mix</h3>
+        <ul class="clean blue">
+          <li><b>30+ events</b> a year, on time and on budget</li>
+          <li><b>Vertical mix</b> — ~50% enterprise / 15% public sector / 35% media</li>
+          <li><b>~10 thought-leadership</b> events with measurable demand-gen outcomes</li>
+        </ul>
+      </div>
+    </div>
+    <div class="callout">Attendance and badge scans are inputs, never the scoreboard. The number that matters is sourced and influenced pipeline — and it's defended with Salesforce data, not anecdotes.</div>
+  </section>
+
+  <section class="panel" data-panel="ninety">
+    <div class="eyebrow">The First 90 Days</div>
+    <h2>From kickoff to a measurable engine</h2>
+    <div class="tl">
+      <div class="tl-item"><div class="tl-phase">Days 0–30<span>Wire it up</span></div><div><ul class="clean"><li>Audit the current event portfolio &amp; its pipeline contribution; meet Sales, CS, Partnerships, MOPs</li><li>Stand up Salesforce campaign + attribution standards with MOPs</li><li>Lock the target vertical mix and the account-list method with Sales</li></ul></div></div>
+      <div class="tl-item"><div class="tl-phase">Days 31–60<span>Prove the motion</span></div><div><ul class="clean blue"><li>Run the first executive dinners + a media roundtable with full pre/post motion</li><li>Ship the reusable event lifecycle, vendor playbooks &amp; AI workflows</li><li>First SAOs sourced and reported in Salesforce</li></ul></div></div>
+      <div class="tl-item"><div class="tl-phase">Days 61–90<span>Scale what works</span></div><div><ul class="clean amber"><li>Launch a flagship sponsorship/proprietary event; plan the owned summit</li><li>Publish the events pipeline dashboard</li><li>Present portfolio ROI + the annual calendar to revenue leadership</li></ul></div></div>
+    </div>
+  </section>
+
+  <section class="panel" data-panel="why">
+    <div class="eyebrow">Why Me</div>
+    <h2>I build event programs that own a number — and I think in systems</h2>
+    <div class="grid2">
+      <div class="card"><h3>How this maps to the role</h3>
+        <ul class="clean">
+          <li><b>Pipeline, not logistics</b> — the engine is built backward from sourced pipeline</li>
+          <li><b>Ops + marketing</b> — I own both the run-of-show and the demand plan</li>
+          <li><b>Salesforce &amp; demand-gen fluency</b> — ABM, segmentation, follow-up that converts</li>
+          <li><b>AI-fluent</b> — a clear POV on leverage vs. judgment</li>
+          <li><b>Systems thinker</b> — I scale with a better operating system, not more headcount</li>
+        </ul>
+      </div>
+      <div class="card"><h3>Proof of work</h3>
+        <p style="font-size:14.5px">This page is one of a library of full event &amp; field marketing operating systems I've built for real companies — each genuinely adapted to that company's situation.</p>
+        <p style="margin-top:4px"><a href="https://cassieuptmore.github.io" style="font-weight:700">cassieuptmore.github.io →</a></p>
+        <p style="font-size:14.5px;margin-top:12px">It's also built to answer your three application questions — pipeline ownership, operational complexity, and how I use AI — and I'd love to walk through the first 90 days for VIP.</p>
+        <p style="font-size:14.5px;margin:0"><a href="mailto:cassieuptmore@gmail.com" style="font-weight:700">cassieuptmore@gmail.com</a></p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div><b>Experiential Marketing Operating System — WordPress VIP</b> · Prepared by Cassie Uptmore for the Senior Manager of Experiential Marketing role</div>
+    <div class="disc"><b>An honest note on sources.</b> Verified from the public job description and WordPress VIP's site: the role's scope and KPIs (30+ events/yr, the ~50/15/35 vertical mix, ~10 thought-leadership events, Salesforce attribution, the small senior team model), VIP's positioning as an enterprise content platform, and its named customers (Meta, Salesforce, Disney). Illustrative and proposed by me: the format allocation, the calendar (anchor events are targets to confirm against 2026 schedules), and the 90-day plan — a point of view for the role, not internal VIP plans.</div>
+  </div>
+</footer>
+
+<script>
+  var tabs=[
+    ["thesis","Thesis"],["mandate","The Mandate"],["jobs","Three Jobs"],["formats","Formats"],
+    ["vertical","Vertical Mix"],["pipeline","Pipeline Engine"],["ops","Run of Show"],["ai","AI Layer"],
+    ["calendar","Calendar"],["scoreboard","Scoreboard"],["ninety","First 90 Days"],["why","Why Me"]
+  ];
+  var nav=document.getElementById('nav');
+  tabs.forEach(function(t,i){
+    var b=document.createElement('button');
+    b.className='tab'+(i===0?' active':''); b.textContent=t[1];
+    b.onclick=function(){
+      document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('active')});
+      document.querySelectorAll('.panel').forEach(function(x){x.classList.remove('active')});
+      b.classList.add('active');
+      document.querySelector('.panel[data-panel="'+t[0]+'"]').classList.add('active');
+      window.scrollTo({top:0,behavior:'smooth'});
+    };
+    nav.appendChild(b);
+  });
+  // vertical mix bars
+  var mix=[["Enterprise",50,"#01a77d"],["Media",35,"#3858e9"],["Public sector",15,"#c8842f"]];
+  var host=document.getElementById('mixchart');
+  var html='';
+  mix.forEach(function(m){
+    html+='<div class="bar-row"><div class="bar-lbl">'+m[0]+'</div><div class="bar-track"><div class="bar-fill" style="width:'+m[1]+'%;background:'+m[2]+'">'+m[1]+'%</div></div></div>';
+  });
+  html+='<div style="font-size:12.5px;color:var(--mut);margin-top:4px">Target share of the 30+ event portfolio (per the role’s performance indicators).</div>';
+  host.innerHTML=html;
+</script>
+</body>
+</html>
