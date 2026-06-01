@@ -8,7 +8,7 @@
 <style>
   :root{
     --ink:#13191e; --ink2:#212529; --green:#01a77d; --green-d:#018a67; --green-l:#d6f3ea;
-    --blue:#3858e9; --blue-l:#e3e8fe; --amber:#c8842f; --amber-l:#f7ecdb;
+    --blue:#3858e9; --blue-l:#e3e8fe; --amber:#0b7d6b; --amber-l:#d3efe9;
     --sand:#f4f7f9; --paper:#ffffff; --line:#e2e9ed; --mut:#5b6b73; --mut2:#7d8c93;
   }
   *{box-sizing:border-box;margin:0;padding:0}
@@ -70,7 +70,7 @@
   td b{color:var(--ink)}
   .tag{display:inline-block;font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;background:var(--green-l);color:var(--green-d)}
   .tag.b{background:var(--blue-l);color:#2742c0}
-  .tag.a{background:var(--amber-l);color:#9a6014}
+  .tag.a{background:var(--amber-l);color:#066552}
 
   .callout{background:linear-gradient(135deg,var(--green-l),#eafaf5);border-left:4px solid var(--green);border-radius:0 12px 12px 0;padding:18px 22px;margin:18px 0;font-size:15px;color:var(--ink)}
   .callout b{color:var(--green-d)}
@@ -369,7 +369,7 @@
     nav.appendChild(b);
   });
   // vertical mix bars
-  var mix=[["Enterprise",50,"#01a77d"],["Media",35,"#3858e9"],["Public sector",15,"#c8842f"]];
+  var mix=[["Enterprise",50,"#01a77d"],["Media",35,"#3858e9"],["Public sector",15,"#0b7d6b"]];
   var host=document.getElementById('mixchart');
   var html='';
   mix.forEach(function(m){
